@@ -1,6 +1,8 @@
 'use client';
 
-import { FormEvent, useState } from 'react';
+import { FormEvent, useState, useCallback } from 'react';
+import ReCaptcha from './ReCaptcha';
+import { submitGetStartedForm } from '@/lib/api';
 
 interface ModalProps {
   isOpen: boolean;
@@ -24,22 +26,36 @@ export default function Modal({ isOpen, onClose }: ModalProps) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [occupation, setOccupation] = useState('');
+  const [recaptchaToken, setRecaptchaToken] = useState('');
   const [submitted, setSubmitted] = useState(false);
-  const [errors, setErrors] = useState<{ firstName?: string; lastName?: string }>({});
+  const [submitting, setSubmitting] = useState(false);
+  const [errors, setErrors] = useState<{ firstName?: string; lastName?: string; recaptcha?: string; submit?: string }>({});
+
+  const handleRecaptchaVerify = useCallback((token: string) => {
+    setRecaptchaToken(token);
+    setErrors(prev => ({ ...prev, recaptcha: undefined }));
+  }, []);
+
+  const handleRecaptchaExpire = useCallback(() => {
+    setRecaptchaToken('');
+  }, []);
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     // Validate inputs
-    const newErrors: { firstName?: string; lastName?: string } = {};
+    const newErrors: { firstName?: string; lastName?: string; recaptcha?: string } = {};
 
     if (!isValidName(firstName)) {
       newErrors.firstName = 'Please enter a valid first name (letters only)';
     }
     if (!isValidName(lastName)) {
       newErrors.lastName = 'Please enter a valid last name (letters only)';
+    }
+    if (!recaptchaToken) {
+      newErrors.recaptcha = 'Please complete the reCAPTCHA verification';
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -48,24 +64,30 @@ export default function Modal({ isOpen, onClose }: ModalProps) {
     }
 
     setErrors({});
+    setSubmitting(true);
 
-    // Sanitize before submission
-    const sanitizedData = {
-      firstName: sanitizeInput(firstName),
-      lastName: sanitizeInput(lastName),
-      occupation,
-    };
+    try {
+      await submitGetStartedForm({
+        first_name: sanitizeInput(firstName),
+        last_name: sanitizeInput(lastName),
+        occupation,
+        recaptcha_token: recaptchaToken,
+      });
 
-    // Mock form submission - will be replaced with API call later
-    console.log('Form submitted:', sanitizedData);
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFirstName('');
-      setLastName('');
-      setOccupation('');
-      onClose();
-    }, 2000);
+      setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        setFirstName('');
+        setLastName('');
+        setOccupation('');
+        setRecaptchaToken('');
+        onClose();
+      }, 2000);
+    } catch (error) {
+      setErrors({ submit: error instanceof Error ? error.message : 'Submission failed. Please try again.' });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleBackdropClick = (e: React.MouseEvent) => {
@@ -103,6 +125,7 @@ export default function Modal({ isOpen, onClose }: ModalProps) {
                 title="Letters, spaces, hyphens, and apostrophes only"
                 autoComplete="given-name"
                 required
+                disabled={submitting}
               />
               {errors.firstName && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.firstName}</div>}
             </div>
@@ -118,6 +141,7 @@ export default function Modal({ isOpen, onClose }: ModalProps) {
                 title="Letters, spaces, hyphens, and apostrophes only"
                 autoComplete="family-name"
                 required
+                disabled={submitting}
               />
               {errors.lastName && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.lastName}</div>}
             </div>
@@ -129,6 +153,7 @@ export default function Modal({ isOpen, onClose }: ModalProps) {
                 value={occupation}
                 onChange={(e) => setOccupation(e.target.value)}
                 required
+                disabled={submitting}
               >
                 <option value="">Select an option</option>
                 <option value="maid">Bai/House help/Maid</option>
@@ -141,8 +166,16 @@ export default function Modal({ isOpen, onClose }: ModalProps) {
               </select>
               <div className="helper-text">Choose the role that fits you best.</div>
             </div>
-            <button className="button primary" type="submit">
-              Submit
+            <div>
+              <ReCaptcha
+                onVerify={handleRecaptchaVerify}
+                onExpire={handleRecaptchaExpire}
+              />
+              {errors.recaptcha && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.recaptcha}</div>}
+            </div>
+            {errors.submit && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.submit}</div>}
+            <button className="button primary" type="submit" disabled={submitting}>
+              {submitting ? 'Submitting...' : 'Submit'}
             </button>
           </form>
         )}

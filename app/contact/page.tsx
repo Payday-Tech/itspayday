@@ -1,8 +1,10 @@
 'use client';
 
 import Image from 'next/image';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useState, useCallback } from 'react';
 import GetStartedButton from '@/components/GetStartedButton';
+import ReCaptcha from '@/components/ReCaptcha';
+import { submitContactForm } from '@/lib/api';
 
 // Sanitize input to prevent XSS
 const sanitizeInput = (input: string, maxLength: number = 500): string => {
@@ -22,6 +24,14 @@ const isValidName = (name: string): boolean => {
   return /^[a-zA-Z\s\-']+$/.test(name) && name.length >= 1 && name.length <= 100;
 };
 
+interface FormErrors {
+  name?: string;
+  email?: string;
+  message?: string;
+  recaptcha?: string;
+  submit?: string;
+}
+
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: '',
@@ -29,14 +39,25 @@ export default function Contact() {
     topic: '',
     message: '',
   });
+  const [recaptchaToken, setRecaptchaToken] = useState('');
   const [submitted, setSubmitted] = useState(false);
-  const [errors, setErrors] = useState<{ name?: string; email?: string; message?: string }>({});
+  const [submitting, setSubmitting] = useState(false);
+  const [errors, setErrors] = useState<FormErrors>({});
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleRecaptchaVerify = useCallback((token: string) => {
+    setRecaptchaToken(token);
+    setErrors(prev => ({ ...prev, recaptcha: undefined }));
+  }, []);
+
+  const handleRecaptchaExpire = useCallback(() => {
+    setRecaptchaToken('');
+  }, []);
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     // Validate inputs
-    const newErrors: { name?: string; email?: string; message?: string } = {};
+    const newErrors: FormErrors = {};
 
     if (!isValidName(formData.name)) {
       newErrors.name = 'Please enter a valid name (letters only)';
@@ -47,6 +68,9 @@ export default function Contact() {
     if (formData.message.length < 10) {
       newErrors.message = 'Message must be at least 10 characters';
     }
+    if (!recaptchaToken) {
+      newErrors.recaptcha = 'Please complete the reCAPTCHA verification';
+    }
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -54,22 +78,28 @@ export default function Contact() {
     }
 
     setErrors({});
+    setSubmitting(true);
 
-    // Sanitize before submission
-    const sanitizedData = {
-      name: sanitizeInput(formData.name, 100),
-      email: sanitizeInput(formData.email, 254),
-      topic: formData.topic,
-      message: sanitizeInput(formData.message, 2000),
-    };
+    try {
+      await submitContactForm({
+        name: sanitizeInput(formData.name, 100),
+        email: sanitizeInput(formData.email, 254),
+        topic: formData.topic,
+        message: sanitizeInput(formData.message, 2000),
+        recaptcha_token: recaptchaToken,
+      });
 
-    // Mock form submission
-    console.log('Contact form submitted:', sanitizedData);
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({ name: '', email: '', topic: '', message: '' });
-    }, 3000);
+      setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        setFormData({ name: '', email: '', topic: '', message: '' });
+        setRecaptchaToken('');
+      }, 3000);
+    } catch (error) {
+      setErrors({ submit: error instanceof Error ? error.message : 'Submission failed. Please try again.' });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -127,6 +157,7 @@ export default function Contact() {
                 title="Letters, spaces, hyphens, and apostrophes only"
                 autoComplete="name"
                 required
+                disabled={submitting}
               />
               {errors.name && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.name}</div>}
             </div>
@@ -141,6 +172,7 @@ export default function Contact() {
                 maxLength={254}
                 autoComplete="email"
                 required
+                disabled={submitting}
               />
               {errors.email && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.email}</div>}
             </div>
@@ -152,6 +184,7 @@ export default function Contact() {
                 value={formData.topic}
                 onChange={(e) => setFormData({ ...formData, topic: e.target.value })}
                 required
+                disabled={submitting}
               >
                 <option value="">Select a topic</option>
                 <option value="earned-wage-access">Earned Wage Access</option>
@@ -171,10 +204,21 @@ export default function Contact() {
                 maxLength={2000}
                 minLength={10}
                 required
+                disabled={submitting}
               />
               {errors.message && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.message}</div>}
             </div>
-            <button className="button primary" type="submit">Send message</button>
+            <div>
+              <ReCaptcha
+                onVerify={handleRecaptchaVerify}
+                onExpire={handleRecaptchaExpire}
+              />
+              {errors.recaptcha && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.recaptcha}</div>}
+            </div>
+            {errors.submit && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.submit}</div>}
+            <button className="button primary" type="submit" disabled={submitting}>
+              {submitting ? 'Sending...' : 'Send message'}
+            </button>
           </form>
         )}
       </section>

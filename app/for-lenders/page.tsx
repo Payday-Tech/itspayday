@@ -1,7 +1,9 @@
 'use client';
 
 import Image from 'next/image';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useState, useCallback } from 'react';
+import ReCaptcha from '@/components/ReCaptcha';
+import { submitLenderPartnershipForm } from '@/lib/api';
 
 // Sanitize input to prevent XSS
 const sanitizeInput = (input: string, maxLength: number = 500): string => {
@@ -38,6 +40,8 @@ interface FormErrors {
   phone?: string;
   role?: string;
   city?: string;
+  recaptcha?: string;
+  submit?: string;
 }
 
 export default function ForLenders() {
@@ -50,10 +54,21 @@ export default function ForLenders() {
     city: '',
     notes: '',
   });
+  const [recaptchaToken, setRecaptchaToken] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleRecaptchaVerify = useCallback((token: string) => {
+    setRecaptchaToken(token);
+    setErrors(prev => ({ ...prev, recaptcha: undefined }));
+  }, []);
+
+  const handleRecaptchaExpire = useCallback(() => {
+    setRecaptchaToken('');
+  }, []);
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     // Validate inputs
@@ -77,6 +92,9 @@ export default function ForLenders() {
     if (!isValidName(formData.city)) {
       newErrors.city = 'Please enter a valid city (letters only)';
     }
+    if (!recaptchaToken) {
+      newErrors.recaptcha = 'Please complete the reCAPTCHA verification';
+    }
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -84,25 +102,31 @@ export default function ForLenders() {
     }
 
     setErrors({});
+    setSubmitting(true);
 
-    // Sanitize before submission
-    const sanitizedData = {
-      name: sanitizeInput(formData.name, 100),
-      company: sanitizeInput(formData.company, 100),
-      email: sanitizeInput(formData.email, 254),
-      phone: sanitizePhone(formData.phone),
-      role: sanitizeInput(formData.role, 100),
-      city: sanitizeInput(formData.city, 100),
-      notes: sanitizeInput(formData.notes, 1000),
-    };
+    try {
+      await submitLenderPartnershipForm({
+        name: sanitizeInput(formData.name, 100),
+        company: sanitizeInput(formData.company, 100),
+        email: sanitizeInput(formData.email, 254),
+        phone: sanitizePhone(formData.phone),
+        role: sanitizeInput(formData.role, 100),
+        city: sanitizeInput(formData.city, 100),
+        notes: sanitizeInput(formData.notes, 1000) || undefined,
+        recaptcha_token: recaptchaToken,
+      });
 
-    // Mock form submission
-    console.log('Lender partnership form submitted:', sanitizedData);
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({ name: '', company: '', email: '', phone: '', role: '', city: '', notes: '' });
-    }, 3000);
+      setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        setFormData({ name: '', company: '', email: '', phone: '', role: '', city: '', notes: '' });
+        setRecaptchaToken('');
+      }, 3000);
+    } catch (error) {
+      setErrors({ submit: error instanceof Error ? error.message : 'Submission failed. Please try again.' });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -166,6 +190,7 @@ export default function ForLenders() {
                 title="Letters, spaces, hyphens, and apostrophes only"
                 autoComplete="name"
                 required
+                disabled={submitting}
               />
               {errors.name && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.name}</div>}
             </div>
@@ -180,6 +205,7 @@ export default function ForLenders() {
                 minLength={2}
                 autoComplete="organization"
                 required
+                disabled={submitting}
               />
               {errors.company && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.company}</div>}
             </div>
@@ -194,6 +220,7 @@ export default function ForLenders() {
                 maxLength={254}
                 autoComplete="email"
                 required
+                disabled={submitting}
               />
               {errors.email && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.email}</div>}
             </div>
@@ -210,6 +237,7 @@ export default function ForLenders() {
                 title="Enter 10-15 digit phone number"
                 autoComplete="tel"
                 required
+                disabled={submitting}
               />
               {errors.phone && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.phone}</div>}
             </div>
@@ -225,6 +253,7 @@ export default function ForLenders() {
                 title="Letters, spaces, hyphens, and apostrophes only"
                 autoComplete="organization-title"
                 required
+                disabled={submitting}
               />
               {errors.role && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.role}</div>}
             </div>
@@ -240,6 +269,7 @@ export default function ForLenders() {
                 title="Letters, spaces, hyphens, and apostrophes only"
                 autoComplete="address-level2"
                 required
+                disabled={submitting}
               />
               {errors.city && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.city}</div>}
             </div>
@@ -252,9 +282,20 @@ export default function ForLenders() {
                 value={formData.notes}
                 onChange={(e) => setFormData({ ...formData, notes: sanitizeInput(e.target.value, 1000) })}
                 maxLength={1000}
+                disabled={submitting}
               />
             </div>
-            <button className="button primary" type="submit">Submit partnership interest</button>
+            <div>
+              <ReCaptcha
+                onVerify={handleRecaptchaVerify}
+                onExpire={handleRecaptchaExpire}
+              />
+              {errors.recaptcha && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.recaptcha}</div>}
+            </div>
+            {errors.submit && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.submit}</div>}
+            <button className="button primary" type="submit" disabled={submitting}>
+              {submitting ? 'Submitting...' : 'Submit partnership interest'}
+            </button>
           </form>
         )}
       </section>
