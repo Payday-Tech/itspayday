@@ -12,6 +12,10 @@ class Settings(BaseSettings):
     # Environment
     environment: str = "development"
 
+    # Google Sheets integration
+    google_credentials_json: str = ""  # Service account JSON as string
+    google_spreadsheet_id: str = ""  # ID of the Google Spreadsheet
+
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"

@@ -9,6 +9,7 @@ from app.schemas import (
     FormResponse,
 )
 from app.recaptcha import verify_recaptcha
+from app.sheets import save_get_started_form, save_contact_form, save_lender_partnership_form
 
 settings = get_settings()
 
@@ -48,8 +49,13 @@ async def submit_get_started(form: GetStartedForm):
             detail="reCAPTCHA verification failed",
         )
 
-    # TODO: Process form data (e.g., save to database, send notification)
-    # For now, just log and return success
+    # Save to Google Sheets
+    save_get_started_form(
+        first_name=form.first_name,
+        last_name=form.last_name,
+        occupation=form.occupation,
+    )
+
     print(f"Get Started form submitted: {form.first_name} {form.last_name}, {form.occupation}")
 
     return FormResponse(
@@ -70,7 +76,14 @@ async def submit_contact(form: ContactForm):
             detail="reCAPTCHA verification failed",
         )
 
-    # TODO: Process form data (e.g., save to database, send email)
+    # Save to Google Sheets
+    save_contact_form(
+        name=form.name,
+        email=form.email,
+        topic=form.topic,
+        message=form.message,
+    )
+
     print(f"Contact form submitted: {form.name}, {form.email}, Topic: {form.topic}")
 
     return FormResponse(
@@ -91,7 +104,17 @@ async def submit_lender_partnership(form: LenderPartnershipForm):
             detail="reCAPTCHA verification failed",
         )
 
-    # TODO: Process form data (e.g., save to database, notify sales team)
+    # Save to Google Sheets
+    save_lender_partnership_form(
+        name=form.name,
+        company=form.company,
+        email=form.email,
+        phone=form.phone,
+        role=form.role,
+        city=form.city,
+        notes=form.notes,
+    )
+
     print(f"Lender partnership form submitted: {form.name} from {form.company}")
 
     return FormResponse(
