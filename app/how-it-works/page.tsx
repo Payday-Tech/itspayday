@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: 'How Payday Works',
-  description: "Understand Payday's consent-led earned wage access flow, safety rails, and repayment process.",
+  description: "Understand Payday&apos;s credit-first flow, consent-led underwriting, and wage-linked repayment journey.",
 };
 
 export default function HowItWorks() {
@@ -12,8 +12,8 @@ export default function HowItWorks() {
       <section className="hero">
         <div>
           <div className="badge">How it works</div>
-          <h1>Consent-led access in three simple steps.</h1>
-          <p>Payday keeps the process simple for workers, communities, and lenders while staying compliant.</p>
+          <h1>Credit-first access in three simple steps.</h1>
+          <p>We combine on-ground trust with digital signals so workers get faster decisions and safer repayment journeys.</p>
         </div>
         <div className="hero-visual">
           <Image

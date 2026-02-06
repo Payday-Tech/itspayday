@@ -107,8 +107,8 @@ export default function Contact() {
       <section className="hero">
         <div>
           <div className="badge">Contact</div>
-          <h1>We&apos;re here to help.</h1>
-          <p>Reach out for onboarding, partnerships, or support. We respond in English, Hinglish, Kannada, and Hindi.</p>
+          <h1>Let&apos;s build responsible access together.</h1>
+          <p>Reach out for worker onboarding, community rollouts, lender partnerships, or support in English, Hinglish, Kannada, and Hindi.</p>
         </div>
         <div className="hero-visual">
           <Image

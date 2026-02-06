@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: 'About Payday',
-  description: 'Payday is a Lending Service Provider dedicated to responsible earned wage access for workers in Tier-1 Indian cities.',
+  description: 'Payday is building credit-first financial access for domestic and on-demand workers in India&apos;s gated communities.',
 };
 
 export default function About() {
@@ -12,8 +12,8 @@ export default function About() {
       <section className="hero">
         <div>
           <div className="badge">About Payday</div>
-          <h1>We help workers access what they&apos;ve already earned.</h1>
-          <p>Payday is a Lending Service Provider focused on responsible Earned Wage Access for workers in gated communities across Tier-1 Indian cities.</p>
+          <h1>We are rebuilding finance for workers traditional products ignore.</h1>
+          <p>Payday is a Lending Service Provider focused on fair, wage-linked credit for domestic and on-demand workers in urban gated ecosystems.</p>
         </div>
         <div className="hero-visual">
           <Image

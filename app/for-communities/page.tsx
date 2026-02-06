@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'For Communities & Employers | Payday',
-  description: 'Payday helps communities support domestic workers without taking on capital or risk, with reliable access and repayment.',
+  description: 'Payday helps communities support trusted workers with fair credit access without adding balance-sheet or repayment risk.',
 };
 
 export default function ForCommunities() {
@@ -13,8 +13,8 @@ export default function ForCommunities() {
       <section className="hero">
         <div>
           <div className="badge">For communities &amp; employers</div>
-          <h1>Support your house help without taking on risk.</h1>
-          <p>Give workers access to capital when they need it while you stay free from capital allocation and repayment risk.</p>
+          <h1>Support your workforce without becoming the lender.</h1>
+          <p>Enable timely financial support for domestic workers while Payday and regulated lenders handle underwriting, servicing, and collections.</p>
           <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginTop: '24px' }}>
             <a className="button primary" href="mailto:info@payday.in" rel="noopener noreferrer">Contact us</a>
             <Link className="button secondary" href="/trust">See trust framework</Link>
