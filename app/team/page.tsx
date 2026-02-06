@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: 'Payday Team',
-  description: 'Meet the Payday team building responsible earned wage access in India.',
+  description: 'Meet the Payday team building credit-first financial products for domestic and on-demand workers in India.',
 };
 
 export default function Team() {
@@ -12,8 +12,8 @@ export default function Team() {
       <section className="hero">
         <div>
           <div className="badge">Team</div>
-          <h1>Builders of responsible access.</h1>
-          <p>Our team blends fintech, community operations, and product expertise to serve workers with dignity.</p>
+          <h1>Operators building for the next 50 million workers.</h1>
+          <p>Our team blends fintech, risk, field operations, and product design to serve workers with dignity and long-term financial resilience.</p>
         </div>
         <div className="hero-visual">
           <Image

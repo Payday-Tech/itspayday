@@ -12,8 +12,8 @@ export default function GrievanceRedressal() {
       <section className="hero">
         <div>
           <div className="badge">Grievance Redressal</div>
-          <h1>We take complaints seriously and respond quickly.</h1>
-          <p>Payday provides clear escalation levels, transparent timelines, and dedicated officers for support.</p>
+          <h1>Every complaint gets a clear owner and timeline.</h1>
+          <p>Our redressal process is structured for speed, accountability, and transparent escalation across support and lender partners.</p>
         </div>
         <div className="hero-visual">
           <Image

@@ -13,8 +13,8 @@ export default function Trust() {
       <section className="hero">
         <div>
           <div className="badge">Trust Hub</div>
-          <h1>Transparency you can rely on.</h1>
-          <p>Payday is committed to privacy-first data handling, clear terms, and responsive grievance redressal.</p>
+          <h1>Trust built through clear rules and accountable support.</h1>
+          <p>From data consent to grievance timelines, Payday is designed so workers, communities, and lenders know exactly where they stand.</p>
         </div>
         <div className="hero-visual">
           <Image

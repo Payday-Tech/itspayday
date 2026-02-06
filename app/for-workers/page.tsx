@@ -5,7 +5,7 @@ import GetStartedButton from '@/components/GetStartedButton';
 
 export const metadata: Metadata = {
   title: 'For Workers | Payday',
-  description: 'Payday for workers: responsible earned wage access with dignity-first support and transparent fees.',
+  description: 'Payday for workers: fair, wage-linked credit with transparent pricing, clear limits, and multilingual support.',
 };
 
 export default function ForWorkers() {
@@ -14,8 +14,8 @@ export default function ForWorkers() {
       <section className="hero">
         <div>
           <div className="badge">For workers</div>
-          <h1>Dignity-first access to your earnings.</h1>
-          <p>Get credit within your wage limits, without excessive fees, and with complete transparency.</p>
+          <h1>Credit support that fits your real cash-flow cycle.</h1>
+          <p>Borrow within wage-linked limits, see all charges upfront, and repay on schedules aligned to your earnings.</p>
           <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginTop: '24px' }}>
             <GetStartedButton>WhatsApp Get Started</GetStartedButton>
             <Link className="button secondary" href="/fees">See fees</Link>

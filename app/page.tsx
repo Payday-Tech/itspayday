@@ -7,8 +7,8 @@ export default function Home() {
       <section className="hero">
         <div>
           <div className="badge">We are in beta &mdash; add your details to receive a loan offer</div>
-          <h1>Access what you&apos;ve already earned&mdash;when you need it.</h1>
-          <p>Responsible, consent-led wage access for workers in gated communities and the gig economy.</p>
+          <h1>Short-term credit that respects how India&apos;s workers actually earn.</h1>
+          <p>We design fair, wage-linked access for domestic and on-demand workers with irregular income and real-world cash flow needs.</p>
           <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginTop: '24px' }}>
             <GetStartedButton />
             <a className="button secondary" href="mailto:info@payday.in" rel="noopener noreferrer">Partner with us</a>
@@ -79,7 +79,7 @@ export default function Home() {
       </section>
 
       <section className="section-alt">
-        <h2>Trust-first commitments</h2>
+        <h2>Built for responsible borrowing and repayment</h2>
         <div className="trust-strip" style={{ marginTop: '24px' }}>
           <div>Privacy-forward data usage</div>
           <div>Grievance escalation with timelines</div>
@@ -112,7 +112,7 @@ export default function Home() {
       </section>
 
       <section className="section-alt">
-        <h2>FAQ Preview</h2>
+        <h2>Quick answers</h2>
         <div className="card-grid">
           <div className="card">
             <h3>Is Payday a lender?</h3>

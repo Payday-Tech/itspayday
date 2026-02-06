@@ -12,8 +12,8 @@ export default function Security() {
       <section className="hero">
         <div>
           <div className="badge">Security</div>
-          <h1>Security practices you can trust.</h1>
-          <p>We protect sensitive data with layered controls, encryption, and ongoing monitoring.</p>
+          <h1>Security designed for high-sensitivity financial journeys.</h1>
+          <p>We use encryption, strict access controls, and continuous monitoring to safeguard worker and transaction data.</p>
         </div>
         <div className="hero-visual">
           <Image

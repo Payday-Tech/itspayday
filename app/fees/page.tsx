@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Fees | Payday',
-  description: 'Transparent Payday fees: processing fee and monthly interest for earned wage access.',
+  description: 'Transparent Payday pricing with upfront processing fees, interest disclosure, and no hidden charges.',
 };
 
 export default function Fees() {
@@ -13,8 +13,8 @@ export default function Fees() {
       <section className="hero">
         <div>
           <div className="badge">Transparent pricing</div>
-          <h1>Fees that are clear, fair, and easy to understand.</h1>
-          <p>We show the processing fee and interest cost before you confirm any withdrawal.</p>
+          <h1>Simple pricing workers can understand before they borrow.</h1>
+          <p>Every disbursal screen shows the fee, interest, and repayment amount upfront—before any confirmation.</p>
         </div>
         <div className="hero-visual">
           <Image
