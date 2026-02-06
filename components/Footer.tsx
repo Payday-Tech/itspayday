@@ -45,7 +45,7 @@ export default function Footer() {
         <Link href="/for-workers">Loans for Drivers</Link>
       </div>
       <div className="footer-bottom">
-        &copy; 2024 Payday. Responsible access, always. Languages: English &bull; Hinglish &bull; &#3221;&#3240;&#3277;&#3240;&#3233; &bull; &#2361;&#2367;&#2344;&#2381;&#2342;&#2368;.
+        &copy; 2026 Payday. Responsible access, always. Languages: English &bull; Hinglish &bull; &#3221;&#3240;&#3277;&#3240;&#3233; &bull; &#2361;&#2367;&#2344;&#2381;&#2342;&#2368;.
       </div>
     </footer>
   );
