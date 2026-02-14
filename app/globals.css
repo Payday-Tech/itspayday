@@ -542,3 +542,102 @@ pre {
   border-radius: 8px;
   overflow-x: auto;
 }
+
+.nav-actions {
+  gap: 12px;
+}
+
+.language-toggle {
+  display: inline-flex;
+  gap: 6px;
+  padding: 4px;
+  border: 1px solid var(--ui-border);
+  border-radius: 999px;
+  background: #fff;
+}
+
+.language-chip,
+.audience-chip {
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--brand-primary-dark);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.language-chip.active,
+.audience-chip.active {
+  background: var(--brand-primary);
+  color: #fff;
+}
+
+.audience-switcher {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 4px 0 16px;
+}
+
+.hero-benefits {
+  margin: 18px 0 10px;
+  padding-left: 18px;
+  max-width: 540px;
+}
+
+.hero-benefits li {
+  margin-bottom: 6px;
+}
+
+.trust-microcopy {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.trust-microcopy span {
+  border: 1px solid var(--ui-border);
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 0.82rem;
+  color: #475569;
+  background: #fff;
+}
+
+.footer-grid > div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-grid h4 {
+  margin-bottom: 4px;
+}
+
+footer a {
+  display: block;
+  margin: 0;
+  line-height: 1.45;
+}
+
+@media (max-width: 1080px) {
+  .language-toggle {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .trust-microcopy span {
+    width: 100%;
+    border-radius: 10px;
+  }
+
+  .audience-chip,
+  .language-chip {
+    white-space: normal;
+    line-height: 1.2;
+  }
+}

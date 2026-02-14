@@ -30,6 +30,7 @@ export default function Footer() {
           <Link href="/grievance-redressal">Grievance</Link>
           <Link href="/lsp-disclosure">LSP Disclosure</Link>
           <Link href="/security">Security</Link>
+          <Link href="/sitemap.xml">Sitemap</Link>
         </div>
       </div>
       <div className="seo-links">

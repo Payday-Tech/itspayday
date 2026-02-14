@@ -12,7 +12,7 @@ export default function About() {
       <section className="hero">
         <div>
           <div className="badge">About Payday</div>
-          <h1>We are rebuilding finance for workers traditional products ignore.</h1>
+          <h1>We are rebuilding finance for workers that traditional products ignore.</h1>
           <p>Payday is a Lending Service Provider focused on fair, wage-linked credit for domestic and on-demand workers in urban gated ecosystems.</p>
         </div>
         <div className="hero-visual">
