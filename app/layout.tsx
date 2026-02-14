@@ -14,8 +14,8 @@ const sora = Sora({
 });
 
 export const metadata: Metadata = {
-  title: 'Payday | Responsible Earned Wage Access',
-  description: 'Payday is a Lending Service Provider enabling responsible Earned Wage Access for workers in gated communities across Tier-1 Indian cities.',
+  title: 'Payday | Credit-First Financial Access for Everyday Workers',
+  description: 'Payday helps domestic and on-demand workers access fair, wage-linked credit with consent-led underwriting and transparent servicing.',
 };
 
 export default function RootLayout({

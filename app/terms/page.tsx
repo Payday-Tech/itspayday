@@ -13,8 +13,8 @@ export default function Terms() {
       <section className="hero">
         <div>
           <div className="badge">Terms &amp; Conditions</div>
-          <h1>Clear, compliant, and easy to understand.</h1>
-          <p>These terms govern Payday&apos;s role as a Lending Service Provider and your access to earned wage services.</p>
+          <h1>Clear terms for fair borrowing journeys.</h1>
+          <p>These terms explain Payday&apos;s role as a Lending Service Provider and the rules that govern your credit access and repayment journey.</p>
         </div>
         <div className="hero-visual">
           <Image
