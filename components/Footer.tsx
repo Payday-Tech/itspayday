@@ -27,13 +27,10 @@ export default function Footer() {
         </div>
         <div>
           <h4>Trust & Policies</h4>
-          <Link href="/trust">Trust Hub</Link>
           <Link href="/privacy">Privacy</Link>
           <Link href="/terms">Terms</Link>
           <Link href="/grievance-redressal">Grievance</Link>
           <Link href="/lsp-disclosure">LSP Disclosure</Link>
-          <Link href="/security">Security</Link>
-          <Link href="/sitemap.xml">Sitemap</Link>
         </div>
       </div>
       <div className="seo-links">

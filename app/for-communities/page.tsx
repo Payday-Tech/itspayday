@@ -27,18 +27,14 @@ export default function ForCommunities() {
             width={960}
             height={640}
           />
-          <div className="trust-box">
-            <strong>Stability &amp; reliability</strong>
-            <p className="small">Reliable access improves attendance, trust, and long-term stability.</p>
-          </div>
         </div>
       </section>
 
       <section>
         <div className="card-grid">
           <div className="card">
-            <h3>Zero capital burden</h3>
-            <p className="small">Lender partners provide capital. You simply enable consent-based verification.</p>
+            <h3>No money risk for you</h3>
+            <p className="small">Partner lenders provide the funds. You only help workers access Payday.</p>
           </div>
           <div className="card">
             <h3>Minimal operations</h3>
@@ -53,7 +49,7 @@ export default function ForCommunities() {
 
       <section className="section-alt">
         <h2>Consent model</h2>
-        <p className="small">Payday only uses employment data with clear worker consent. Communities can support inclusion while respecting privacy.</p>
+        <p className="small">We ask workers first. With their approval, we use relevant platform records or bank statements through consent-based authentication.</p>
       </section>
     </main>
   );

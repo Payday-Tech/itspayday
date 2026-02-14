@@ -30,8 +30,6 @@ export default function Header({ onOpenModal }: HeaderProps) {
           <Link href="/how-it-works">How it works</Link>
           <Link href="/for-communities">For Communities</Link>
           <Link href="/for-lenders">For Lenders</Link>
-          <Link href="/about">About</Link>
-          <Link href="/contact">Contact</Link>
         </div>
         <div className="mobile-nav">
           <button
