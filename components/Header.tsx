@@ -3,13 +3,21 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
+import { useLanguage } from './LanguageContext';
 
 interface HeaderProps {
   onOpenModal: () => void;
 }
 
+const languageOptions = [
+  { code: 'en' as const, label: 'EN' },
+  { code: 'hi' as const, label: 'HI' },
+  { code: 'hng' as const, label: 'HNG' },
+];
+
 export default function Header({ onOpenModal }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { language, setLanguage, t } = useLanguage();
 
   return (
     <header>
@@ -27,25 +35,34 @@ export default function Header({ onOpenModal }: HeaderProps) {
           <button
             className="button secondary"
             onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle navigation menu"
           >
             Menu
           </button>
-          <button
-            className="button primary"
-            onClick={onOpenModal}
-          >
-            Apply for Loan
+          <button className="button primary" onClick={() => { setLanguage('hng'); onOpenModal(); }}>
+            {t('cta.getStarted')}
           </button>
         </div>
-        <div className="nav-links">
+        <div className="nav-links nav-actions">
+          <div className="language-toggle" role="group" aria-label="Select language">
+            {languageOptions.map((option) => (
+              <button
+                key={option.code}
+                type="button"
+                className={`language-chip ${language === option.code ? 'active' : ''}`}
+                onClick={() => setLanguage(option.code)}
+                aria-pressed={language === option.code}
+                aria-label={`Set language to ${option.label}`}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
           <a className="button secondary" href="mailto:info@payday.in" rel="noopener noreferrer">
-            Partner with us
+            {t('cta.partner')}
           </a>
-          <button
-            className="button primary"
-            onClick={onOpenModal}
-          >
-            Apply for Loan
+          <button className="button primary" onClick={() => { setLanguage('hng'); onOpenModal(); }}>
+            {t('cta.getStarted')}
           </button>
         </div>
       </nav>
@@ -54,7 +71,24 @@ export default function Header({ onOpenModal }: HeaderProps) {
         <Link href="/how-it-works" onClick={() => setMenuOpen(false)}>How it works</Link>
         <Link href="/for-communities" onClick={() => setMenuOpen(false)}>For Communities</Link>
         <Link href="/for-lenders" onClick={() => setMenuOpen(false)}>For Lenders</Link>
-        <a href="mailto:info@payday.in" rel="noopener noreferrer">Partner with us</a>
+        <Link href="/about" onClick={() => setMenuOpen(false)}>About</Link>
+        <Link href="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
+        <a href="mailto:info@payday.in" rel="noopener noreferrer">{t('cta.partner')}</a>
+        <div className="language-toggle" role="group" aria-label="Select language">
+          {languageOptions.map((option) => (
+            <button
+              key={option.code}
+              type="button"
+              className={`language-chip ${language === option.code ? 'active' : ''}`}
+              onClick={() => setLanguage(option.code)}
+              aria-pressed={language === option.code}
+              aria-label={`Set language to ${option.label}`}
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
+
       </div>
     </header>
   );
