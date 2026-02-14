@@ -133,9 +133,8 @@ export default function ForLenders() {
     <main>
       <section className="hero">
         <div>
-          <div className="badge">LSP partnership</div>
-          <h1>Trusted sourcing and underwriting signals for lenders.</h1>
-          <p>Payday helps lenders reach wage-linked workers with consent-based data, assisted repayment, and community support.</p>
+          <h1>High-intent borrowers surfaced through work-behaviour signals.</h1>
+          <p>Payday helps lenders underwrite better using attendance, tenure, employer stickiness, and multi-income consistency signals.</p>
         </div>
         <div className="hero-visual">
           <Image
@@ -144,10 +143,6 @@ export default function ForLenders() {
             width={960}
             height={640}
           />
-          <div className="trust-box">
-            <strong>Signals you can trust</strong>
-            <p className="small">Tenure, regularity, and consent-based data power reliable underwriting.</p>
-          </div>
         </div>
       </section>
 

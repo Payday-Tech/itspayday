@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState } from 'react';
 
 interface HeaderProps {
@@ -13,16 +14,14 @@ export default function Header({ onOpenModal }: HeaderProps) {
   return (
     <header>
       <nav>
-        <Link className="logo" href="/">
-          <span>P</span> Payday
+        <Link className="logo" href="/" aria-label="Payday home">
+          <Image src="/payday-logo.svg" alt="Payday" width={176} height={58} priority />
         </Link>
         <div className="nav-links">
           <Link href="/products">Products</Link>
           <Link href="/how-it-works">How it works</Link>
           <Link href="/for-communities">For Communities</Link>
           <Link href="/for-lenders">For Lenders</Link>
-          <Link href="/about">About</Link>
-          <Link href="/contact">Contact</Link>
         </div>
         <div className="mobile-nav">
           <button
@@ -35,7 +34,7 @@ export default function Header({ onOpenModal }: HeaderProps) {
             className="button primary"
             onClick={onOpenModal}
           >
-            Get Started
+            Apply for Loan
           </button>
         </div>
         <div className="nav-links">
@@ -46,7 +45,7 @@ export default function Header({ onOpenModal }: HeaderProps) {
             className="button primary"
             onClick={onOpenModal}
           >
-            Get Started
+            Apply for Loan
           </button>
         </div>
       </nav>
@@ -55,8 +54,6 @@ export default function Header({ onOpenModal }: HeaderProps) {
         <Link href="/how-it-works" onClick={() => setMenuOpen(false)}>How it works</Link>
         <Link href="/for-communities" onClick={() => setMenuOpen(false)}>For Communities</Link>
         <Link href="/for-lenders" onClick={() => setMenuOpen(false)}>For Lenders</Link>
-        <Link href="/about" onClick={() => setMenuOpen(false)}>About</Link>
-        <Link href="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
         <a href="mailto:info@payday.in" rel="noopener noreferrer">Partner with us</a>
       </div>
     </header>

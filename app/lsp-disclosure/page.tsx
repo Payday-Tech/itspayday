@@ -12,8 +12,8 @@ export default function LSPDisclosure() {
       <section className="hero">
         <div>
           <div className="badge">LSP Disclosure</div>
-          <h1>Payday&apos;s role as a Lending Service Provider.</h1>
-          <p>We facilitate onboarding, consent, servicing, and communication while loans are issued by regulated partners.</p>
+          <h1>Exactly what Payday does—and what it doesn&apos;t.</h1>
+          <p>Payday handles onboarding, consent, and servicing; regulated lenders make credit decisions and issue loans.</p>
         </div>
         <div className="hero-visual">
           <Image

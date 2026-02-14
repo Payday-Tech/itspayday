@@ -5,7 +5,7 @@ import GetStartedButton from '@/components/GetStartedButton';
 
 export const metadata: Metadata = {
   title: 'Earned Wage Access | Payday',
-  description: "Learn how Payday's earned wage access works: wage-linked limits, transparent fees, consent-led data usage, and responsible safeguards.",
+  description: "Learn how Payday&apos;s earned wage access product uses work-behaviour signals, wage-linked caps, and transparent repayment safeguards.",
 };
 
 export default function EarnedWageAccess() {
@@ -14,8 +14,8 @@ export default function EarnedWageAccess() {
       <section className="hero">
         <div>
           <div className="badge">Earned Wage Access</div>
-          <h1>Responsible access to wages you&apos;ve already earned.</h1>
-          <p>Payday enables workers to access a portion of earned wages with wage-linked limits and transparent pricing.</p>
+          <h1>Credit that rewards consistent work behaviour.</h1>
+          <p>Payday enables short-tenor credit with wage-linked limits, transparent pricing, and repayment journeys aligned to real income patterns.</p>
           <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginTop: '24px' }}>
             <GetStartedButton />
             <Link className="button secondary" href="/fees">View fees</Link>

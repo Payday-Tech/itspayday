@@ -12,8 +12,8 @@ export default function Privacy() {
       <section className="hero">
         <div>
           <div className="badge">Privacy Policy</div>
-          <h1>Your data is handled with care and consent.</h1>
-          <p>Payday follows consent-led, privacy-forward practices aligned with RBI and partner lender requirements.</p>
+          <h1>Your data is collected only for clear, necessary purposes.</h1>
+          <p>Payday follows consent-led, privacy-forward practices aligned with RBI norms and partner lender compliance requirements.</p>
         </div>
         <div className="hero-visual">
           <Image

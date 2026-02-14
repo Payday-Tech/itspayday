@@ -9,7 +9,7 @@ interface GetStartedButtonProps {
 
 export default function GetStartedButton({
   className = 'button primary',
-  children = 'Get Started'
+  children = 'Apply for Loan'
 }: GetStartedButtonProps) {
   const { openModal } = useModal();
 
