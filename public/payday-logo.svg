@@ -1,0 +1,11 @@
+<svg width="620" height="220" viewBox="0 0 620 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="620" height="220" fill="white"/>
+  <g transform="translate(28,18)">
+    <path d="M90 0H172L222 52V132L162 184H82L22 124V52L90 0Z" fill="white"/>
+    <path d="M90 8H166L212 56V126L158 176H86L34 124V56L90 8Z" stroke="#0F2E67" stroke-width="14" fill="none"/>
+    <path d="M98 32H162L188 58V118L150 154" stroke="#66D7B7" stroke-width="14" fill="none"/>
+    <path d="M94 148L188 34" stroke="#0F2E67" stroke-width="16" stroke-linecap="round"/>
+    <path d="M96 132V76H126C138 76 148 86 148 98C148 110 138 120 126 120H112" stroke="#0F2E67" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="260" y="148" font-size="92" font-family="Inter, system-ui, Arial, sans-serif" font-weight="600" fill="#0F2E67">PayDay</text>
+</svg>

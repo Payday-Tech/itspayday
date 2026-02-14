@@ -68,24 +68,14 @@ nav {
 }
 
 .logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-weight: 700;
-  font-size: 1.1rem;
-  color: var(--brand-primary-dark);
-}
-
-.logo span {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--brand-primary);
-  color: #ffffff;
-  font-weight: 700;
+  line-height: 0;
+}
+
+.logo img {
+  width: clamp(132px, 13vw, 176px);
+  height: auto;
 }
 
 main {

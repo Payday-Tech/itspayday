@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState } from 'react';
 import { useLanguage } from './LanguageContext';
 
@@ -21,8 +22,8 @@ export default function Header({ onOpenModal }: HeaderProps) {
   return (
     <header>
       <nav>
-        <Link className="logo" href="/">
-          <span>P</span> Payday
+        <Link className="logo" href="/" aria-label="Payday home">
+          <Image src="/payday-logo.svg" alt="Payday" width={176} height={58} priority />
         </Link>
         <div className="nav-links">
           <Link href="/products">Products</Link>

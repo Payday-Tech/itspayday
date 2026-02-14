@@ -1,12 +1,15 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Footer() {
   return (
     <footer>
+      <div className="footer-brand">
+        <Image src="/payday-logo.svg" alt="Payday" width={156} height={52} />
+      </div>
       <div className="footer-grid">
         <div>
           <h4>Product</h4>
-          <Link href="/products">Products Hub</Link>
           <Link href="/products/earned-wage-access">Earned Wage Access</Link>
           <Link href="/fees">Fees</Link>
         </div>
