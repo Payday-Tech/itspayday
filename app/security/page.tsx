@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function Security() {
   return (
     <main>
-      <section className="hero">
+      <section className="hero section-trust-dark">
         <div>
           <div className="badge">Security</div>
           <h1>Security designed for high-sensitivity financial journeys.</h1>
@@ -25,17 +25,17 @@ export default function Security() {
         </div>
       </section>
 
-      <section>
+      <section className="section-trust-dark">
         <div className="card-grid">
-          <div className="card">
+          <div className="card trust-card">
             <h3>Data encryption</h3>
             <p className="small">Sensitive data is encrypted at rest and in transit using industry standards.</p>
           </div>
-          <div className="card">
+          <div className="card trust-card">
             <h3>Access control</h3>
             <p className="small">Role-based permissions and audit logs restrict data access to authorized teams.</p>
           </div>
-          <div className="card">
+          <div className="card trust-card">
             <h3>Monitoring</h3>
             <p className="small">Continuous monitoring and periodic audits ensure compliance and safety.</p>
           </div>
