@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Payday Products | Earned Wage Access',
-  description: 'Explore Payday products: Earned Wage Access, Savings, and Insurance designed for Tier-1 Indian workers.',
+  description: 'Explore Payday products starting with earned wage access, then banking, savings, and credit-shield pathways.',
 };
 
 export default function Products() {
@@ -13,8 +13,8 @@ export default function Products() {
       <section className="hero">
         <div>
           <div className="badge">Products built for dignity-first access</div>
-          <h1>Payday product hub</h1>
-          <p>Clean, focused financial services designed for workers in gated communities and the gig economy.</p>
+          <h1>A product journey that matches real financial needs</h1>
+          <p>We start with credit to solve urgent liquidity, then layer stability products like banking rails, savings, and protection.</p>
         </div>
         <div className="hero-visual">
           <Image

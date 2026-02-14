@@ -9,9 +9,9 @@ export default function Footer() {
       </div>
       <div className="footer-grid">
         <div>
-          <h4>Explore</h4>
-          <Link href="/for-workers">For Workers</Link>
-          <Link href="/how-it-works">How it works</Link>
+          <h4>Product</h4>
+          <Link href="/products/earned-wage-access">Earned Wage Access</Link>
+          <Link href="/fees">Fees</Link>
         </div>
         <div>
           <h4>Partners</h4>
