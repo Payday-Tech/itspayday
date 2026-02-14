@@ -1,21 +1,79 @@
+'use client';
+
 import Image from 'next/image';
+import { useState } from 'react';
 import GetStartedButton from '@/components/GetStartedButton';
+import { useLanguage } from '@/components/LanguageContext';
+
+type Audience = 'worker' | 'community' | 'lender';
+
+const audienceOrder: Audience[] = ['worker', 'community', 'lender'];
 
 export default function Home() {
+  const { t } = useLanguage();
+  const [audience, setAudience] = useState<Audience>('worker');
+
+  const audienceConfig = {
+    worker: {
+      title: t('home.hero.worker.title'),
+      subtitle: t('home.hero.worker.subtitle'),
+      ctaLabel: t('home.hero.worker.cta'),
+      ctaHref: '',
+      benefits: [],
+    },
+    community: {
+      title: t('home.hero.community.title'),
+      subtitle: t('home.hero.community.subtitle'),
+      ctaLabel: t('home.hero.community.cta'),
+      ctaHref: '/for-communities',
+      benefits: [],
+    },
+    lender: {
+      title: t('home.hero.lender.title'),
+      subtitle: t('home.hero.lender.subtitle'),
+      ctaLabel: t('home.hero.lender.cta'),
+      ctaHref: '/for-lenders',
+      benefits: [],
+    },
+  } as const;
+
+  const selected = audienceConfig[audience];
+
   return (
     <main>
       <section className="hero">
         <div>
-          <div className="badge">We are in beta &mdash; add your details to receive a loan offer</div>
-          <h1>Access what you&apos;ve already earned&mdash;when you need it.</h1>
-          <p>Responsible, consent-led wage access for workers in gated communities and the gig economy.</p>
-          <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginTop: '24px' }}>
-            <GetStartedButton />
-            <a className="button secondary" href="mailto:info@payday.in" rel="noopener noreferrer">Partner with us</a>
+          <div className="badge">{t('home.badge')}</div>
+          <div className="audience-switcher" role="tablist" aria-label="Select audience type">
+            {audienceOrder.map((option) => (
+              <button
+                key={option}
+                type="button"
+                role="tab"
+                aria-selected={audience === option}
+                className={`audience-chip ${audience === option ? 'active' : ''}`}
+                onClick={() => setAudience(option)}
+              >
+                {option === 'worker' ? t('home.audience.worker') : option === 'community' ? t('home.audience.community') : t('home.audience.lender')}
+              </button>
+            ))}
           </div>
-          <p className="helper-text" style={{ marginTop: '16px' }}>
-            Transparent fees, clear grievance redressal, privacy-forward data use.
-          </p>
+          <h1>{selected.title}</h1>
+          <p>{selected.subtitle}</p>
+          <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginTop: '24px' }}>
+            {audience === 'worker' ? (
+              <GetStartedButton>{selected.ctaLabel}</GetStartedButton>
+            ) : (
+              <a className="button primary" href={selected.ctaHref}>{selected.ctaLabel}</a>
+            )}
+            <a className="button secondary" href="mailto:info@payday.in" rel="noopener noreferrer">{t('cta.partner')}</a>
+          </div>
+          <div className="trust-microcopy">
+            <span>{t('microcopy.lsp')}</span>
+            <span>{t('microcopy.fees')}</span>
+            <span>{t('microcopy.consent')}</span>
+            <span>{t('microcopy.grievance')}</span>
+          </div>
         </div>
         <div className="hero-visual">
           <Image
@@ -79,7 +137,7 @@ export default function Home() {
       </section>
 
       <section className="section-alt">
-        <h2>Trust-first commitments</h2>
+        <h2>Built for responsible borrowing and repayment</h2>
         <div className="trust-strip" style={{ marginTop: '24px' }}>
           <div>Privacy-forward data usage</div>
           <div>Grievance escalation with timelines</div>
@@ -88,43 +146,20 @@ export default function Home() {
         </div>
       </section>
 
-      <section>
-        <h2>Multilingual support</h2>
-        <p className="small">We communicate in English, Hinglish, Kannada, and Hindi for dignity-first onboarding.</p>
-        <div className="language-grid">
-          <div className="language-card">
-            <h4>English</h4>
-            <p className="small">&ldquo;I can access my earned wages safely when I need it.&rdquo;</p>
-          </div>
-          <div className="language-card">
-            <h4>Hinglish</h4>
-            <p className="small">&ldquo;Jitna kamaaya hai, utna hi access &mdash; bina tension.&rdquo;</p>
-          </div>
-          <div className="language-card">
-            <h4>&#3221;&#3240;&#3277;&#3240;&#3233;</h4>
-            <p className="small">&ldquo;&#3240;&#3262;&#3240;&#3265; &#3223;&#3251;&#3263;&#3256;&#3263;&#3238; &#3253;&#3271;&#3236;&#3240;&#3253;&#3240;&#3277;&#3240;&#3265; &#3256;&#3265;&#3248;&#3221;&#3277;&#3255;&#3263;&#3236;&#3253;&#3262;&#3223;&#3263; &#3242;&#3233;&#3270;&#3247;&#3244;&#3257;&#3265;&#3238;&#3265;.&rdquo;</p>
-          </div>
-          <div className="language-card">
-            <h4>&#2361;&#2367;&#2344;&#2381;&#2342;&#2368;</h4>
-            <p className="small">&ldquo;&#2332;&#2379; &#2325;&#2350;&#2366;&#2351;&#2366; &#2361;&#2376;, &#2357;&#2361;&#2368; &#2360;&#2369;&#2352;&#2325;&#2381;&#2359;&#2367;&#2340; &#2340;&#2352;&#2368;&#2325;&#2375; &#2360;&#2375; &#2350;&#2367;&#2354; &#2360;&#2325;&#2340;&#2366; &#2361;&#2376;&#2404;&rdquo;</p>
-          </div>
-        </div>
-      </section>
-
       <section className="section-alt">
-        <h2>FAQ Preview</h2>
+        <h2>{t('home.faqTitle')}</h2>
         <div className="card-grid">
           <div className="card">
-            <h3>Is Payday a lender?</h3>
-            <p className="small">Payday is a Lending Service Provider partnering with regulated lenders. We never lend directly.</p>
+            <h3>{t('home.faq.q1')}</h3>
+            <p className="small">{t('home.faq.a1')}</p>
           </div>
           <div className="card">
-            <h3>How much can I access?</h3>
-            <p className="small">Limits are tied to earned wages and community data, with caps and reminders.</p>
+            <h3>{t('home.faq.q2')}</h3>
+            <p className="small">{t('home.faq.a2')}</p>
           </div>
           <div className="card">
-            <h3>How are fees shared?</h3>
-            <p className="small">Fees are clearly shown before you confirm, with no hidden charges.</p>
+            <h3>{t('home.faq.q3')}</h3>
+            <p className="small">{t('home.faq.a3')}</p>
           </div>
         </div>
       </section>
