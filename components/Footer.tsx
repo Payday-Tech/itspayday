@@ -1,14 +1,17 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Footer() {
   return (
     <footer>
+      <div className="footer-brand">
+        <Image src="/payday-logo.svg" alt="Payday" width={156} height={52} />
+      </div>
       <div className="footer-grid">
         <div>
-          <h4>Product</h4>
-          <Link href="/products">Products Hub</Link>
-          <Link href="/products/earned-wage-access">Earned Wage Access</Link>
-          <Link href="/fees">Fees</Link>
+          <h4>Explore</h4>
+          <Link href="/for-workers">For Workers</Link>
+          <Link href="/how-it-works">How it works</Link>
         </div>
         <div>
           <h4>Partners</h4>
@@ -24,12 +27,10 @@ export default function Footer() {
         </div>
         <div>
           <h4>Trust & Policies</h4>
-          <Link href="/trust">Trust Hub</Link>
           <Link href="/privacy">Privacy</Link>
           <Link href="/terms">Terms</Link>
           <Link href="/grievance-redressal">Grievance</Link>
           <Link href="/lsp-disclosure">LSP Disclosure</Link>
-          <Link href="/security">Security</Link>
         </div>
       </div>
       <div className="seo-links">
@@ -45,7 +46,7 @@ export default function Footer() {
         <Link href="/for-workers">Loans for Drivers</Link>
       </div>
       <div className="footer-bottom">
-        &copy; 2024 Payday. Responsible access, always. Languages: English &bull; Hinglish &bull; &#3221;&#3240;&#3277;&#3240;&#3233; &bull; &#2361;&#2367;&#2344;&#2381;&#2342;&#2368;.
+        &copy; 2026 Payday. Responsible access, always. Languages: English &bull; Hinglish &bull; &#3221;&#3240;&#3277;&#3240;&#3233; &bull; &#2361;&#2367;&#2344;&#2381;&#2342;&#2368;.
       </div>
     </footer>
   );
