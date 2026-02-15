@@ -82,7 +82,7 @@ export default function Home() {
         </div>
         <div className="hero-visual">
           <Image
-            src="/homepagehero.svg"
+            src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&q=80"
             alt="Aspirational illustration of an Indian domestic worker using her phone"
             width={960}
             height={640}
