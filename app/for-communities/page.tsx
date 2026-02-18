@@ -17,7 +17,7 @@ export default function ForCommunities() {
           <p>Enable timely financial support for domestic workers while Payday and regulated lenders handle underwriting, servicing, and collections.</p>
           <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginTop: '24px' }}>
             <a className="button primary" href="mailto:info@payday.in" rel="noopener noreferrer">Contact us</a>
-            <Link className="button secondary" href="/trust">See trust framework</Link>
+            <Link className="button secondary" href="/security">See security posture</Link>
           </div>
         </div>
         <div className="hero-visual">
