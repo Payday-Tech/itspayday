@@ -1,7 +1,17 @@
-<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="256" height="256" rx="36" fill="white"/>
-  <path d="M56 24H170L206 60L180 88H84V188L56 216L30 188V50L56 24Z" stroke="#0B2D6B" stroke-width="14" fill="none" stroke-linejoin="round"/>
-  <path d="M84 52H206V188L172 224" stroke="#6CE0BB" stroke-width="14" fill="none" stroke-linejoin="round"/>
-  <path d="M60 206L204 40" stroke="#0B2D6B" stroke-width="16" stroke-linecap="round"/>
-  <path d="M84 164V88H122C140 88 154 102 154 120C154 138 140 152 122 152H108" stroke="#0B2D6B" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">PayDay favicon</title>
+  <desc id="desc">Circular PayDay icon with mint line mark on navy background.</desc>
+
+  <circle cx="60" cy="60" r="50" fill="#001f3f" />
+
+  <g fill="none" stroke="#98ff98" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M38,50 L60,30 L82,50" />
+
+    <g transform="translate(60, 65)">
+      <path d="M-18,-10 H18" />
+      <path d="M-18,0 H18" />
+      <path d="M-3,0 C-3,0 -3,15 -18,25" />
+      <path d="M-3,-10 L-3,0" />
+    </g>
+  </g>
 </svg>
