@@ -246,6 +246,13 @@ section {
   gap: 20px;
 }
 
+.how-it-works-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
 .step {
   display: flex;
   gap: 16px;
@@ -441,6 +448,10 @@ label {
   .hero {
     grid-template-columns: 1fr;
   }
+
+  .how-it-works-row {
+    grid-template-columns: 1fr;
+  }
 }
 
 .mobile-nav {
@@ -537,16 +548,28 @@ pre {
   gap: 12px;
 }
 
-.language-toggle {
-  display: inline-flex;
-  gap: 6px;
-  padding: 4px;
-  border: 1px solid var(--ui-border);
+.language-select-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.language-select {
+  width: 150px;
   border-radius: 999px;
+  border: 1px solid var(--ui-border);
+  padding: 10px 38px 10px 16px;
+  font-weight: 600;
+  color: var(--brand-primary-dark);
   background: #fff;
 }
 
-.language-chip,
 .audience-chip {
   border: 1px solid transparent;
   background: transparent;
@@ -558,7 +581,6 @@ pre {
   cursor: pointer;
 }
 
-.language-chip.active,
 .audience-chip.active {
   background: var(--brand-primary);
   color: #fff;
@@ -597,6 +619,51 @@ pre {
   background: #fff;
 }
 
+
+.faq-list {
+  display: grid;
+  gap: 14px;
+  max-width: 860px;
+}
+
+.faq-item {
+  border: 1px solid var(--ui-border);
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: var(--shadow-sm);
+}
+
+.faq-trigger {
+  width: 100%;
+  background: transparent;
+  border: none;
+  text-align: left;
+  padding: 18px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  cursor: pointer;
+}
+
+.faq-arrow {
+  font-size: 1.4rem;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.faq-arrow.open {
+  transform: rotate(180deg);
+}
+
+.faq-answer {
+  margin: 0;
+  padding: 0 20px 18px;
+}
+
 .footer-grid > div {
   display: flex;
   flex-direction: column;
@@ -613,20 +680,13 @@ footer a {
   line-height: 1.45;
 }
 
-@media (max-width: 1080px) {
-  .language-toggle {
-    display: none;
-  }
-}
-
 @media (max-width: 640px) {
   .trust-microcopy span {
     width: 100%;
     border-radius: 10px;
   }
 
-  .audience-chip,
-  .language-chip {
+  .audience-chip {
     white-space: normal;
     line-height: 1.2;
   }
