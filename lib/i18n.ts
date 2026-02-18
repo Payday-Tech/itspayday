@@ -110,7 +110,7 @@ const en: Dictionary = {
   'home.faq.q4': 'Do I need to be employed to use Payday?',
   'home.faq.a4': 'Yes. Payday currently serves salaried or gig workers with regular, verifiable income.',
   'home.faq.q5': 'What if I face repayment issues or have a complaint?',
-  'home.faq.a5': 'Please contact our support team for help. You can also raise a grievance by emailing grievance@payday.in.',
+  'home.faq.a5': 'Please contact our support team for help. You can also raise a grievance by emailing grievance@itspayday.in.',
   'worker.badge': 'For workers',
   'worker.hero.title': 'Credit support that fits your real cash-flow cycle.',
   'worker.hero.subtitle': 'Borrow within wage-linked limits, see all charges upfront, and repay on schedules aligned to your earnings.',
