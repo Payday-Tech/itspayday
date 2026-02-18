@@ -13,6 +13,8 @@ const faqItems = [
   { question: 'home.faq.q1', answer: 'home.faq.a1' },
   { question: 'home.faq.q2', answer: 'home.faq.a2' },
   { question: 'home.faq.q3', answer: 'home.faq.a3' },
+  { question: 'home.faq.q4', answer: 'home.faq.a4' },
+  { question: 'home.faq.q5', answer: 'home.faq.a5' },
 ] as const;
 
 export default function Home() {

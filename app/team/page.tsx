@@ -6,6 +6,33 @@ export const metadata: Metadata = {
   description: 'Meet the Payday team building credit-first financial products for domestic and on-demand workers in India.',
 };
 
+const teamMembers = [
+  {
+    name: 'Ketan Jain',
+    subheader: 'Operations and Business',
+    image: '/team/ketan-jain.svg',
+    alt: 'Portrait of Ketan Jain',
+  },
+  {
+    name: 'Saksham Bansal',
+    subheader: 'Business and Partnerships',
+    image: '/team/saksham-bansal.svg',
+    alt: 'Portrait of Saksham Bansal',
+  },
+  {
+    name: 'Atreya Arun',
+    subheader: 'Product and Design',
+    image: '/team/atreya-arun.svg',
+    alt: 'Portrait of Atreya Arun',
+  },
+  {
+    name: 'Kaustav Banerjee',
+    subheader: 'Engineering',
+    image: '/team/kaustav-banerjee.svg',
+    alt: 'Portrait of Kaustav Banerjee',
+  },
+];
+
 export default function Team() {
   return (
     <main>
@@ -27,22 +54,19 @@ export default function Team() {
 
       <section>
         <div className="card-grid">
-          <div className="card">
-            <h3>Ananya Rao</h3>
-            <p className="small">CEO &amp; Co-founder &mdash; Former fintech operator focused on inclusive credit.</p>
-          </div>
-          <div className="card">
-            <h3>Rahul Mehta</h3>
-            <p className="small">COO &mdash; Community partnerships and operations in Tier-1 cities.</p>
-          </div>
-          <div className="card">
-            <h3>Priya Nair</h3>
-            <p className="small">Head of Product &mdash; Consent-first workflows and multilingual UX.</p>
-          </div>
-          <div className="card">
-            <h3>Vikram Singh</h3>
-            <p className="small">Risk &amp; Compliance &mdash; Responsible lending practices and safeguards.</p>
-          </div>
+          {teamMembers.map((member) => (
+            <div className="card" key={member.name}>
+              <Image
+                src={member.image}
+                alt={member.alt}
+                width={400}
+                height={400}
+                style={{ width: '100%', height: 'auto', borderRadius: '12px', marginBottom: '16px' }}
+              />
+              <h3>{member.name}</h3>
+              <p className="small">{member.subheader}</p>
+            </div>
+          ))}
         </div>
       </section>
     </main>
