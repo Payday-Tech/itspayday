@@ -18,6 +18,23 @@
     Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google.com https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://www.google.com https://payday-api-983f.onrender.com; frame-src https://www.google.com https://www.gstatic.com"
     Strict-Transport-Security = "max-age=31536000; includeSubDomains"
 
+
+# Explicit route handling to keep home and team pages isolated
+[[redirects]]
+  from = "/"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/team"
+  to = "/team/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/team/"
+  to = "/team/index.html"
+  status = 200
+
 # Custom 404 page
 [[redirects]]
   from = "/*"
