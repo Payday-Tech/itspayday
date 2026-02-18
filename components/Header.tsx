@@ -10,9 +10,10 @@ interface HeaderProps {
 }
 
 const languageOptions = [
-  { code: 'en' as const, label: 'EN' },
-  { code: 'hi' as const, label: 'HI' },
-  { code: 'hng' as const, label: 'HNG' },
+  { code: 'en' as const, label: 'English' },
+  { code: 'hng' as const, label: 'Hinglish' },
+  { code: 'kn' as const, label: 'ಕನ್ನಡ' },
+  { code: 'hi' as const, label: 'हिन्दी' },
 ];
 
 export default function Header({ onOpenModal }: HeaderProps) {
@@ -26,8 +27,6 @@ export default function Header({ onOpenModal }: HeaderProps) {
           <Image src="/payday-logo.svg" alt="Payday" width={176} height={58} priority />
         </Link>
         <div className="nav-links">
-          <Link href="/products">Products</Link>
-          <Link href="/how-it-works">How it works</Link>
           <Link href="/for-communities">For Communities</Link>
           <Link href="/for-lenders">For Lenders</Link>
         </div>
@@ -44,20 +43,18 @@ export default function Header({ onOpenModal }: HeaderProps) {
           </button>
         </div>
         <div className="nav-links nav-actions">
-          <div className="language-toggle" role="group" aria-label="Select language">
+          <label className="language-select-label" htmlFor="language-select">Language</label>
+          <select
+            id="language-select"
+            className="language-select"
+            value={language}
+            onChange={(event) => setLanguage(event.target.value as typeof language)}
+            aria-label="Select language"
+          >
             {languageOptions.map((option) => (
-              <button
-                key={option.code}
-                type="button"
-                className={`language-chip ${language === option.code ? 'active' : ''}`}
-                onClick={() => setLanguage(option.code)}
-                aria-pressed={language === option.code}
-                aria-label={`Set language to ${option.label}`}
-              >
-                {option.label}
-              </button>
+              <option key={option.code} value={option.code}>{option.label}</option>
             ))}
-          </div>
+          </select>
           <a className="button secondary" href="mailto:info@payday.in" rel="noopener noreferrer">
             {t('cta.partner')}
           </a>
@@ -67,28 +64,21 @@ export default function Header({ onOpenModal }: HeaderProps) {
         </div>
       </nav>
       <div className={`menu-panel ${menuOpen ? 'open' : ''}`}>
-        <Link href="/products" onClick={() => setMenuOpen(false)}>Products</Link>
-        <Link href="/how-it-works" onClick={() => setMenuOpen(false)}>How it works</Link>
         <Link href="/for-communities" onClick={() => setMenuOpen(false)}>For Communities</Link>
         <Link href="/for-lenders" onClick={() => setMenuOpen(false)}>For Lenders</Link>
         <Link href="/about" onClick={() => setMenuOpen(false)}>About</Link>
         <Link href="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
         <a href="mailto:info@payday.in" rel="noopener noreferrer">{t('cta.partner')}</a>
-        <div className="language-toggle" role="group" aria-label="Select language">
+        <select
+          className="language-select"
+          value={language}
+          onChange={(event) => setLanguage(event.target.value as typeof language)}
+          aria-label="Select language"
+        >
           {languageOptions.map((option) => (
-            <button
-              key={option.code}
-              type="button"
-              className={`language-chip ${language === option.code ? 'active' : ''}`}
-              onClick={() => setLanguage(option.code)}
-              aria-pressed={language === option.code}
-              aria-label={`Set language to ${option.label}`}
-            >
-              {option.label}
-            </button>
+            <option key={option.code} value={option.code}>{option.label}</option>
           ))}
-        </div>
-
+        </select>
       </div>
     </header>
   );

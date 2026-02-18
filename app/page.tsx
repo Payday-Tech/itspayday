@@ -9,9 +9,16 @@ type Audience = 'worker' | 'community' | 'lender';
 
 const audienceOrder: Audience[] = ['worker', 'community', 'lender'];
 
+const faqItems = [
+  { question: 'home.faq.q1', answer: 'home.faq.a1' },
+  { question: 'home.faq.q2', answer: 'home.faq.a2' },
+  { question: 'home.faq.q3', answer: 'home.faq.a3' },
+] as const;
+
 export default function Home() {
   const { t } = useLanguage();
   const [audience, setAudience] = useState<Audience>('worker');
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
   const audienceConfig = {
     worker: {
@@ -82,90 +89,62 @@ export default function Home() {
         </div>
         <div className="hero-visual">
           <Image
-            src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&q=80"
-            alt="Aspirational illustration of an Indian domestic worker using her phone"
+            src="/payday-hero.svg"
+            alt="A domestic worker smiling while using her phone"
             width={960}
             height={640}
+            priority
           />
-          <div className="trust-box">
-            <strong>Goal-led support</strong>
-            <p className="small">Plan for school fees, medical care, or emergencies with wage-linked limits and reminders.</p>
-          </div>
         </div>
       </section>
 
       <section>
-        <div className="card-grid">
-          <div className="card">
-            <h3>How it works</h3>
-            <div className="steps">
-              <div className="step">
-                <span>1</span>
-                <div>
-                  <strong>Consent first</strong>
-                  <p className="small">Workers opt in via WhatsApp and verify employment details.</p>
-                </div>
-              </div>
-              <div className="step">
-                <span>2</span>
-                <div>
-                  <strong>Access earned wages</strong>
-                  <p className="small">Withdraw within wage-linked limits powered by trusted community data.</p>
-                </div>
-              </div>
-              <div className="step">
-                <span>3</span>
-                <div>
-                  <strong>Repay seamlessly</strong>
-                  <p className="small">Repayments align with salary cycles, with reminders and support.</p>
-                </div>
-              </div>
+        <h2>{t('home.howItWorksTitle')}</h2>
+        <div className="how-it-works-row">
+          <div className="step">
+            <span>1</span>
+            <div>
+              <strong>{t('home.how.step1.title')}</strong>
+              <p className="small">{t('home.how.step1.body')}</p>
             </div>
           </div>
-          <div className="card">
-            <h3>Goal-led benefits</h3>
-            <ul className="small">
-              <li>Meet urgent needs without heavy fees.</li>
-              <li>Build financial discipline and confidence.</li>
-              <li>Stay in control with frequency caps and limit reminders.</li>
-            </ul>
+          <div className="step">
+            <span>2</span>
+            <div>
+              <strong>{t('home.how.step2.title')}</strong>
+              <p className="small">{t('home.how.step2.body')}</p>
+            </div>
           </div>
-          <div className="card">
-            <h3>Safety rails</h3>
-            <ul className="small">
-              <li>Wage-linked caps with transparent pricing.</li>
-              <li>Cooling-off windows between withdrawals.</li>
-              <li>Consent-led data use, no hidden sharing.</li>
-            </ul>
+          <div className="step">
+            <span>3</span>
+            <div>
+              <strong>{t('home.how.step3.title')}</strong>
+              <p className="small">{t('home.how.step3.body')}</p>
+            </div>
           </div>
-        </div>
-      </section>
-
-      <section className="section-alt">
-        <h2>Built for responsible borrowing and repayment</h2>
-        <div className="trust-strip" style={{ marginTop: '24px' }}>
-          <div>Privacy-forward data usage</div>
-          <div>Grievance escalation with timelines</div>
-          <div>Transparent fees in plain language</div>
-          <div>Partnered with regulated lenders</div>
         </div>
       </section>
 
       <section className="section-alt">
         <h2>{t('home.faqTitle')}</h2>
-        <div className="card-grid">
-          <div className="card">
-            <h3>{t('home.faq.q1')}</h3>
-            <p className="small">{t('home.faq.a1')}</p>
-          </div>
-          <div className="card">
-            <h3>{t('home.faq.q2')}</h3>
-            <p className="small">{t('home.faq.a2')}</p>
-          </div>
-          <div className="card">
-            <h3>{t('home.faq.q3')}</h3>
-            <p className="small">{t('home.faq.a3')}</p>
-          </div>
+        <div className="faq-list">
+          {faqItems.map((item, index) => {
+            const isOpen = openFaqIndex === index;
+            return (
+              <div key={item.question} className="faq-item">
+                <button
+                  type="button"
+                  className="faq-trigger"
+                  aria-expanded={isOpen}
+                  onClick={() => setOpenFaqIndex(isOpen ? null : index)}
+                >
+                  <span>{t(item.question)}</span>
+                  <span className={`faq-arrow ${isOpen ? 'open' : ''}`} aria-hidden="true">⌄</span>
+                </button>
+                {isOpen ? <p className="small faq-answer">{t(item.answer)}</p> : null}
+              </div>
+            );
+          })}
         </div>
       </section>
     </main>
