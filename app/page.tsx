@@ -88,13 +88,16 @@ export default function Home() {
           </div>
         </div>
         <div className="hero-visual">
-          <Image
-            src="/payday-hero.svg"
-            alt="A domestic worker smiling while using her phone"
-            width={960}
-            height={640}
-            priority
-          />
+          <div className="hero-image-frame">
+            <Image
+              src="/home-hero-woman-phone.svg"
+              alt="A smiling woman checking her smartphone"
+              fill
+              priority
+              sizes="(max-width: 860px) 100vw, 45vw"
+              style={{ objectFit: 'cover', objectPosition: 'center top' }}
+            />
+          </div>
         </div>
       </section>
 
