@@ -27,7 +27,7 @@ export default function GrievanceRedressal() {
 
       <section>
         <div className="notice">
-          <strong>Primary contact:</strong> grievance@payday.in &middot; +91-00000-00000 (Mon&ndash;Sat, 9am&ndash;6pm)
+          <strong>Primary contact:</strong> grievance@itspayday.in &middot; +918587012908 (Mon&ndash;Sat, 9am&ndash;6pm)
         </div>
       </section>
 
@@ -36,7 +36,7 @@ export default function GrievanceRedressal() {
         <div className="timeline">
           <div className="timeline-item">
             <strong>Level 1: Support team</strong>
-            <p className="small">Write to grievance@payday.in or call. Response within 2 business days.</p>
+            <p className="small">Write to grievance@itspayday.in or call. Response within 2 business days.</p>
           </div>
           <div className="timeline-item">
             <strong>Level 2: Nodal officer</strong>
