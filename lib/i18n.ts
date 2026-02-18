@@ -42,6 +42,10 @@ export type TranslationKey =
   | 'home.faq.a2'
   | 'home.faq.q3'
   | 'home.faq.a3'
+  | 'home.faq.q4'
+  | 'home.faq.a4'
+  | 'home.faq.q5'
+  | 'home.faq.a5'
   | 'worker.badge'
   | 'worker.hero.title'
   | 'worker.hero.subtitle'
@@ -97,12 +101,16 @@ const en: Dictionary = {
   'home.how.step3.title': 'Repay simply',
   'home.how.step3.body': 'Repayment matches your salary cycle.',
   'home.faqTitle': 'FAQs',
-  'home.faq.q1': 'Is Payday a lender?',
-  'home.faq.a1': 'No. Payday works with RBI-regulated lenders. We do not lend directly.',
-  'home.faq.q2': 'How much money can I take?',
-  'home.faq.a2': 'Your limit is based on wages already earned.',
-  'home.faq.q3': 'Will I see charges first?',
-  'home.faq.a3': 'Yes. You see all fees before you confirm.',
+  'home.faq.q1': 'Do I need a CIBIL score to apply?',
+  'home.faq.a1': 'No. Payday eligibility is based on your earnings and work profile, not your CIBIL score.',
+  'home.faq.q2': 'Do I need a bank account and UPI ID?',
+  'home.faq.a2': 'Yes. You need an active bank account and UPI ID in your own name to receive funds and complete repayments.',
+  'home.faq.q3': 'How quickly can I get the loan amount?',
+  'home.faq.a3': 'After approval from the lending partner, disbursal is typically completed within minutes.',
+  'home.faq.q4': 'Do I need to be employed to use Payday?',
+  'home.faq.a4': 'Yes. Payday currently serves salaried or gig workers with regular, verifiable income.',
+  'home.faq.q5': 'What if I face repayment issues or have a complaint?',
+  'home.faq.a5': 'Please contact our support team for help. You can also raise a grievance by emailing grievance@payday.in.',
   'worker.badge': 'For workers',
   'worker.hero.title': 'Credit support that fits your real cash-flow cycle.',
   'worker.hero.subtitle': 'Borrow within wage-linked limits, see all charges upfront, and repay on schedules aligned to your earnings.',
