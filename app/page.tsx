@@ -92,8 +92,8 @@ export default function Home() {
         <div className="hero-visual">
           <div className="hero-image-frame">
             <Image
-              src="/home-hero-woman-phone.svg"
-              alt="A smiling woman checking her smartphone"
+              src="/api/home-hero-woman-phone"
+              alt="An aspirational Indian domestic worker smiling at her phone"
               fill
               priority
               sizes="(max-width: 860px) 100vw, 45vw"
