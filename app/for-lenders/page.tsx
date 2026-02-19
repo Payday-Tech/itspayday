@@ -138,10 +138,10 @@ export default function ForLenders() {
         </div>
         <div className="hero-visual">
           <Image
-            src="/hero-worker.svg"
-            alt="Lender partnership illustration"
+            src="/api/for-lenders-hero"
+            alt="Borrower viewing loan approval on smartphone"
             width={960}
-            height={640}
+            height={885}
           />
         </div>
       </section>
