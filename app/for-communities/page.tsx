@@ -2,6 +2,9 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
+const communitiesHeroImageUrl =
+  'https://images.unsplash.com/photo-1571607388263-1044f9ea01dd?auto=format&fit=crop&w=1600&q=90';
+
 export const metadata: Metadata = {
   title: 'For Communities & Employers | Payday',
   description: 'Payday helps communities support trusted workers with fair credit access without adding balance-sheet or repayment risk.',
@@ -22,10 +25,11 @@ export default function ForCommunities() {
         </div>
         <div className="hero-visual">
           <Image
-            src="/hero-worker.svg"
-            alt="Community support illustration"
+            src={communitiesHeroImageUrl}
+            alt="Two women in a kitchen smiling while looking at a phone"
             width={960}
             height={640}
+            style={{ width: '100%', height: 'auto', objectFit: 'cover', borderRadius: '16px' }}
           />
         </div>
       </section>
