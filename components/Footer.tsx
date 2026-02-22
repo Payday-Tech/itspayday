@@ -4,49 +4,46 @@ import Image from 'next/image';
 export default function Footer() {
   return (
     <footer>
-      <div className="footer-brand">
-        <Image src="/payday-logo.svg" alt="Payday" width={156} height={52} />
-      </div>
-      <div className="footer-grid">
-        <div>
-          <h4>Product</h4>
-          <Link href="/products/earned-wage-access">Earned Wage Access</Link>
-          <Link href="/fees">Fees</Link>
+      <div className="footer-inner">
+        <div className="footer-top">
+          <div className="footer-brand">
+            <Image src="/payday-logo.svg" alt="Payday" width={156} height={52} />
+            <p>
+              Payday is a Lending Service Provider (LSP). Loans are issued by regulated partner lenders.
+              We focus on transparent pricing, consent-led servicing, and multilingual support.
+            </p>
+            <a href="mailto:contact@itspayday.in" rel="noopener noreferrer">contact@itspayday.in</a>
+          </div>
+
+          <div className="footer-grid">
+            <div>
+              <h4>Products</h4>
+              <Link href="/products/earned-wage-access">Earned Wage Access</Link>
+              <Link href="/fees">Fees</Link>
+              <Link href="/security">Security</Link>
+            </div>
+            <div>
+              <h4>Company</h4>
+              <Link href="/for-communities">For Communities</Link>
+              <Link href="/for-lenders">For Lenders</Link>
+              <Link href="/about">About</Link>
+              <Link href="/team">Team</Link>
+              <Link href="/contact">Contact</Link>
+            </div>
+            <div>
+              <h4>Legal</h4>
+              <Link href="/privacy">Privacy</Link>
+              <Link href="/terms">Terms</Link>
+              <Link href="/grievance-redressal">Grievance Redressal</Link>
+              <Link href="/lsp-disclosure">LSP Disclosure</Link>
+            </div>
+          </div>
         </div>
-        <div>
-          <h4>Partners</h4>
-          <Link href="/for-communities">For Communities</Link>
-          <Link href="/for-lenders">For Lenders</Link>
-          <a href="mailto:info@payday.in" rel="noopener noreferrer">Partner with us</a>
+
+        <div className="footer-note">
+          <span>&copy; 2026 Payday Financial Technologies Pvt. Ltd.</span>
+          <span>Languages: English • Hinglish • ಕನ್ನಡ • हिन्दी</span>
         </div>
-        <div>
-          <h4>Company</h4>
-          <Link href="/about">About</Link>
-          <Link href="/team">Team</Link>
-          <Link href="/contact">Contact</Link>
-        </div>
-        <div>
-          <h4>Trust & Policies</h4>
-          <Link href="/privacy">Privacy</Link>
-          <Link href="/terms">Terms</Link>
-          <Link href="/grievance-redressal">Grievance</Link>
-          <Link href="/lsp-disclosure">LSP Disclosure</Link>
-        </div>
-      </div>
-      <div className="seo-links">
-        <Link href="/products/earned-wage-access">Earned Wage Access Loans in Bengaluru</Link>
-        <Link href="/products/earned-wage-access">Loans in Mumbai</Link>
-        <Link href="/for-workers">Loans for Maids</Link>
-        <Link href="/for-workers">Loans for Snabbit Employees</Link>
-        <Link href="/for-workers">Loans for Urban Company Employees</Link>
-        <Link href="/for-workers">Loans for Pronto Employees</Link>
-        <Link href="/for-workers">Loans for Factory Workers</Link>
-        <Link href="/for-workers">Loans for Gardeners</Link>
-        <Link href="/for-workers">Loans for Cooks</Link>
-        <Link href="/for-workers">Loans for Drivers</Link>
-      </div>
-      <div className="footer-bottom">
-        &copy; 2026 Payday. Responsible access, always. Languages: English &bull; Hinglish &bull; &#3221;&#3240;&#3277;&#3240;&#3233; &bull; &#2361;&#2367;&#2344;&#2381;&#2342;&#2368;.
       </div>
     </footer>
   );

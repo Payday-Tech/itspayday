@@ -12,59 +12,37 @@ export default function Fees() {
     <main>
       <section className="hero">
         <div>
-          <div className="badge">Transparent pricing</div>
-          <h1>Simple pricing workers can understand before they borrow.</h1>
-          <p>Every disbursal screen shows the fee, interest, and repayment amount upfront—before any confirmation.</p>
+          <div className="badge">Fees and charges</div>
+          <h1>Transparent fees, disclosed before every transaction.</h1>
+          <p>Payday displays fee components and repayment obligations upfront. No hidden deductions.</p>
         </div>
-        <div className="hero-visual">
-          <Image
-            src="/hero-worker.svg"
-            alt="Worker illustration"
-            width={960}
-            height={640}
-          />
-        </div>
+        <div className="hero-visual"><Image src="/hero-worker.svg" alt="Worker illustration" width={960} height={640} /></div>
       </section>
 
       <section>
         <table className="table">
-          <thead>
-            <tr>
-              <th>Fee component</th>
-              <th>Rate</th>
-              <th>How it works</th>
-            </tr>
-          </thead>
+          <thead><tr><th>Fee component</th><th>Rate</th><th>How it applies</th></tr></thead>
           <tbody>
-            <tr>
-              <td>Processing fee</td>
-              <td>2% of principal</td>
-              <td>Deducted from the principal at disbursal.</td>
-            </tr>
-            <tr>
-              <td>Interest</td>
-              <td>3% per month</td>
-              <td>Applied for a 1-month repayment cycle.</td>
-            </tr>
+            <tr><td>Processing fee</td><td>2% of principal</td><td>Deducted at disbursal and shown in advance.</td></tr>
+            <tr><td>Interest</td><td>3% per month</td><td>Applied as per approved tenor from lender partner.</td></tr>
           </tbody>
         </table>
       </section>
 
       <section className="section-alt">
-        <h2>Example</h2>
+        <h2>Illustrative example</h2>
         <div className="card">
-          <p className="small">If you access &#8377;5,000:</p>
           <ul className="small">
-            <li>Processing fee: &#8377;100 (2% of &#8377;5,000) deducted upfront.</li>
-            <li>Amount received: &#8377;4,900.</li>
-            <li>Interest for 1 month: &#8377;150 (3% of &#8377;5,000).</li>
-            <li>Total repayment after 1 month: &#8377;5,150.</li>
+            <li>Principal approved: ₹5,000</li>
+            <li>Processing fee (2%): ₹100</li>
+            <li>Amount disbursed: ₹4,900</li>
+            <li>Interest for one month (3%): ₹150</li>
+            <li>Total repayment: ₹5,150</li>
           </ul>
         </div>
-        <div className="notice" style={{ marginTop: '20px' }}>
-          <strong>Important:</strong> For full terms, please review our{' '}
-          <Link href="/terms">Terms &amp; Conditions</Link> and{' '}
-          <Link href="/grievance-redressal">Grievance Redressal</Link> policy.
+        <div className="notice" style={{ marginTop: '14px' }}>
+          <strong>Disclosure:</strong> Payday is an LSP. Final terms are issued by partner lenders in the Key Fact Statement.
+          Please review <Link href="/terms">Terms</Link>, <Link href="/lsp-disclosure">LSP Disclosure</Link>, and <Link href="/grievance-redressal">Grievance Redressal</Link>.
         </div>
       </section>
     </main>

@@ -84,10 +84,10 @@ export default function ForLenders() {
       newErrors.email = 'Please enter a valid email address';
     }
     if (!isValidPhone(formData.phone)) {
-      newErrors.phone = 'Please enter a valid phone number (10-15 digits)';
+      newErrors.phone = 'Please enter a valid phone number with country code (10-15 digits)';
     }
     if (!isValidName(formData.role)) {
-      newErrors.role = 'Please enter a valid role (letters only)';
+      newErrors.role = 'Please enter a valid role title (letters only)';
     }
     if (!isValidName(formData.city)) {
       newErrors.city = 'Please enter a valid city (letters only)';
@@ -133,8 +133,9 @@ export default function ForLenders() {
     <main>
       <section className="hero">
         <div>
-          <h1>High-intent borrowers surfaced through work-behaviour signals.</h1>
-          <p>Payday helps lenders underwrite better using attendance, tenure, employer stickiness, and multi-income consistency signals.</p>
+          <div className="badge">For lenders</div>
+          <h1>Underwrite worker credit with structured, consent-led signals.</h1>
+          <p>Payday supports lender partners with wage behaviour data, servicing workflows, and multilingual borrower support.</p>
         </div>
         <div className="hero-visual">
           <Image
@@ -164,10 +165,11 @@ export default function ForLenders() {
       </section>
 
       <section className="section-alt">
-        <h2>Partner with us</h2>
+        <h2>Partner with Payday</h2>
+        <p className="small" style={{ marginBottom: '14px' }}>Payday is an LSP; regulated lenders own credit policy, underwriting decisions, and disbursal.</p>
         {submitted ? (
           <div className="card" style={{ textAlign: 'center', padding: '40px' }}>
-            <p style={{ color: 'var(--brand-primary)', fontWeight: 600, fontSize: '1.1rem' }}>
+            <p style={{ color: 'var(--color-brand-700)', fontWeight: 600, fontSize: '1.1rem' }}>
               Thank you for your interest! We&apos;ll be in touch soon.
             </p>
           </div>
@@ -230,6 +232,7 @@ export default function ForLenders() {
                 maxLength={15}
                 pattern="[0-9]{10,15}"
                 title="Enter 10-15 digit phone number"
+                placeholder="e.g. 919876543210"
                 autoComplete="tel"
                 required
                 disabled={submitting}
@@ -289,7 +292,7 @@ export default function ForLenders() {
             </div>
             {errors.submit && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.submit}</div>}
             <button className="button primary" type="submit" disabled={submitting}>
-              {submitting ? 'Submitting...' : 'Submit partnership interest'}
+              {submitting ? 'Submitting...' : 'Submit partner request'}
             </button>
           </form>
         )}

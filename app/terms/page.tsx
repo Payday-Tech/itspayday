@@ -12,60 +12,31 @@ export default function Terms() {
     <main>
       <section className="hero">
         <div>
-          <div className="badge">Terms &amp; Conditions</div>
-          <h1>Clear terms for fair borrowing journeys.</h1>
-          <p>These terms explain Payday&apos;s role as a Lending Service Provider and the rules that govern your credit access and repayment journey.</p>
+          <div className="badge">Terms & conditions</div>
+          <h1>Clear terms for transparent borrowing journeys.</h1>
+          <p>These terms explain Payday&apos;s role as an LSP, how loans are issued by partner lenders, and what users can expect at each step.</p>
         </div>
-        <div className="hero-visual">
-          <Image
-            src="/hero-worker.svg"
-            alt="Terms illustration"
-            width={960}
-            height={640}
-          />
-        </div>
+        <div className="hero-visual"><Image src="/hero-worker.svg" alt="Terms illustration" width={960} height={640} /></div>
       </section>
 
       <section>
-        <h2>1. Our role</h2>
-        <p className="small">Payday is a Lending Service Provider (LSP). Loans are provided by regulated partner lenders, and Payday facilitates onboarding, consent, and servicing in alignment with RBI guidelines.</p>
+        <h2>1. Payday&apos;s role</h2>
+        <p className="small">Payday is a Lending Service Provider. Loans are provided by regulated partner lenders. Payday assists with onboarding, communication, and servicing workflows.</p>
       </section>
 
       <section className="section-alt">
-        <h2>2. Eligibility &amp; consent</h2>
-        <ul className="small">
-          <li>You must be employed or engaged with a verified community or gig platform.</li>
-          <li>You provide explicit consent for data access and loan processing.</li>
-          <li>You can revoke consent at any time, subject to outstanding repayment obligations.</li>
-        </ul>
+        <h2>2. Consent and eligibility</h2>
+        <ul className="small"><li>User consent is required for processing and data sharing.</li><li>Eligibility is determined by partner lenders as per approved policy.</li><li>Consent revocation may be subject to active repayment obligations.</li></ul>
       </section>
 
       <section>
-        <h2>3. Fees &amp; repayment</h2>
-        <ul className="small">
-          <li>Processing fees and interest are displayed before you confirm any disbursal.</li>
-          <li>Repayment aligns with salary cycles or the schedule agreed with the lender.</li>
-          <li>Late payments may incur charges as defined by the partner lender.</li>
-        </ul>
+        <h2>3. Fees and repayment</h2>
+        <ul className="small"><li>Fees, charges, and repayment amount are disclosed before confirmation.</li><li>Repayments follow approved schedules from the lender partner.</li><li>Delayed repayment may attract lender-defined charges.</li></ul>
       </section>
 
       <section className="section-alt">
-        <h2>4. Data usage</h2>
-        <ul className="small">
-          <li>We collect only the data needed for underwriting, servicing, and compliance.</li>
-          <li>We do not sell personal data and share it only with authorized partners.</li>
-          <li>See our <Link href="/privacy">Privacy Policy</Link> for details.</li>
-        </ul>
-      </section>
-
-      <section>
-        <h2>5. Grievance redressal</h2>
-        <p className="small">If you have complaints, follow our <Link href="/grievance-redressal">Grievance Redressal</Link> procedure for prompt resolution.</p>
-      </section>
-
-      <section className="section-alt">
-        <h2>6. Updates</h2>
-        <p className="small">We may update these terms with notice. Continued use indicates acceptance of revised terms.</p>
+        <h2>4. Complaints and escalation</h2>
+        <p className="small">For support or complaints, please use our <Link href="/grievance-redressal">Grievance Redressal</Link> channels. For data practices, see <Link href="/privacy">Privacy Policy</Link>.</p>
       </section>
     </main>
   );

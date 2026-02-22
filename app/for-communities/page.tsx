@@ -15,14 +15,18 @@ export default function ForCommunities() {
     <main>
       <section className="hero">
         <div>
-          <div className="badge">For communities &amp; employers</div>
-          <h1>Support your workforce without becoming the lender.</h1>
-          <p>Enable timely financial support for domestic workers while Payday and regulated lenders handle underwriting, servicing, and collections.</p>
-          <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginTop: '24px' }}>
-            <a className="button primary" href="mailto:info@payday.in" rel="noopener noreferrer">Contact us</a>
-            <Link className="button secondary" href="/security">See security posture</Link>
+          <div className="badge">For communities & employers</div>
+          <h1>Offer better financial support without becoming the lender.</h1>
+          <p>
+            Payday helps your workforce access responsible credit while regulated lenders manage underwriting and loan disbursal.
+            Your team stays focused on operations.
+          </p>
+          <div className="hero-actions">
+            <a className="button primary" href="mailto:partnerships@itspayday.in" rel="noopener noreferrer">Contact partnerships</a>
+            <Link className="button secondary" href="/security">Review security</Link>
           </div>
         </div>
+
         <div className="hero-visual">
           <Image
             src={communitiesHeroImageUrl}
@@ -36,24 +40,17 @@ export default function ForCommunities() {
 
       <section>
         <div className="card-grid">
-          <div className="card">
-            <h3>No money risk for you</h3>
-            <p className="small">Partner lenders provide the funds. You only help workers access Payday.</p>
-          </div>
-          <div className="card">
-            <h3>Minimal operations</h3>
-            <p className="small">Easy onboarding and payroll-aligned repayments reduce admin work.</p>
-          </div>
-          <div className="card">
-            <h3>Build financial discipline</h3>
-            <p className="small">Workers gain structured access to financial services and build toward goals.</p>
-          </div>
+          <div className="card"><h3>No lending exposure</h3><p className="small">Partner lenders issue loans. Payday operates as LSP and servicing layer.</p></div>
+          <div className="card"><h3>Low operational effort</h3><p className="small">Simple onboarding and repayment communication designed for large communities.</p></div>
+          <div className="card"><h3>Better worker outcomes</h3><p className="small">Transparent pricing and wage-linked limits improve trust and retention.</p></div>
         </div>
       </section>
 
       <section className="section-alt">
-        <h2>Consent model</h2>
-        <p className="small">We ask workers first. With their approval, we use relevant platform records or bank statements through consent-based authentication.</p>
+        <h2>Consent-first model</h2>
+        <p className="small">
+          Worker consent is mandatory before data use. Payday shares key terms, fees, and grievance channels before any disbursal.
+        </p>
       </section>
     </main>
   );
