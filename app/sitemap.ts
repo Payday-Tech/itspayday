@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://payday.in';
+  const baseUrl = 'https://itspayday.in';
   const routes = [
     '',
     '/about',

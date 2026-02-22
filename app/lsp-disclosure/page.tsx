@@ -11,36 +11,20 @@ export default function LSPDisclosure() {
     <main>
       <section className="hero">
         <div>
-          <div className="badge">LSP Disclosure</div>
-          <h1>Exactly what Payday does—and what it doesn&apos;t.</h1>
-          <p>Payday handles onboarding, consent, and servicing; regulated lenders make credit decisions and issue loans.</p>
+          <div className="badge">LSP disclosure</div>
+          <h1>What Payday does, and what regulated lenders do.</h1>
+          <p>Payday is a Lending Service Provider. Lender partners make credit decisions and issue loans.</p>
         </div>
-        <div className="hero-visual">
-          <Image
-            src="/hero-worker.svg"
-            alt="LSP disclosure illustration"
-            width={960}
-            height={640}
-          />
-        </div>
+        <div className="hero-visual"><Image src="/hero-worker.svg" alt="LSP disclosure illustration" width={960} height={640} /></div>
       </section>
 
       <section>
         <h2>Key disclosures</h2>
         <ul className="small">
-          <li>Payday does not provide loans directly and does not take deposits.</li>
-          <li>All loans are issued by RBI-regulated partner lenders.</li>
-          <li>We receive a service fee from partner lenders for facilitating services.</li>
-          <li>Loan terms, interest, and repayment schedules are shared prior to disbursal.</li>
-        </ul>
-      </section>
-
-      <section className="section-alt">
-        <h2>Your rights</h2>
-        <ul className="small">
-          <li>Receive a Key Fact Statement before confirmation.</li>
-          <li>Access grievance redressal channels and escalation paths.</li>
-          <li>Opt out of data sharing except where required for servicing.</li>
+          <li>Payday does not issue loans or accept deposits.</li>
+          <li>Loans are issued by RBI-regulated partner lenders.</li>
+          <li>All loan terms and fees are shown before loan acceptance.</li>
+          <li>Payday may receive service fees from lender partners for facilitation.</li>
         </ul>
       </section>
     </main>

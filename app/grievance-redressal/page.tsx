@@ -11,51 +11,26 @@ export default function GrievanceRedressal() {
     <main>
       <section className="hero">
         <div>
-          <div className="badge">Grievance Redressal</div>
-          <h1>Every complaint gets a clear owner and timeline.</h1>
-          <p>Our redressal process is structured for speed, accountability, and transparent escalation across support and lender partners.</p>
+          <div className="badge">Grievance redressal</div>
+          <h1>Every complaint has a clear owner and timeline.</h1>
+          <p>Our grievance process is designed for accountability across Payday and partner lenders.</p>
         </div>
-        <div className="hero-visual">
-          <Image
-            src="/hero-worker.svg"
-            alt="Support illustration"
-            width={960}
-            height={640}
-          />
-        </div>
+        <div className="hero-visual"><Image src="/hero-worker.svg" alt="Support illustration" width={960} height={640} /></div>
       </section>
 
       <section>
         <div className="notice">
-          <strong>Primary contact:</strong> grievance@itspayday.in &middot; +918587012908 (Mon&ndash;Sat, 9am&ndash;6pm)
+          <strong>Primary contact:</strong> grievance@itspayday.in · +91 85870 12908 (Mon–Sat, 9:00 AM–6:00 PM)
         </div>
       </section>
 
       <section className="section-alt">
         <h2>Escalation levels</h2>
         <div className="timeline">
-          <div className="timeline-item">
-            <strong>Level 1: Support team</strong>
-            <p className="small">Write to grievance@itspayday.in or call. Response within 2 business days.</p>
-          </div>
-          <div className="timeline-item">
-            <strong>Level 2: Nodal officer</strong>
-            <p className="small">If unresolved, escalate to nodal.officer@payday.in within 5 business days.</p>
-          </div>
-          <div className="timeline-item">
-            <strong>Level 3: Partner lender escalation</strong>
-            <p className="small">If still unresolved, we connect you with the partner lender&apos;s grievance officer within 7 business days.</p>
-          </div>
+          <div className="timeline-item"><div><strong>Level 1: Support team</strong><p className="small">Email grievance@itspayday.in. Response within 2 business days.</p></div></div>
+          <div className="timeline-item"><div><strong>Level 2: Nodal officer</strong><p className="small">If unresolved, escalate to nodal.officer@itspayday.in within 5 business days.</p></div></div>
+          <div className="timeline-item"><div><strong>Level 3: Partner lender desk</strong><p className="small">If still unresolved, we route the complaint to lender grievance channels within 7 business days.</p></div></div>
         </div>
-      </section>
-
-      <section>
-        <h2>Important details</h2>
-        <ul className="small">
-          <li>Provide your registered mobile number, transaction date, and issue summary.</li>
-          <li>We log every complaint and share a tracking ID.</li>
-          <li>All grievances follow RBI and partner lender requirements.</li>
-        </ul>
       </section>
     </main>
   );

@@ -17,24 +17,22 @@ export default function Home() {
   const { t } = useLanguage();
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
-  const selected = {
-    title: t('home.hero.worker.title'),
-    subtitle: t('home.hero.worker.subtitle'),
-    ctaLabel: t('home.hero.worker.cta'),
-  };
-
   return (
     <main>
       <section className="hero">
         <div>
-          <h1>{selected.title}</h1>
-          <p>{selected.subtitle}</p>
-          <div className="badge">{t('home.badge')}</div>
-          <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginTop: '24px' }}>
-            <GetStartedButton>{selected.ctaLabel}</GetStartedButton>
-            <a className="button secondary" href="mailto:info@payday.in" rel="noopener noreferrer">{t('cta.partner')}</a>
+          <div className="badge">LSP-led financial access</div>
+          <h1>{t('home.hero.worker.title')}</h1>
+          <p>{t('home.hero.worker.subtitle')}</p>
+          <div className="hero-actions">
+            <GetStartedButton>{t('home.hero.worker.cta')}</GetStartedButton>
+            <a className="button secondary" href="mailto:partnerships@itspayday.in" rel="noopener noreferrer">{t('cta.partner')}</a>
           </div>
+          <p className="small" style={{ marginTop: '12px' }}>
+            Payday is a Lending Service Provider. Loans are issued by regulated partner lenders after consent and eligibility checks.
+          </p>
         </div>
+
         <div className="hero-visual">
           <div className="hero-image-frame">
             <Image
@@ -52,47 +50,30 @@ export default function Home() {
       <section>
         <h2>{t('home.howItWorksTitle')}</h2>
         <div className="how-it-works-row">
-          <div className="step">
-            <span>1</span>
-            <div>
-              <strong>{t('home.how.step1.title')}</strong>
-              <p className="small">{t('home.how.step1.body')}</p>
-            </div>
-          </div>
-          <div className="step">
-            <span>2</span>
-            <div>
-              <strong>{t('home.how.step2.title')}</strong>
-              <p className="small">{t('home.how.step2.body')}</p>
-            </div>
-          </div>
-          <div className="step">
-            <span>3</span>
-            <div>
-              <strong>{t('home.how.step3.title')}</strong>
-              <p className="small">{t('home.how.step3.body')}</p>
-            </div>
-          </div>
+          <div className="step"><span>1</span><div><strong>{t('home.how.step1.title')}</strong><p className="small">{t('home.how.step1.body')}</p></div></div>
+          <div className="step"><span>2</span><div><strong>{t('home.how.step2.title')}</strong><p className="small">{t('home.how.step2.body')}</p></div></div>
+          <div className="step"><span>3</span><div><strong>{t('home.how.step3.title')}</strong><p className="small">{t('home.how.step3.body')}</p></div></div>
         </div>
       </section>
 
       <section className="section-alt">
         <h2>{t('home.faqTitle')}</h2>
-        <div className="faq-list">
+        <div className="steps">
           {faqItems.map((item, index) => {
             const isOpen = openFaqIndex === index;
             return (
-              <div key={item.question} className="faq-item">
+              <div key={item.question} className="timeline-item" style={{ display: 'block' }}>
                 <button
                   type="button"
-                  className="faq-trigger"
+                  className="button-link"
                   aria-expanded={isOpen}
                   onClick={() => setOpenFaqIndex(isOpen ? null : index)}
+                  style={{ width: '100%', justifyContent: 'space-between', background: 'transparent', border: 'none', padding: 0, textAlign: 'left' }}
                 >
                   <span>{t(item.question)}</span>
-                  <span className={`faq-arrow ${isOpen ? 'open' : ''}`} aria-hidden="true">⌄</span>
+                  <span aria-hidden="true">{isOpen ? '−' : '+'}</span>
                 </button>
-                {isOpen ? <p className="small faq-answer">{t(item.answer)}</p> : null}
+                {isOpen ? <p className="small" style={{ marginTop: '10px' }}>{t(item.answer)}</p> : null}
               </div>
             );
           })}

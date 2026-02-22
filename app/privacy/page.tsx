@@ -11,44 +11,37 @@ export default function Privacy() {
     <main>
       <section className="hero">
         <div>
-          <div className="badge">Privacy Policy</div>
-          <h1>Your data is collected only for clear, necessary purposes.</h1>
-          <p>Payday follows consent-led, privacy-forward practices aligned with RBI norms and partner lender compliance requirements.</p>
+          <div className="badge">Privacy policy</div>
+          <h1>Data is collected only for defined financial and compliance purposes.</h1>
+          <p>Payday follows consent-led data handling aligned with lender partner requirements and applicable regulation.</p>
         </div>
-        <div className="hero-visual">
-          <Image
-            src="/hero-worker.svg"
-            alt="Privacy illustration"
-            width={960}
-            height={640}
-          />
-        </div>
+        <div className="hero-visual"><Image src="/hero-worker.svg" alt="Privacy illustration" width={960} height={640} /></div>
       </section>
 
       <section>
         <h2>What we collect</h2>
         <ul className="small">
-          <li>Identity and contact details you submit via WhatsApp or forms.</li>
-          <li>Employment and wage data shared with your consent from community platforms.</li>
-          <li>Transaction and repayment data linked to your wage access.</li>
+          <li>Identity and contact details shared through form or WhatsApp onboarding.</li>
+          <li>Employment and wage information shared with user consent.</li>
+          <li>Transaction, repayment, and support interaction records.</li>
         </ul>
       </section>
 
       <section className="section-alt">
-        <h2>How we use data</h2>
+        <h2>How data is used</h2>
         <ul className="small">
-          <li>To assess eligibility, set wage-linked limits, and support repayment.</li>
-          <li>To communicate in your preferred language and channel.</li>
-          <li>To improve product safety and meet regulatory obligations.</li>
+          <li>Eligibility checks, servicing operations, and repayment communications.</li>
+          <li>Fraud prevention, dispute resolution, and regulatory reporting.</li>
+          <li>Product performance monitoring and quality improvements.</li>
         </ul>
       </section>
 
       <section>
-        <h2>Sharing &amp; retention</h2>
+        <h2>Sharing and rights</h2>
         <ul className="small">
-          <li>Data is shared only with regulated partner lenders, payment partners, and verified service providers.</li>
-          <li>We retain data only as long as required by law or for servicing your account.</li>
-          <li>You can request access, correction, or deletion through privacy@payday.in.</li>
+          <li>Data is shared only with regulated lenders and authorized processors.</li>
+          <li>Data retention follows legal, audit, and servicing requirements.</li>
+          <li>For data requests, write to privacy@itspayday.in.</li>
         </ul>
       </section>
     </main>
