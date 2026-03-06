@@ -47,7 +47,7 @@ export default function Header({ onOpenModal }: HeaderProps) {
               <option key={option.code} value={option.code}>{option.label}</option>
             ))}
           </select>
-          <button className="button primary" onClick={() => { setLanguage('hng'); onOpenModal(); }}>
+          <button className="button primary" onClick={onOpenModal}>
             {t('cta.getStarted')}
           </button>
         </div>
@@ -60,7 +60,7 @@ export default function Header({ onOpenModal }: HeaderProps) {
           >
             Menu
           </button>
-          <button className="button primary" onClick={() => { setLanguage('hng'); onOpenModal(); }}>
+          <button className="button primary" onClick={onOpenModal}>
             {t('cta.getStarted')}
           </button>
         </div>
