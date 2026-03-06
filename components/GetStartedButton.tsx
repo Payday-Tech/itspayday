@@ -6,26 +6,14 @@ import { useLanguage } from './LanguageContext';
 interface GetStartedButtonProps {
   className?: string;
   children?: React.ReactNode;
-  defaultHinglish?: boolean;
 }
 
-export default function GetStartedButton({
-  className = 'button primary',
-  children,
-  defaultHinglish = true,
-}: GetStartedButtonProps) {
+export default function GetStartedButton({ className = 'button primary', children }: GetStartedButtonProps) {
   const { openModal } = useModal();
-  const { setLanguage, t } = useLanguage();
-
-  const handleClick = () => {
-    if (defaultHinglish) {
-      setLanguage('hng');
-    }
-    openModal();
-  };
+  const { t } = useLanguage();
 
   return (
-    <button className={className} onClick={handleClick}>
+    <button className={className} onClick={openModal}>
       {children || t('cta.getStarted')}
     </button>
   );
