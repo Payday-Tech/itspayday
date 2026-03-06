@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: 'About Payday',
@@ -14,9 +13,6 @@ export default function About() {
           <div className="badge">About Payday</div>
           <h1>We design responsible credit journeys for India&apos;s everyday workforce.</h1>
           <p>Payday is an LSP enabling wage-linked credit with regulated lending partners, consent-led operations, and clear communication in local languages.</p>
-        </div>
-        <div className="hero-visual">
-          <Image src="/hero-worker.svg" alt="Payday mission illustration" width={960} height={640} />
         </div>
       </section>
 
