@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { FormEvent, useState, useCallback } from 'react';
 import GetStartedButton from '@/components/GetStartedButton';
 import ReCaptcha from '@/components/ReCaptcha';
@@ -70,9 +69,6 @@ export default function Contact() {
           <div className="badge">Contact</div>
           <h1>Talk to our team.</h1>
           <p>For onboarding, partnerships, support, or compliance queries, reach us by WhatsApp, email, or this form.</p>
-        </div>
-        <div className="hero-visual">
-          <Image src="/hero-worker.svg" alt="Contact support illustration" width={960} height={640} />
         </div>
       </section>
 
