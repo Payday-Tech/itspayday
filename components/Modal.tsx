@@ -2,87 +2,72 @@
 
 import { FormEvent, useState, useCallback } from 'react';
 import ReCaptcha from './ReCaptcha';
-import { submitGetStartedForm } from '@/lib/api';
+import { submitContactForm } from '@/lib/api';
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-// Sanitize input to prevent XSS - removes potential script injections
-const sanitizeInput = (input: string): string => {
-  return input
-    .replace(/[<>]/g, '') // Remove angle brackets
-    .trim()
-    .slice(0, 100); // Limit length
-};
+const sanitizeInput = (input: string, maxLength: number = 500): string =>
+  input.replace(/[<>]/g, '').trim().slice(0, maxLength);
 
-// Validate name field - only letters, spaces, hyphens, apostrophes
-const isValidName = (name: string): boolean => {
-  return /^[a-zA-Z\s\-']+$/.test(name) && name.length >= 1 && name.length <= 50;
-};
+const isValidEmail = (email: string): boolean =>
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length <= 254;
+
+const isValidName = (name: string): boolean =>
+  /^[a-zA-Z\s\-']+$/.test(name) && name.length >= 1 && name.length <= 100;
+
+interface FormErrors {
+  name?: string;
+  email?: string;
+  message?: string;
+  recaptcha?: string;
+  submit?: string;
+}
 
 export default function Modal({ isOpen, onClose }: ModalProps) {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [occupation, setOccupation] = useState('');
+  const [formData, setFormData] = useState({ name: '', email: '', topic: '', message: '' });
   const [recaptchaToken, setRecaptchaToken] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [errors, setErrors] = useState<{ firstName?: string; lastName?: string; recaptcha?: string; submit?: string }>({});
+  const [errors, setErrors] = useState<FormErrors>({});
 
   const handleRecaptchaVerify = useCallback((token: string) => {
     setRecaptchaToken(token);
-    setErrors(prev => ({ ...prev, recaptcha: undefined }));
+    setErrors((prev) => ({ ...prev, recaptcha: undefined }));
   }, []);
 
-  const handleRecaptchaExpire = useCallback(() => {
-    setRecaptchaToken('');
-  }, []);
+  const handleRecaptchaExpire = useCallback(() => setRecaptchaToken(''), []);
 
   if (!isOpen) return null;
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-
-    // Validate inputs
-    const newErrors: { firstName?: string; lastName?: string; recaptcha?: string } = {};
-
-    if (!isValidName(firstName)) {
-      newErrors.firstName = 'Please enter a valid first name (letters only)';
-    }
-    if (!isValidName(lastName)) {
-      newErrors.lastName = 'Please enter a valid last name (letters only)';
-    }
-    if (!recaptchaToken) {
-      newErrors.recaptcha = 'Please complete the reCAPTCHA verification';
-    }
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
+    const newErrors: FormErrors = {};
+    if (!isValidName(formData.name)) newErrors.name = 'Please enter a valid name (letters only)';
+    if (!isValidEmail(formData.email)) newErrors.email = 'Please enter a valid email address';
+    if (formData.message.length < 10) newErrors.message = 'Message must be at least 10 characters';
+    if (!recaptchaToken) newErrors.recaptcha = 'Please complete the reCAPTCHA verification';
+    if (Object.keys(newErrors).length > 0) return setErrors(newErrors);
 
     setErrors({});
     setSubmitting(true);
-
     try {
-      await submitGetStartedForm({
-        first_name: sanitizeInput(firstName),
-        last_name: sanitizeInput(lastName),
-        occupation,
+      await submitContactForm({
+        name: sanitizeInput(formData.name, 100),
+        email: sanitizeInput(formData.email, 254),
+        topic: formData.topic,
+        message: sanitizeInput(formData.message, 2000),
         recaptcha_token: recaptchaToken,
       });
-
       setSubmitted(true);
       setTimeout(() => {
         setSubmitted(false);
-        setFirstName('');
-        setLastName('');
-        setOccupation('');
+        setFormData({ name: '', email: '', topic: '', message: '' });
         setRecaptchaToken('');
         onClose();
-      }, 2000);
+      }, 3000);
     } catch (error) {
       setErrors({ submit: error instanceof Error ? error.message : 'Submission failed. Please try again.' });
     } finally {
@@ -102,80 +87,74 @@ export default function Modal({ isOpen, onClose }: ModalProps) {
         <button className="modal-close" onClick={onClose} aria-label="Close">
           &times;
         </button>
-        <h3>We are in beta &mdash; share your details</h3>
-        <p className="small">We will get back to you with your loan offer on WhatsApp.</p>
+        <h3>Contact us</h3>
+        <p className="small">Our team will respond shortly.</p>
 
         {submitted ? (
           <div style={{ textAlign: 'center', padding: '20px' }}>
-            <p style={{ color: 'var(--brand-primary)', fontWeight: 600 }}>
-              Thank you! We&apos;ll be in touch soon.
+            <p style={{ color: 'var(--color-brand-700)', fontWeight: 600 }}>
+              Thanks. Our team will respond shortly.
             </p>
           </div>
         ) : (
           <form className="form-grid" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="first-name">First name</label>
+              <label htmlFor="modal-name">Name</label>
               <input
-                id="first-name"
-                name="firstName"
-                value={firstName}
-                onChange={(e) => setFirstName(sanitizeInput(e.target.value))}
-                maxLength={50}
-                pattern="[a-zA-Z\s\-']+"
-                title="Letters, spaces, hyphens, and apostrophes only"
-                autoComplete="given-name"
+                id="modal-name"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: sanitizeInput(e.target.value, 100) })}
                 required
                 disabled={submitting}
               />
-              {errors.firstName && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.firstName}</div>}
+              {errors.name && <div className="helper-text" style={{ color: 'var(--color-error)' }}>{errors.name}</div>}
             </div>
             <div>
-              <label htmlFor="last-name">Last name</label>
+              <label htmlFor="modal-email">Email</label>
               <input
-                id="last-name"
-                name="lastName"
-                value={lastName}
-                onChange={(e) => setLastName(sanitizeInput(e.target.value))}
-                maxLength={50}
-                pattern="[a-zA-Z\s\-']+"
-                title="Letters, spaces, hyphens, and apostrophes only"
-                autoComplete="family-name"
+                id="modal-email"
+                type="email"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: sanitizeInput(e.target.value, 254) })}
                 required
                 disabled={submitting}
               />
-              {errors.lastName && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.lastName}</div>}
+              {errors.email && <div className="helper-text" style={{ color: 'var(--color-error)' }}>{errors.email}</div>}
             </div>
             <div>
-              <label htmlFor="occupation">Occupation</label>
+              <label htmlFor="modal-topic">Topic</label>
               <select
-                id="occupation"
-                name="occupation"
-                value={occupation}
-                onChange={(e) => setOccupation(e.target.value)}
-                required
+                id="modal-topic"
+                value={formData.topic}
+                onChange={(e) => setFormData({ ...formData, topic: e.target.value })}
                 disabled={submitting}
               >
-                <option value="">Select an option</option>
-                <option value="maid">Bai/House help/Maid</option>
-                <option value="gig-worker">Gig worker (urban company)</option>
-                <option value="nanny">Nanny</option>
-                <option value="aaipronto">AaiPronto</option>
-                <option value="cook">Cook</option>
-                <option value="driver">Driver</option>
-                <option value="gardener">Gardener</option>
+                <option value="">Select a topic</option>
+                <option value="support">Worker support</option>
+                <option value="partnerships">Partnerships</option>
+                <option value="lenders">Lender partnerships</option>
+                <option value="compliance">Compliance &amp; legal</option>
               </select>
-              <div className="helper-text">Choose the role that fits you best.</div>
             </div>
             <div>
-              <ReCaptcha
-                onVerify={handleRecaptchaVerify}
-                onExpire={handleRecaptchaExpire}
+              <label htmlFor="modal-message">Message</label>
+              <textarea
+                id="modal-message"
+                rows={4}
+                value={formData.message}
+                onChange={(e) => setFormData({ ...formData, message: sanitizeInput(e.target.value, 2000) })}
+                required
+                disabled={submitting}
               />
-              {errors.recaptcha && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.recaptcha}</div>}
+              {errors.message && <div className="helper-text" style={{ color: 'var(--color-error)' }}>{errors.message}</div>}
             </div>
-            {errors.submit && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.submit}</div>}
+            <div>
+              <ReCaptcha onVerify={handleRecaptchaVerify} onExpire={handleRecaptchaExpire} />
+              {errors.recaptcha && <div className="helper-text" style={{ color: 'var(--color-error)' }}>{errors.recaptcha}</div>}
+            </div>
+            {errors.submit && <div className="helper-text" style={{ color: 'var(--color-error)' }}>{errors.submit}</div>}
             <button className="button primary" type="submit" disabled={submitting}>
-              {submitting ? 'Submitting...' : 'Submit'}
+              {submitting ? 'Submitting...' : 'Send message'}
             </button>
           </form>
         )}
