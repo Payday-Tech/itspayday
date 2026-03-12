@@ -16,6 +16,14 @@ class Settings(BaseSettings):
     google_credentials_json: str = ""  # Service account JSON as string
     google_spreadsheet_id: str = ""  # ID of the Google Spreadsheet
 
+    # SMTP / alerting
+    smtp_host: str = ""
+    smtp_port: int = 587
+    smtp_username: str = ""
+    smtp_password: str = ""
+    smtp_sender: str = ""
+    alert_email_to: str = "info@itspayday.in"
+
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"
