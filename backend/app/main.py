@@ -33,10 +33,10 @@ origins = [origin.strip() for origin in settings.cors_origins.split(",") if orig
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
-    # Also allow app subdomains and local dev origins for safer defaults.
-    allow_origin_regex=r"https://([a-z0-9-]+\.)?itspayday\.in$|http://localhost(:\d+)?$|http://127\.0\.0\.1(:\d+)?$",
+    # Also allow app subdomains, Render deployments, and local dev origins.
+    allow_origin_regex=r"^https://([a-zA-Z0-9-]+\.)*itspayday\.in$|^https://payday-api-[a-zA-Z0-9-]+\.onrender\.com$|^http://localhost(:\d+)?$|^http://127\.0\.0\.1(:\d+)?$",
     allow_credentials=True,
-    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_methods=["*"],
     allow_headers=["*"],
 )
 
