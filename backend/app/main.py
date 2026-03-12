@@ -28,7 +28,11 @@ app = FastAPI(
     version="1.0.0",
 )
 
+<<<<<<< codex/create-pre-application-eligibility-form-92mikg
 origins = [origin.strip() for origin in settings.cors_origins.split(",") if origin.strip()]
+=======
+origins = [origin.strip() for origin in settings.cors_origins.split(",")]
+>>>>>>> main
 
 app.add_middleware(
     CORSMiddleware,
