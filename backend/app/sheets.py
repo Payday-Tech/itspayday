@@ -7,6 +7,7 @@ from datetime import datetime
 from typing import Optional
 
 from app.config import get_settings
+from app.schemas import EligibilitySubmission
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -39,7 +40,6 @@ def get_sheets_client() -> Optional[gspread.Client]:
         return None
 
     try:
-        # Parse credentials from JSON string
         logger.info("Parsing Google credentials JSON...")
         creds_dict = json.loads(settings.google_credentials_json)
         logger.info(f"Credentials parsed successfully. Project ID: {creds_dict.get('project_id', 'N/A')}")
@@ -62,17 +62,6 @@ def get_sheets_client() -> Optional[gspread.Client]:
 
 
 def append_to_sheet(spreadsheet_id: str, sheet_name: str, row_data: list) -> bool:
-    """
-    Append a row to a Google Sheet.
-
-    Args:
-        spreadsheet_id: The ID of the Google Spreadsheet
-        sheet_name: The name of the sheet/tab to append to
-        row_data: List of values to append as a row
-
-    Returns:
-        True if successful, False otherwise
-    """
     logger.info(f"append_to_sheet called: spreadsheet_id={spreadsheet_id}, sheet_name={sheet_name}")
     logger.info(f"Row data: {row_data}")
 
@@ -83,38 +72,23 @@ def append_to_sheet(spreadsheet_id: str, sheet_name: str, row_data: list) -> boo
         return False
 
     try:
-        logger.info(f"Opening spreadsheet by key: {spreadsheet_id}")
         spreadsheet = client.open_by_key(spreadsheet_id)
-        logger.info(f"Spreadsheet opened successfully: {spreadsheet.title}")
 
-        # Try to get the worksheet, create if it doesn't exist
         try:
-            logger.info(f"Looking for worksheet: {sheet_name}")
             worksheet = spreadsheet.worksheet(sheet_name)
-            logger.info(f"Worksheet found: {sheet_name}")
         except gspread.WorksheetNotFound:
-            logger.info(f"Worksheet not found, creating: {sheet_name}")
-            worksheet = spreadsheet.add_worksheet(title=sheet_name, rows=1000, cols=20)
-            # Add headers based on the sheet name
+            worksheet = spreadsheet.add_worksheet(title=sheet_name, rows=1000, cols=30)
             headers = get_headers_for_sheet(sheet_name)
             if headers:
-                logger.info(f"Adding headers: {headers}")
                 worksheet.append_row(headers)
 
-        # Add timestamp to the beginning of the row
         timestamp = datetime.utcnow().isoformat()
         row_with_timestamp = [timestamp] + row_data
 
-        logger.info(f"Appending row: {row_with_timestamp}")
         worksheet.append_row(row_with_timestamp)
         logger.info(f"Successfully appended row to {sheet_name}")
         return True
 
-    except gspread.exceptions.APIError as e:
-        logger.error(f"Google Sheets API Error: {e}")
-        logger.error(f"API Error details: {e.response.text if hasattr(e, 'response') else 'N/A'}")
-        logger.error(traceback.format_exc())
-        return False
     except Exception as e:
         logger.error(f"Error appending to Google Sheet: {e}")
         logger.error(traceback.format_exc())
@@ -122,70 +96,82 @@ def append_to_sheet(spreadsheet_id: str, sheet_name: str, row_data: list) -> boo
 
 
 def get_headers_for_sheet(sheet_name: str) -> list:
-    """Return appropriate headers for each form type."""
     headers_map = {
-        "Get Started": ["Timestamp", "First Name", "Last Name", "Occupation"],
-        "Contact": ["Timestamp", "Name", "Email", "Topic", "Message"],
-        "Lender Partnership": ["Timestamp", "Name", "Company", "Email", "Phone", "Role", "City", "Notes"],
+        "Get Started": ["timestamp", "first_name", "last_name", "occupation"],
+        "Contact": ["timestamp", "name", "email", "topic", "message"],
+        "Lender Partnership": ["timestamp", "name", "company", "email", "phone", "role", "city", "notes"],
+        "Eligibility Submissions": [
+            "submitted_at", "application_id", "first_name", "last_name", "mobile", "dob", "pan", "address", "city", "state",
+            "pincode", "phone2", "consent", "consent_timestamp", "privacy", "source", "voter_upload_ref", "driving_licence_upload_ref", "passport_upload_ref",
+        ],
+        "Eligibility Events": ["timestamp", "application_id", "session_id", "event_name", "step", "metadata_json"],
+        "Eligibility Ops": ["timestamp", "application_id", "review_status", "bureau_status", "remarks", "partner_shared", "shared_at"],
     }
     return headers_map.get(sheet_name, [])
 
 
-# Helper functions for each form type
 def save_get_started_form(first_name: str, last_name: str, occupation: str) -> bool:
-    """Save Get Started form submission to Google Sheet."""
-    logger.info(f"save_get_started_form called: {first_name} {last_name}, {occupation}")
     settings = get_settings()
-
-    logger.info(f"GOOGLE_SPREADSHEET_ID set: {bool(settings.google_spreadsheet_id)}")
     if not settings.google_spreadsheet_id:
-        logger.warning("GOOGLE_SPREADSHEET_ID not set")
         return False
 
-    result = append_to_sheet(
-        settings.google_spreadsheet_id,
-        "Get Started",
-        [first_name, last_name, occupation]
-    )
-    logger.info(f"save_get_started_form result: {result}")
-    return result
+    return append_to_sheet(settings.google_spreadsheet_id, "Get Started", [first_name, last_name, occupation])
 
 
 def save_contact_form(name: str, email: str, topic: str, message: str) -> bool:
-    """Save Contact form submission to Google Sheet."""
-    logger.info(f"save_contact_form called: {name}, {email}, {topic}")
     settings = get_settings()
-
-    logger.info(f"GOOGLE_SPREADSHEET_ID set: {bool(settings.google_spreadsheet_id)}")
     if not settings.google_spreadsheet_id:
-        logger.warning("GOOGLE_SPREADSHEET_ID not set")
         return False
 
-    result = append_to_sheet(
-        settings.google_spreadsheet_id,
-        "Contact",
-        [name, email, topic, message]
-    )
-    logger.info(f"save_contact_form result: {result}")
-    return result
+    return append_to_sheet(settings.google_spreadsheet_id, "Contact", [name, email, topic, message])
 
 
-def save_lender_partnership_form(
-    name: str, company: str, email: str, phone: str, role: str, city: str, notes: str
-) -> bool:
-    """Save Lender Partnership form submission to Google Sheet."""
-    logger.info(f"save_lender_partnership_form called: {name} from {company}")
+def save_lender_partnership_form(name: str, company: str, email: str, phone: str, role: str, city: str, notes: str) -> bool:
     settings = get_settings()
-
-    logger.info(f"GOOGLE_SPREADSHEET_ID set: {bool(settings.google_spreadsheet_id)}")
     if not settings.google_spreadsheet_id:
-        logger.warning("GOOGLE_SPREADSHEET_ID not set")
         return False
 
-    result = append_to_sheet(
+    return append_to_sheet(settings.google_spreadsheet_id, "Lender Partnership", [name, company, email, phone, role, city, notes or ""])
+
+
+def save_eligibility_submission(form: EligibilitySubmission) -> bool:
+    settings = get_settings()
+    if not settings.google_spreadsheet_id:
+        return False
+
+    return append_to_sheet(
         settings.google_spreadsheet_id,
-        "Lender Partnership",
-        [name, company, email, phone, role, city, notes or ""]
+        "Eligibility Submissions",
+        [
+            form.applicationId,
+            form.firstName,
+            form.lastName,
+            form.phone1,
+            form.dob,
+            form.pan,
+            form.address1,
+            form.city1,
+            form.state1,
+            form.pincode1,
+            form.phone2,
+            str(form.consentAccepted),
+            form.consentTimestamp,
+            str(form.privacyAccepted),
+            form.source,
+            form.voterIdUpload.storageRef if form.voterIdUpload else '',
+            form.drivingLicenceUpload.storageRef if form.drivingLicenceUpload else '',
+            form.passportUpload.storageRef if form.passportUpload else '',
+        ],
     )
-    logger.info(f"save_lender_partnership_form result: {result}")
-    return result
+
+
+def save_eligibility_event(application_id: str, session_id: str, event_name: str, step: str, metadata_json: str) -> bool:
+    settings = get_settings()
+    if not settings.google_spreadsheet_id:
+        return False
+
+    return append_to_sheet(
+        settings.google_spreadsheet_id,
+        "Eligibility Events",
+        [application_id, session_id, event_name, step, metadata_json],
+    )
