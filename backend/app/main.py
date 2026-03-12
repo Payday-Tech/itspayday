@@ -6,10 +6,19 @@ from app.schemas import (
     GetStartedForm,
     ContactForm,
     LenderPartnershipForm,
+    EligibilitySubmission,
+    EligibilityEvent,
     FormResponse,
 )
 from app.recaptcha import verify_recaptcha
-from app.sheets import save_get_started_form, save_contact_form, save_lender_partnership_form
+from app.notifications import send_success_alert
+from app.sheets import (
+    save_get_started_form,
+    save_contact_form,
+    save_lender_partnership_form,
+    save_eligibility_submission,
+    save_eligibility_event,
+)
 
 settings = get_settings()
 
@@ -19,12 +28,13 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# Configure CORS
-origins = [origin.strip() for origin in settings.cors_origins.split(",")]
+origins = [origin.strip() for origin in settings.cors_origins.split(",") if origin.strip()]
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
+    # Also allow app subdomains and local dev origins for safer defaults.
+    allow_origin_regex=r"https://([a-z0-9-]+\.)?itspayday\.in$|http://localhost(:\d+)?$|http://127\.0\.0\.1(:\d+)?$",
     allow_credentials=True,
     allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
@@ -33,78 +43,34 @@ app.add_middleware(
 
 @app.get("/health")
 async def health_check():
-    """Health check endpoint"""
     return {"status": "healthy", "environment": settings.environment}
 
 
 @app.post("/api/forms/get-started", response_model=FormResponse)
 async def submit_get_started(form: GetStartedForm):
-    """
-    Handle Get Started form submission from the modal.
-    """
-    # Verify reCAPTCHA
     if not await verify_recaptcha(form.recaptcha_token):
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="reCAPTCHA verification failed",
-        )
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="reCAPTCHA verification failed")
 
-    # Save to Google Sheets
-    save_get_started_form(
-        first_name=form.first_name,
-        last_name=form.last_name,
-        occupation=form.occupation,
-    )
+    save_get_started_form(first_name=form.first_name, last_name=form.last_name, occupation=form.occupation)
 
-    print(f"Get Started form submitted: {form.first_name} {form.last_name}, {form.occupation}")
-
-    return FormResponse(
-        success=True,
-        message="Thank you! We'll be in touch soon on WhatsApp.",
-    )
+    return FormResponse(success=True, message="Thank you! We'll be in touch soon on WhatsApp.")
 
 
 @app.post("/api/forms/contact", response_model=FormResponse)
 async def submit_contact(form: ContactForm):
-    """
-    Handle Contact form submission.
-    """
-    # Verify reCAPTCHA
     if not await verify_recaptcha(form.recaptcha_token):
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="reCAPTCHA verification failed",
-        )
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="reCAPTCHA verification failed")
 
-    # Save to Google Sheets
-    save_contact_form(
-        name=form.name,
-        email=form.email,
-        topic=form.topic,
-        message=form.message,
-    )
+    save_contact_form(name=form.name, email=form.email, topic=form.topic, message=form.message)
 
-    print(f"Contact form submitted: {form.name}, {form.email}, Topic: {form.topic}")
-
-    return FormResponse(
-        success=True,
-        message="Thank you for your message! We'll respond within 1 business day.",
-    )
+    return FormResponse(success=True, message="Thank you for your message! We'll respond within 1 business day.")
 
 
 @app.post("/api/forms/lender-partnership", response_model=FormResponse)
 async def submit_lender_partnership(form: LenderPartnershipForm):
-    """
-    Handle Lender Partnership form submission.
-    """
-    # Verify reCAPTCHA
     if not await verify_recaptcha(form.recaptcha_token):
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="reCAPTCHA verification failed",
-        )
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="reCAPTCHA verification failed")
 
-    # Save to Google Sheets
     save_lender_partnership_form(
         name=form.name,
         company=form.company,
@@ -115,9 +81,34 @@ async def submit_lender_partnership(form: LenderPartnershipForm):
         notes=form.notes,
     )
 
-    print(f"Lender partnership form submitted: {form.name} from {form.company}")
+    return FormResponse(success=True, message="Thank you for your interest! Our partnerships team will be in touch soon.")
 
-    return FormResponse(
-        success=True,
-        message="Thank you for your interest! Our partnerships team will be in touch soon.",
+
+@app.post("/api/forms/check-eligibility", response_model=FormResponse)
+async def submit_check_eligibility(form: EligibilitySubmission):
+    if not form.consentAccepted or not form.privacyAccepted:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Consent is required")
+
+    save_eligibility_submission(form)
+
+    send_success_alert(
+        first_name=form.firstName,
+        mobile=form.phone1,
+        application_id=form.applicationId,
+        has_pan=bool(form.pan),
     )
+
+    return FormResponse(success=True, message="Your details have been received.")
+
+
+@app.post("/api/forms/eligibility-event", response_model=FormResponse)
+async def save_check_eligibility_event(event: EligibilityEvent):
+    save_eligibility_event(
+        application_id=event.applicationId,
+        session_id=event.sessionId,
+        event_name=event.eventName,
+        step=event.step,
+        metadata_json=event.metadataJson,
+    )
+
+    return FormResponse(success=True, message="Event stored")
