@@ -28,11 +28,17 @@ app = FastAPI(
     version="1.0.0",
 )
 
+<<<<<<< codex/create-pre-application-eligibility-form-92mikg
+origins = [origin.strip() for origin in settings.cors_origins.split(",") if origin.strip()]
+=======
 origins = [origin.strip() for origin in settings.cors_origins.split(",")]
+>>>>>>> main
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
+    # Also allow app subdomains and local dev origins for safer defaults.
+    allow_origin_regex=r"https://([a-z0-9-]+\.)?itspayday\.in$|http://localhost(:\d+)?$|http://127\.0\.0\.1(:\d+)?$",
     allow_credentials=True,
     allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
