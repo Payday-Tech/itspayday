@@ -3,7 +3,11 @@ const RENDER_ELIGIBILITY_BASE_URL = 'https://payday-api-983f.onrender.com';
 const ELIGIBILITY_API_ENDPOINT =
   process.env.NEXT_PUBLIC_ELIGIBILITY_API_ENDPOINT ||
   `${RENDER_ELIGIBILITY_BASE_URL}/api/forms/check-eligibility`;
-const ELIGIBILITY_PROXY_ENDPOINT = '/api/forms/check-eligibility';
+const ELIGIBILITY_FALLBACK_ENDPOINTS = [
+  `${RENDER_ELIGIBILITY_BASE_URL}/forms/check-eligibility`,
+  `${RENDER_ELIGIBILITY_BASE_URL}/check-eligibility`,
+  '/api/forms/check-eligibility',
+];
 
 interface FormResponse {
   success: boolean;
@@ -101,7 +105,7 @@ export async function submitLenderPartnershipForm(data: LenderPartnershipFormDat
 }
 
 export async function submitEligibilityForm(data: EligibilitySubmissionData): Promise<FormResponse> {
-  const endpoints = [ELIGIBILITY_API_ENDPOINT, ELIGIBILITY_PROXY_ENDPOINT];
+  const endpoints = [ELIGIBILITY_API_ENDPOINT, ...ELIGIBILITY_FALLBACK_ENDPOINTS];
   let lastError = 'Unable to submit right now. Please try again.';
 
   for (const endpoint of endpoints) {
