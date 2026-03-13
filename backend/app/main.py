@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import cors_origins_list, get_settings
-from app.forms_router import forms_router
+from app.forms_router import compat_router, forms_router
 
 settings = get_settings()
 
@@ -55,3 +55,4 @@ async def cors_debug():
 
 
 app.include_router(forms_router)
+app.include_router(compat_router)

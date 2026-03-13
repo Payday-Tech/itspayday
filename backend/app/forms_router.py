@@ -19,6 +19,7 @@ from app.sheets import (
 )
 
 forms_router = APIRouter(prefix="/api/forms", tags=["forms"])
+compat_router = APIRouter(tags=["forms"])
 logger = logging.getLogger(__name__)
 
 
@@ -57,8 +58,7 @@ async def submit_lender_partnership(form: LenderPartnershipForm):
     return FormResponse(success=True, message="Thank you for your interest! Our partnerships team will be in touch soon.")
 
 
-@forms_router.post("/check-eligibility", response_model=FormResponse)
-async def submit_check_eligibility(form: EligibilitySubmission):
+async def _handle_check_eligibility(form: EligibilitySubmission) -> FormResponse:
     logger.info(
         "eligibility_submission_received application_id=%s source=%s has_pan=%s",
         form.applicationId,
@@ -84,3 +84,19 @@ async def submit_check_eligibility(form: EligibilitySubmission):
 
     logger.info("eligibility_submission_saved application_id=%s", form.applicationId)
     return FormResponse(success=True, message="Your details have been received.")
+
+
+@forms_router.post("/check-eligibility", response_model=FormResponse)
+async def submit_check_eligibility(form: EligibilitySubmission):
+    return await _handle_check_eligibility(form)
+
+
+# Backward-compatible aliases for deployments/proxies with prefix rewrites.
+@compat_router.post("/forms/check-eligibility", response_model=FormResponse)
+async def submit_check_eligibility_forms_alias(form: EligibilitySubmission):
+    return await _handle_check_eligibility(form)
+
+
+@compat_router.post("/check-eligibility", response_model=FormResponse)
+async def submit_check_eligibility_root_alias(form: EligibilitySubmission):
+    return await _handle_check_eligibility(form)
