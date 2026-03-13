@@ -96,6 +96,19 @@ export async function submitLenderPartnershipForm(data: LenderPartnershipFormDat
 }
 
 export async function submitEligibilityForm(data: EligibilitySubmissionData): Promise<FormResponse> {
-  return submitForm('/api/forms/check-eligibility', data);
+  const response = await fetch('/api/forms/check-eligibility', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({ detail: 'Submission failed' }));
+    throw new Error(error.detail || 'Submission failed');
+  }
+
+  return response.json();
 }
 
