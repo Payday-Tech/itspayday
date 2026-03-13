@@ -1,7 +1,7 @@
 'use client';
 
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
-import { EligibilitySubmissionData, submitEligibilityEvent, submitEligibilityForm } from '@/lib/api';
+import { EligibilitySubmissionData, submitEligibilityForm } from '@/lib/api';
 
 type StepKey = 'basic' | 'identity' | 'address' | 'additional' | 'consent';
 type UploadKind = 'voterIdUpload' | 'drivingLicenceUpload' | 'passportUpload';
@@ -19,6 +19,7 @@ interface FormData {
   dob: string;
   hasPan: 'yes' | 'no';
   pan: string;
+  fallbackIdType: UploadKind | '';
   address1: string;
   city1: string;
   state1: string;
@@ -37,6 +38,12 @@ const CONSENT_TEXT_VERSION = 'v1_2026_03';
 const ACCEPTED_UPLOAD_TYPES = ['image/jpeg', 'image/png', 'application/pdf'];
 const ACCEPTED_UPLOAD_EXTENSIONS = '.jpg,.jpeg,.png,.pdf';
 const MAX_UPLOAD_SIZE = 8 * 1024 * 1024;
+
+const FALLBACK_ID_OPTIONS: Array<{ value: UploadKind; label: string }> = [
+  { value: 'voterIdUpload', label: 'Voter ID photo' },
+  { value: 'drivingLicenceUpload', label: 'Driving Licence photo' },
+  { value: 'passportUpload', label: 'Passport photo' },
+];
 
 const STATE_OPTIONS = [
   { code: 'AN', name: 'Andaman and Nicobar Islands' },
@@ -92,6 +99,7 @@ const initialData: FormData = {
   dob: '',
   hasPan: 'yes',
   pan: '',
+  fallbackIdType: '',
   address1: '',
   city1: '',
   state1: '',
@@ -139,9 +147,7 @@ const calculateAge = (dobDate: Date): number => {
 
 const genId = () => `PD-${Date.now()}-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
 
-const safeTrack = (payload: Parameters<typeof submitEligibilityEvent>[0]) => {
-  submitEligibilityEvent(payload).catch(() => undefined);
-};
+const getFallbackLabel = (kind: UploadKind | '') => FALLBACK_ID_OPTIONS.find((option) => option.value === kind)?.label || '';
 
 export default function CheckEligibilityPage() {
   const [data, setData] = useState<FormData>(initialData);
@@ -151,18 +157,8 @@ export default function CheckEligibilityPage() {
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState('');
   const [uploads, setUploads] = useState<Partial<Record<UploadKind, UploadState>>>({});
-  const sessionIdRef = useRef<string>(`session_${Math.random().toString(36).slice(2, 10)}`);
   const applicationIdRef = useRef<string>(genId());
   const datePickerRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    safeTrack({
-      applicationId: applicationIdRef.current,
-      sessionId: sessionIdRef.current,
-      eventName: 'step_view',
-      step,
-    });
-  }, [step]);
 
   useEffect(() => {
     return () => {
@@ -204,6 +200,14 @@ export default function CheckEligibilityPage() {
     if (data.hasPan === 'yes') {
       if (!panRegex.test(data.pan)) {
         nextErrors.pan = 'Please enter a valid PAN';
+      }
+    }
+
+    if (data.hasPan === 'no') {
+      if (!data.fallbackIdType) {
+        nextErrors.fallbackIdType = 'Please choose one ID to upload';
+      } else if (!uploads[data.fallbackIdType]) {
+        nextErrors.fallbackUpload = 'Please upload a clear file';
       }
     }
 
@@ -268,7 +272,7 @@ export default function CheckEligibilityPage() {
 
   const handleTextChange = (key: keyof FormData, value: string | boolean) => {
     setData((prev) => ({ ...prev, [key]: value }));
-    setErrors((prev) => ({ ...prev, [key]: undefined }));
+    setErrors((prev) => ({ ...prev, [key]: undefined, fallbackUpload: undefined }));
   };
 
   const openDatePicker = () => {
@@ -283,17 +287,13 @@ export default function CheckEligibilityPage() {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    safeTrack({ applicationId: applicationIdRef.current, sessionId: sessionIdRef.current, eventName: 'upload_started', step: 'identity', metadataJson: JSON.stringify({ kind, fileType: file.type }) });
-
     if (!ACCEPTED_UPLOAD_TYPES.includes(file.type)) {
       setErrors((prev) => ({ ...prev, [kind]: 'Please upload a clear file (JPG, PNG or PDF)' }));
-      safeTrack({ applicationId: applicationIdRef.current, sessionId: sessionIdRef.current, eventName: 'upload_failed', step: 'identity', metadataJson: JSON.stringify({ kind, reason: 'invalid_type' }) });
       return;
     }
 
     if (file.size > MAX_UPLOAD_SIZE) {
       setErrors((prev) => ({ ...prev, [kind]: 'Please upload a clear file under 8 MB' }));
-      safeTrack({ applicationId: applicationIdRef.current, sessionId: sessionIdRef.current, eventName: 'upload_failed', step: 'identity', metadataJson: JSON.stringify({ kind, reason: 'file_too_large' }) });
       return;
     }
 
@@ -308,8 +308,6 @@ export default function CheckEligibilityPage() {
         },
       };
     });
-
-    safeTrack({ applicationId: applicationIdRef.current, sessionId: sessionIdRef.current, eventName: 'upload_completed', step: 'identity', metadataJson: JSON.stringify({ kind, fileName: file.name, fileSize: file.size }) });
   };
 
   const removeUpload = (kind: UploadKind) => {
@@ -327,7 +325,6 @@ export default function CheckEligibilityPage() {
       setErrors((prev) => ({ ...prev, ...nextErrors }));
       return;
     }
-    safeTrack({ applicationId: applicationIdRef.current, sessionId: sessionIdRef.current, eventName: 'step_complete', step });
     setStep(STEP_ORDER[currentStepIndex + 1]);
   };
 
@@ -357,9 +354,9 @@ export default function CheckEligibilityPage() {
       lastName: data.lastName.trim(),
       dob: data.dob,
       pan: data.hasPan === 'yes' ? data.pan.toUpperCase() : '',
-      voterIdUpload: asUploadMeta('voterIdUpload'),
-      drivingLicenceUpload: asUploadMeta('drivingLicenceUpload'),
-      passportUpload: asUploadMeta('passportUpload'),
+      voterIdUpload: data.hasPan === 'no' && data.fallbackIdType === 'voterIdUpload' ? asUploadMeta('voterIdUpload') : null,
+      drivingLicenceUpload: data.hasPan === 'no' && data.fallbackIdType === 'drivingLicenceUpload' ? asUploadMeta('drivingLicenceUpload') : null,
+      passportUpload: data.hasPan === 'no' && data.fallbackIdType === 'passportUpload' ? asUploadMeta('passportUpload') : null,
       phone1: data.mobile,
       phone2: data.phone2,
       address1: data.address1.trim(),
@@ -391,11 +388,9 @@ export default function CheckEligibilityPage() {
 
     try {
       await submitEligibilityForm(buildPayload());
-      safeTrack({ applicationId: applicationIdRef.current, sessionId: sessionIdRef.current, eventName: 'submit_success', step: 'consent' });
       setSubmitted(true);
     } catch (error) {
       setSubmitError(error instanceof Error ? error.message : 'Could not submit. Please try again.');
-      safeTrack({ applicationId: applicationIdRef.current, sessionId: sessionIdRef.current, eventName: 'submit_error', step: 'consent', metadataJson: JSON.stringify({ message: String(error) }) });
     } finally {
       setSubmitting(false);
     }
@@ -484,8 +479,14 @@ export default function CheckEligibilityPage() {
                 <div>
                   <label>Do you have a PAN card?</label>
                   <div className="radio-group">
-                    <label className="radio-item"><input type="radio" name="hasPan" checked={data.hasPan === 'yes'} onChange={() => handleTextChange('hasPan', 'yes')} /> Yes</label>
-                    <label className="radio-item"><input type="radio" name="hasPan" checked={data.hasPan === 'no'} onChange={() => handleTextChange('hasPan', 'no')} /> No</label>
+                    <label className="radio-item"><input type="radio" name="hasPan" checked={data.hasPan === 'yes'} onChange={() => {
+                      setData((prev) => ({ ...prev, hasPan: 'yes', fallbackIdType: '' }));
+                      setErrors((prev) => ({ ...prev, fallbackIdType: undefined, fallbackUpload: undefined }));
+                    }} /> Yes</label>
+                    <label className="radio-item"><input type="radio" name="hasPan" checked={data.hasPan === 'no'} onChange={() => {
+                      setData((prev) => ({ ...prev, hasPan: 'no', pan: '' }));
+                      setErrors((prev) => ({ ...prev, pan: undefined }));
+                    }} /> No</label>
                   </div>
                 </div>
 
@@ -499,30 +500,45 @@ export default function CheckEligibilityPage() {
                 ) : (
                   <div className="fallback-upload-wrap">
                     <p className="helper-text"><strong>If you do not have PAN, you can upload one other ID photo.</strong> You do not need to type the ID number.</p>
-                    {([
-                      ['voterIdUpload', 'Voter ID photo'],
-                      ['drivingLicenceUpload', 'Driving Licence photo'],
-                      ['passportUpload', 'Passport photo'],
-                    ] as [UploadKind, string][]).map(([kind, label]) => {
-                      const upload = uploads[kind];
-                      return (
-                        <div key={kind} className="upload-card">
-                          <label>{label}</label>
-                          <p className="helper-text">Upload a clear photo of your ID</p>
-                          <input type="file" accept={ACCEPTED_UPLOAD_EXTENSIONS} capture="environment" onChange={(event) => handleUploadChange(kind, event)} />
-                          {errors[kind] && <p className="helper-text form-error">{errors[kind]}</p>}
-                          {upload && (
-                            <div className="upload-preview">
-                              <p className="small">{upload.file.name}</p>
-                              <div className="upload-actions">
-                                {upload.file.type.startsWith('image/') && <a href={upload.previewUrl} target="_blank" rel="noreferrer" className="button-link">Preview</a>}
-                                <button type="button" className="button-link" onClick={() => removeUpload(kind)}>Remove</button>
-                              </div>
+                    <div className="upload-card">
+                      <label>Choose one ID to upload</label>
+                      <div className="radio-group fallback-radio-group">
+                        {FALLBACK_ID_OPTIONS.map((option) => (
+                          <label key={option.value} className="radio-item">
+                            <input
+                              type="radio"
+                              name="fallbackIdType"
+                              checked={data.fallbackIdType === option.value}
+                              onChange={() => {
+                                setData((prev) => ({ ...prev, fallbackIdType: option.value }));
+                                setErrors((prev) => ({ ...prev, fallbackIdType: undefined, fallbackUpload: undefined }));
+                              }}
+                            />
+                            {option.label}
+                          </label>
+                        ))}
+                      </div>
+                      {errors.fallbackIdType && <p className="helper-text form-error">{errors.fallbackIdType}</p>}
+                    </div>
+
+                    {data.fallbackIdType && (
+                      <div className="upload-card">
+                        <label>{getFallbackLabel(data.fallbackIdType)}</label>
+                        <p className="helper-text">Upload a clear photo of your ID</p>
+                        <input type="file" accept={ACCEPTED_UPLOAD_EXTENSIONS} capture="environment" onChange={(event) => handleUploadChange(data.fallbackIdType as UploadKind, event)} />
+                        {errors.fallbackUpload && <p className="helper-text form-error">{errors.fallbackUpload}</p>}
+                        {errors[data.fallbackIdType] && <p className="helper-text form-error">{errors[data.fallbackIdType]}</p>}
+                        {uploads[data.fallbackIdType] && (
+                          <div className="upload-preview">
+                            <p className="small">{uploads[data.fallbackIdType]?.file.name}</p>
+                            <div className="upload-actions">
+                              {uploads[data.fallbackIdType]?.file.type.startsWith('image/') && <a href={uploads[data.fallbackIdType]?.previewUrl} target="_blank" rel="noreferrer" className="button-link">Preview</a>}
+                              <button type="button" className="button-link" onClick={() => removeUpload(data.fallbackIdType as UploadKind)}>Remove</button>
                             </div>
-                          )}
-                        </div>
-                      );
-                    })}
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
                 )}
               </>
@@ -584,6 +600,7 @@ export default function CheckEligibilityPage() {
                     <li><strong>Mobile:</strong> {data.mobile}</li>
                     <li><strong>Date of birth:</strong> {data.dob}</li>
                     <li><strong>PAN:</strong> {data.hasPan === 'yes' ? data.pan : 'Not provided'}</li>
+                    {data.hasPan === 'no' && data.fallbackIdType && <li><strong>Uploaded ID:</strong> {getFallbackLabel(data.fallbackIdType)}</li>}
                     <li><strong>Address:</strong> {data.address1}, {data.city1}, {data.state1} - {data.pincode1}</li>
                     {data.phone2 && <li><strong>Alternate mobile:</strong> {data.phone2}</li>}
                   </ul>

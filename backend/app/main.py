@@ -7,7 +7,6 @@ from app.schemas import (
     ContactForm,
     LenderPartnershipForm,
     EligibilitySubmission,
-    EligibilityEvent,
     FormResponse,
 )
 from app.recaptcha import verify_recaptcha
@@ -17,9 +16,7 @@ from app.sheets import (
     save_contact_form,
     save_lender_partnership_form,
     save_eligibility_submission,
-    save_eligibility_event,
 )
-
 settings = get_settings()
 
 app = FastAPI(
@@ -27,12 +24,8 @@ app = FastAPI(
     description="Backend API for Payday website forms",
     version="1.0.0",
 )
-
-<<<<<<< codex/create-pre-application-eligibility-form-92mikg
 origins = [origin.strip() for origin in settings.cors_origins.split(",") if origin.strip()]
-=======
-origins = [origin.strip() for origin in settings.cors_origins.split(",")]
->>>>>>> main
+origins = [origin.strip() for origin in settings.cors_origins.split(",") if origin.strip()]
 
 app.add_middleware(
     CORSMiddleware,
@@ -40,7 +33,7 @@ app.add_middleware(
     # Also allow app subdomains and local dev origins for safer defaults.
     allow_origin_regex=r"https://([a-z0-9-]+\.)?itspayday\.in$|http://localhost(:\d+)?$|http://127\.0\.0\.1(:\d+)?$",
     allow_credentials=True,
-    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_methods=["*"],
     allow_headers=["*"],
 )
 
@@ -103,16 +96,3 @@ async def submit_check_eligibility(form: EligibilitySubmission):
     )
 
     return FormResponse(success=True, message="Your details have been received.")
-
-
-@app.post("/api/forms/eligibility-event", response_model=FormResponse)
-async def save_check_eligibility_event(event: EligibilityEvent):
-    save_eligibility_event(
-        application_id=event.applicationId,
-        session_id=event.sessionId,
-        event_name=event.eventName,
-        step=event.step,
-        metadata_json=event.metadataJson,
-    )
-
-    return FormResponse(success=True, message="Event stored")

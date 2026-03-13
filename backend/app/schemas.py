@@ -68,14 +68,6 @@ class EligibilitySubmission(BaseModel):
     source: str
 
 
-class EligibilityEvent(BaseModel):
-    applicationId: str
-    sessionId: str
-    eventName: Literal['step_view', 'step_complete', 'submit_success', 'submit_error', 'upload_started', 'upload_completed', 'upload_failed']
-    step: str
-    metadataJson: str = ''
-
-
 class FormResponse(BaseModel):
     """Standard form response"""
     success: bool

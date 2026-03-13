@@ -1,4 +1,4 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
 
 interface FormResponse {
   success: boolean;
@@ -66,14 +66,6 @@ export interface EligibilitySubmissionData {
   source: string;
 }
 
-export interface EligibilityEventData {
-  applicationId: string;
-  sessionId: string;
-  eventName: 'step_view' | 'step_complete' | 'submit_success' | 'submit_error' | 'upload_started' | 'upload_completed' | 'upload_failed';
-  step: string;
-  metadataJson?: string;
-}
-
 async function submitForm<T>(endpoint: string, data: T): Promise<FormResponse> {
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     method: 'POST',
@@ -107,6 +99,3 @@ export async function submitEligibilityForm(data: EligibilitySubmissionData): Pr
   return submitForm('/api/forms/check-eligibility', data);
 }
 
-export async function submitEligibilityEvent(data: EligibilityEventData): Promise<FormResponse> {
-  return submitForm('/api/forms/eligibility-event', data);
-}
