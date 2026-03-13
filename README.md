@@ -135,6 +135,24 @@ The backend is configured to deploy on Render:
    - `CORS_ORIGINS` - Your Netlify domain(s)
    - `ENVIRONMENT` - `production`
 
+### GitHub CI/CD for backend Render deploys
+
+This repo includes a GitHub Actions workflow at `.github/workflows/deploy-render-backend.yml` that:
+
+1. Runs backend tests when files in `backend/**` change on `main`.
+2. Triggers a Render deploy via Render API if tests pass.
+
+Configure the following GitHub repository secrets:
+
+- `RENDER_API_KEY` - Render API key (from Render account settings)
+- `RENDER_SERVICE_ID` - Render service ID for the backend web service (`payday-api`)
+
+To set them in GitHub:
+
+1. Open **GitHub → Repository → Settings → Secrets and variables → Actions**.
+2. Click **New repository secret**.
+3. Add `RENDER_API_KEY` and `RENDER_SERVICE_ID`.
+
 ## Security Features
 
 - **Security Headers**: X-Frame-Options, CSP, HSTS, etc.

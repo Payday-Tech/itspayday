@@ -1,4 +1,7 @@
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
+const ELIGIBILITY_API_ENDPOINT =
+  process.env.NEXT_PUBLIC_ELIGIBILITY_API_ENDPOINT ||
+  '/api/forms/check-eligibility';
 const ELIGIBILITY_API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL ||
   process.env.NEXT_PUBLIC_API_URL ||
@@ -100,18 +103,39 @@ export async function submitLenderPartnershipForm(data: LenderPartnershipFormDat
 }
 
 export async function submitEligibilityForm(data: EligibilitySubmissionData): Promise<FormResponse> {
-  const response = await fetch(`${ELIGIBILITY_API_BASE_URL}/api/forms/check-eligibility`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  });
+  const endpoints = [
+    ELIGIBILITY_API_ENDPOINT,
+    `${ELIGIBILITY_API_BASE_URL}/api/forms/check-eligibility`,
+  ];
 
-  if (!response.ok) {
-    const error = await response.json().catch(() => ({ detail: 'Unable to submit right now. Please try again.' }));
-    throw new Error(error.detail || 'Unable to submit right now. Please try again.');
+  let lastError = 'Unable to submit right now. Please try again.';
+
+  for (const endpoint of endpoints) {
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (response.ok) {
+      return response.json();
+    }
+
+    const contentType = response.headers.get('content-type') || '';
+    const shouldFallback = response.status === 404 || contentType.includes('text/html');
+
+    if (shouldFallback) {
+      continue;
+    }
+
+    const error = await response
+      .json()
+      .catch(() => ({ detail: 'Unable to submit right now. Please try again.' }));
+    lastError = error.detail || lastError;
+    break;
   }
 
-  return response.json();
+  throw new Error(lastError);
 }
