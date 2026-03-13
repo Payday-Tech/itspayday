@@ -12,6 +12,12 @@ class Settings(BaseSettings):
         "https://itspayday.in,https://www.itspayday.in,"
         "http://localhost:3000,http://localhost:3001,http://127.0.0.1:3000,http://127.0.0.1:3001"
     )
+    cors_origin_regex: str = (
+        r"^https://([a-zA-Z0-9-]+\.)*itspayday\.in$|"
+        r"^https://payday-api-[a-zA-Z0-9-]+\.onrender\.com$|"
+        r"^http://localhost(:\d+)?$|"
+        r"^http://127\.0\.0\.1(:\d+)?$"
+    )
 
     # Environment
     environment: str = "development"
@@ -36,3 +42,8 @@ class Settings(BaseSettings):
 @lru_cache()
 def get_settings() -> Settings:
     return Settings()
+
+
+def cors_origins_list(raw_origins: str) -> list[str]:
+    """Return normalized list of CORS origins from a comma-separated setting."""
+    return [origin.strip() for origin in raw_origins.split(",") if origin.strip()]

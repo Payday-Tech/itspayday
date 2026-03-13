@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.config import get_settings
+from app.config import cors_origins_list, get_settings
 from app.schemas import (
     GetStartedForm,
     ContactForm,
@@ -28,13 +28,12 @@ app = FastAPI(
     version="1.0.0",
 )
 
-origins = [origin.strip() for origin in settings.cors_origins.split(",") if origin.strip()]
+origins = cors_origins_list(settings.cors_origins)
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
-    # Also allow app subdomains, Render deployments, and local dev origins.
-    allow_origin_regex=r"^https://([a-zA-Z0-9-]+\.)*itspayday\.in$|^https://payday-api-[a-zA-Z0-9-]+\.onrender\.com$|^http://localhost(:\d+)?$|^http://127\.0\.0\.1(:\d+)?$",
+    allow_origin_regex=settings.cors_origin_regex,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
