@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "check-conflicts": "bash scripts/check-conflicts.sh"
+    "check-conflicts": "bash scripts/check-conflicts.sh",
+    "test:eligibility-api": "bash scripts/test-eligibility-api.sh"
   },
   "dependencies": {
     "next": "^14.2.0",
