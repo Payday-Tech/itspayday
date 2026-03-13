@@ -1,4 +1,28 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
+const DEFAULT_ELIGIBILITY_API_BASE_URL = 'https://payday-api-983f.onrender.com';
+
+function resolveEligibilityApiBaseUrl(): string {
+  const configuredBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || process.env.NEXT_PUBLIC_API_URL || '';
+
+  if (!configuredBaseUrl) {
+    return DEFAULT_ELIGIBILITY_API_BASE_URL;
+  }
+
+  try {
+    const parsed = new URL(configuredBaseUrl);
+
+    // Netlify-hosted frontend domain must never be used as API base for eligibility submit.
+    if (parsed.hostname === 'itspayday.in' || parsed.hostname === 'www.itspayday.in') {
+      return DEFAULT_ELIGIBILITY_API_BASE_URL;
+    }
+
+    return parsed.origin;
+  } catch {
+    return DEFAULT_ELIGIBILITY_API_BASE_URL;
+  }
+}
+
+const ELIGIBILITY_API_BASE_URL = resolveEligibilityApiBaseUrl();
 
 interface FormResponse {
   success: boolean;
@@ -31,6 +55,41 @@ interface LenderPartnershipFormData {
   recaptcha_token: string;
 }
 
+export interface EligibilityUploadMeta {
+  label: 'voterIdUpload' | 'drivingLicenceUpload' | 'passportUpload';
+  fileName: string;
+  fileType: string;
+  fileSize: number;
+  storageRef: string;
+}
+
+export interface EligibilitySubmissionData {
+  applicationId: string;
+  fullName: string;
+  firstName: string;
+  lastName: string;
+  dob: string;
+  pan: string;
+  voterIdUpload: EligibilityUploadMeta | null;
+  drivingLicenceUpload: EligibilityUploadMeta | null;
+  passportUpload: EligibilityUploadMeta | null;
+  phone1: string;
+  phone2: string;
+  address1: string;
+  city1: string;
+  state1: string;
+  pincode1: string;
+  address2: string;
+  city2: string;
+  state2: string;
+  pincode2: string;
+  consentAccepted: boolean;
+  consentTimestamp: string;
+  consentTextVersion: string;
+  privacyAccepted: boolean;
+  source: string;
+}
+
 async function submitForm<T>(endpoint: string, data: T): Promise<FormResponse> {
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     method: 'POST',
@@ -58,4 +117,21 @@ export async function submitContactForm(data: ContactFormData): Promise<FormResp
 
 export async function submitLenderPartnershipForm(data: LenderPartnershipFormData): Promise<FormResponse> {
   return submitForm('/api/forms/lender-partnership', data);
+}
+
+export async function submitEligibilityForm(data: EligibilitySubmissionData): Promise<FormResponse> {
+  const response = await fetch(`${ELIGIBILITY_API_BASE_URL}/api/forms/check-eligibility`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({ detail: 'Unable to submit right now. Please try again.' }));
+    throw new Error(error.detail || 'Unable to submit right now. Please try again.');
+  }
+
+  return response.json();
 }

@@ -6,3 +6,4 @@ httpx==0.26.0
 python-multipart==0.0.6
 gspread==6.0.2
 google-auth==2.27.0
+supabase==2.4.0

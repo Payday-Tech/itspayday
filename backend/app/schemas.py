@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr, Field
-from typing import Optional
+from typing import Literal, Optional
 
 
 class RecaptchaBase(BaseModel):
@@ -31,6 +31,41 @@ class LenderPartnershipForm(RecaptchaBase):
     role: str = Field(..., min_length=1, max_length=100)
     city: str = Field(..., min_length=1, max_length=100)
     notes: Optional[str] = Field(None, max_length=1000)
+
+
+class EligibilityUploadMeta(BaseModel):
+    label: Literal['voterIdUpload', 'drivingLicenceUpload', 'passportUpload']
+    fileName: str = Field(..., min_length=1, max_length=300)
+    fileType: str = Field(..., min_length=1, max_length=100)
+    fileSize: int = Field(..., ge=1)
+    storageRef: str = Field(..., min_length=1, max_length=500)
+
+
+class EligibilitySubmission(BaseModel):
+    applicationId: str
+    fullName: str
+    firstName: str
+    lastName: str
+    dob: str
+    pan: str
+    voterIdUpload: Optional[EligibilityUploadMeta] = None
+    drivingLicenceUpload: Optional[EligibilityUploadMeta] = None
+    passportUpload: Optional[EligibilityUploadMeta] = None
+    phone1: str
+    phone2: str = ''
+    address1: str
+    city1: str
+    state1: str
+    pincode1: str
+    address2: str = ''
+    city2: str = ''
+    state2: str = ''
+    pincode2: str = ''
+    consentAccepted: bool
+    consentTimestamp: str
+    consentTextVersion: str
+    privacyAccepted: bool
+    source: str
 
 
 class FormResponse(BaseModel):
