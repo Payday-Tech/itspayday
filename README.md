@@ -49,6 +49,7 @@ Create a `.env.local` file:
 ```env
 NEXT_PUBLIC_RECAPTCHA_SITE_KEY=your_recaptcha_site_key
 NEXT_PUBLIC_API_URL=http://localhost:8000
+NEXT_PUBLIC_ELIGIBILITY_API_ENDPOINT=http://localhost:8000/api/forms/check-eligibility
 ```
 
 For Netlify deployment, set these in your Netlify environment variables.
@@ -60,7 +61,8 @@ The frontend is configured to deploy on Netlify:
 1. Connect your repository to Netlify
 2. Set environment variables:
    - `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` - reCAPTCHA v2 site key
-   - `NEXT_PUBLIC_API_URL` - Backend API URL (Render)
+   - `NEXT_PUBLIC_API_URL` - Backend API URL (for existing forms)
+   - `NEXT_PUBLIC_ELIGIBILITY_API_ENDPOINT` - Full eligibility submit endpoint (defaults to Render backend URL)
 3. Deploy - Netlify will use the `netlify.toml` configuration
 
 ## Backend (FastAPI)
