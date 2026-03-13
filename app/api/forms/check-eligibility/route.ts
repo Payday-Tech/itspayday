@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const BACKEND_BASE_URL = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const BACKEND_BASE_URL =
+  process.env.API_URL ||
+  process.env.NEXT_PUBLIC_API_URL ||
+  'https://payday-api-983f.onrender.com';
 
 export async function POST(request: NextRequest) {
   try {

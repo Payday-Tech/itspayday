@@ -1,3 +1,5 @@
+import logging
+
 from fastapi import APIRouter, HTTPException, status
 
 from app.notifications import send_success_alert
@@ -17,6 +19,7 @@ from app.sheets import (
 )
 
 forms_router = APIRouter(prefix="/api/forms", tags=["forms"])
+logger = logging.getLogger(__name__)
 
 
 @forms_router.post("/get-started", response_model=FormResponse)
@@ -56,14 +59,28 @@ async def submit_lender_partnership(form: LenderPartnershipForm):
 
 @forms_router.post("/check-eligibility", response_model=FormResponse)
 async def submit_check_eligibility(form: EligibilitySubmission):
+    logger.info(
+        "eligibility_submission_received application_id=%s source=%s has_pan=%s",
+        form.applicationId,
+        form.source,
+        bool(form.pan),
+    )
+
     if not form.consentAccepted or not form.privacyAccepted:
+        logger.warning("eligibility_submission_rejected application_id=%s reason=missing_consent", form.applicationId)
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Consent is required")
 
-    save_eligibility_submission(form)
-    send_success_alert(
-        first_name=form.firstName,
-        mobile=form.phone1,
-        application_id=form.applicationId,
-        has_pan=bool(form.pan),
-    )
+    try:
+        save_eligibility_submission(form)
+        send_success_alert(
+            first_name=form.firstName,
+            mobile=form.phone1,
+            application_id=form.applicationId,
+            has_pan=bool(form.pan),
+        )
+    except Exception:
+        logger.exception("eligibility_submission_failed application_id=%s", form.applicationId)
+        raise
+
+    logger.info("eligibility_submission_saved application_id=%s", form.applicationId)
     return FormResponse(success=True, message="Your details have been received.")
