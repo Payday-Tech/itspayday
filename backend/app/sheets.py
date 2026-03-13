@@ -104,7 +104,6 @@ def get_headers_for_sheet(sheet_name: str) -> list:
             "submitted_at", "application_id", "first_name", "last_name", "mobile", "dob", "pan", "address", "city", "state",
             "pincode", "phone2", "consent", "consent_timestamp", "privacy", "source", "voter_upload_ref", "driving_licence_upload_ref", "passport_upload_ref",
         ],
-        "Eligibility Events": ["timestamp", "application_id", "session_id", "event_name", "step", "metadata_json"],
         "Eligibility Ops": ["timestamp", "application_id", "review_status", "bureau_status", "remarks", "partner_shared", "shared_at"],
     }
     return headers_map.get(sheet_name, [])
@@ -162,16 +161,4 @@ def save_eligibility_submission(form: EligibilitySubmission) -> bool:
             form.drivingLicenceUpload.storageRef if form.drivingLicenceUpload else '',
             form.passportUpload.storageRef if form.passportUpload else '',
         ],
-    )
-
-
-def save_eligibility_event(application_id: str, session_id: str, event_name: str, step: str, metadata_json: str) -> bool:
-    settings = get_settings()
-    if not settings.google_spreadsheet_id:
-        return False
-
-    return append_to_sheet(
-        settings.google_spreadsheet_id,
-        "Eligibility Events",
-        [application_id, session_id, event_name, step, metadata_json],
     )

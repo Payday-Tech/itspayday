@@ -1,13 +1,12 @@
 from fastapi import FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.config import cors_origins_list, get_settings
+from app.config import get_settings
 from app.schemas import (
     GetStartedForm,
     ContactForm,
     LenderPartnershipForm,
     EligibilitySubmission,
-    EligibilityEvent,
     FormResponse,
 )
 from app.recaptcha import verify_recaptcha
@@ -17,7 +16,6 @@ from app.sheets import (
     save_contact_form,
     save_lender_partnership_form,
     save_eligibility_submission,
-    save_eligibility_event,
 )
 
 settings = get_settings()
@@ -28,12 +26,13 @@ app = FastAPI(
     version="1.0.0",
 )
 
-origins = cors_origins_list(settings.cors_origins)
+origins = [origin.strip() for origin in settings.cors_origins.split(",") if origin.strip()]
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
-    allow_origin_regex=settings.cors_origin_regex,
+    # Also allow app subdomains and local dev origins for safer defaults.
+    allow_origin_regex=r"https://([a-z0-9-]+\.)?itspayday\.in$|http://localhost(:\d+)?$|http://127\.0\.0\.1(:\d+)?$",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -98,16 +97,3 @@ async def submit_check_eligibility(form: EligibilitySubmission):
     )
 
     return FormResponse(success=True, message="Your details have been received.")
-
-
-@app.post("/api/forms/eligibility-event", response_model=FormResponse)
-async def save_check_eligibility_event(event: EligibilityEvent):
-    save_eligibility_event(
-        application_id=event.applicationId,
-        session_id=event.sessionId,
-        event_name=event.eventName,
-        step=event.step,
-        metadata_json=event.metadataJson,
-    )
-
-    return FormResponse(success=True, message="Event stored")

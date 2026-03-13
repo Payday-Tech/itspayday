@@ -1,7 +1,7 @@
 'use client';
 
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
-import { EligibilitySubmissionData, submitEligibilityEvent, submitEligibilityForm } from '@/lib/api';
+import { EligibilitySubmissionData, submitEligibilityForm } from '@/lib/api';
 
 type StepKey = 'basic' | 'identity' | 'address' | 'additional' | 'consent';
 type UploadKind = 'voterIdUpload' | 'drivingLicenceUpload' | 'passportUpload';
@@ -149,10 +149,6 @@ const genId = () => `PD-${Date.now()}-${Math.random().toString(36).slice(2, 8).t
 
 const getFallbackLabel = (kind: UploadKind | '') => FALLBACK_ID_OPTIONS.find((option) => option.value === kind)?.label || '';
 
-const safeTrack = (payload: Parameters<typeof submitEligibilityEvent>[0]) => {
-  submitEligibilityEvent(payload).catch(() => undefined);
-};
-
 export default function CheckEligibilityPage() {
   const [data, setData] = useState<FormData>(initialData);
   const [errors, setErrors] = useState<FormErrors>({});
@@ -161,18 +157,8 @@ export default function CheckEligibilityPage() {
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState('');
   const [uploads, setUploads] = useState<Partial<Record<UploadKind, UploadState>>>({});
-  const sessionIdRef = useRef<string>(`session_${Math.random().toString(36).slice(2, 10)}`);
   const applicationIdRef = useRef<string>(genId());
   const datePickerRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    safeTrack({
-      applicationId: applicationIdRef.current,
-      sessionId: sessionIdRef.current,
-      eventName: 'step_view',
-      step,
-    });
-  }, [step]);
 
   useEffect(() => {
     return () => {
@@ -301,17 +287,13 @@ export default function CheckEligibilityPage() {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    safeTrack({ applicationId: applicationIdRef.current, sessionId: sessionIdRef.current, eventName: 'upload_started', step: 'identity', metadataJson: JSON.stringify({ kind, fileType: file.type }) });
-
     if (!ACCEPTED_UPLOAD_TYPES.includes(file.type)) {
       setErrors((prev) => ({ ...prev, [kind]: 'Please upload a clear file (JPG, PNG or PDF)' }));
-      safeTrack({ applicationId: applicationIdRef.current, sessionId: sessionIdRef.current, eventName: 'upload_failed', step: 'identity', metadataJson: JSON.stringify({ kind, reason: 'invalid_type' }) });
       return;
     }
 
     if (file.size > MAX_UPLOAD_SIZE) {
       setErrors((prev) => ({ ...prev, [kind]: 'Please upload a clear file under 8 MB' }));
-      safeTrack({ applicationId: applicationIdRef.current, sessionId: sessionIdRef.current, eventName: 'upload_failed', step: 'identity', metadataJson: JSON.stringify({ kind, reason: 'file_too_large' }) });
       return;
     }
 
@@ -326,8 +308,6 @@ export default function CheckEligibilityPage() {
         },
       };
     });
-
-    safeTrack({ applicationId: applicationIdRef.current, sessionId: sessionIdRef.current, eventName: 'upload_completed', step: 'identity', metadataJson: JSON.stringify({ kind, fileName: file.name, fileSize: file.size }) });
   };
 
   const removeUpload = (kind: UploadKind) => {
@@ -345,7 +325,6 @@ export default function CheckEligibilityPage() {
       setErrors((prev) => ({ ...prev, ...nextErrors }));
       return;
     }
-    safeTrack({ applicationId: applicationIdRef.current, sessionId: sessionIdRef.current, eventName: 'step_complete', step });
     setStep(STEP_ORDER[currentStepIndex + 1]);
   };
 
@@ -409,11 +388,9 @@ export default function CheckEligibilityPage() {
 
     try {
       await submitEligibilityForm(buildPayload());
-      safeTrack({ applicationId: applicationIdRef.current, sessionId: sessionIdRef.current, eventName: 'submit_success', step: 'consent' });
       setSubmitted(true);
     } catch (error) {
       setSubmitError(error instanceof Error ? error.message : 'Could not submit. Please try again.');
-      safeTrack({ applicationId: applicationIdRef.current, sessionId: sessionIdRef.current, eventName: 'submit_error', step: 'consent', metadataJson: JSON.stringify({ message: String(error) }) });
     } finally {
       setSubmitting(false);
     }
