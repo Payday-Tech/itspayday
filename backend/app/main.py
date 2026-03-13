@@ -1,17 +1,25 @@
-from fastapi import FastAPI, HTTPException, status
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.config import get_settings
-from app.schemas import (
-    GetStartedForm,
-    ContactForm,
-    LenderPartnershipForm,
-    FormResponse,
-)
-from app.recaptcha import verify_recaptcha
-from app.sheets import save_get_started_form, save_contact_form, save_lender_partnership_form
+from app.config import cors_origins_list, get_settings
+from app.forms_router import forms_router
 
 settings = get_settings()
+
+SAFE_CORS_ORIGINS = {
+    "https://itspayday.in",
+    "https://www.itspayday.in",
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1:3001",
+}
+SAFE_CORS_REGEX = (
+    r"^https://([a-zA-Z0-9-]+\.)*itspayday\.in$|"
+    r"^https://payday-api-[a-zA-Z0-9-]+\.onrender\.com$|"
+    r"^http://localhost(:\d+)?$|"
+    r"^http://127\.0\.0\.1(:\d+)?$"
+)
 
 app = FastAPI(
     title="Payday API",
@@ -19,105 +27,31 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# Configure CORS
-origins = [origin.strip() for origin in settings.cors_origins.split(",")]
+origins = sorted(set(cors_origins_list(settings.cors_origins)).union(SAFE_CORS_ORIGINS))
+active_origin_regex = settings.cors_origin_regex or SAFE_CORS_REGEX
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
+    allow_origin_regex=active_origin_regex,
     allow_credentials=True,
-    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_methods=["*"],
     allow_headers=["*"],
 )
 
 
 @app.get("/health")
 async def health_check():
-    """Health check endpoint"""
     return {"status": "healthy", "environment": settings.environment}
 
 
-@app.post("/api/forms/get-started", response_model=FormResponse)
-async def submit_get_started(form: GetStartedForm):
-    """
-    Handle Get Started form submission from the modal.
-    """
-    # Verify reCAPTCHA
-    if not await verify_recaptcha(form.recaptcha_token):
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="reCAPTCHA verification failed",
-        )
-
-    # Save to Google Sheets
-    save_get_started_form(
-        first_name=form.first_name,
-        last_name=form.last_name,
-        occupation=form.occupation,
-    )
-
-    print(f"Get Started form submitted: {form.first_name} {form.last_name}, {form.occupation}")
-
-    return FormResponse(
-        success=True,
-        message="Thank you! We'll be in touch soon on WhatsApp.",
-    )
+@app.get("/debug/cors")
+async def cors_debug():
+    """Return active CORS configuration for deployment debugging."""
+    return {
+        "origins": origins,
+        "origin_regex": active_origin_regex,
+    }
 
 
-@app.post("/api/forms/contact", response_model=FormResponse)
-async def submit_contact(form: ContactForm):
-    """
-    Handle Contact form submission.
-    """
-    # Verify reCAPTCHA
-    if not await verify_recaptcha(form.recaptcha_token):
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="reCAPTCHA verification failed",
-        )
-
-    # Save to Google Sheets
-    save_contact_form(
-        name=form.name,
-        email=form.email,
-        topic=form.topic,
-        message=form.message,
-    )
-
-    print(f"Contact form submitted: {form.name}, {form.email}, Topic: {form.topic}")
-
-    return FormResponse(
-        success=True,
-        message="Thank you for your message! We'll respond within 1 business day.",
-    )
-
-
-@app.post("/api/forms/lender-partnership", response_model=FormResponse)
-async def submit_lender_partnership(form: LenderPartnershipForm):
-    """
-    Handle Lender Partnership form submission.
-    """
-    # Verify reCAPTCHA
-    if not await verify_recaptcha(form.recaptcha_token):
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="reCAPTCHA verification failed",
-        )
-
-    # Save to Google Sheets
-    save_lender_partnership_form(
-        name=form.name,
-        company=form.company,
-        email=form.email,
-        phone=form.phone,
-        role=form.role,
-        city=form.city,
-        notes=form.notes,
-    )
-
-    print(f"Lender partnership form submitted: {form.name} from {form.company}")
-
-    return FormResponse(
-        success=True,
-        message="Thank you for your interest! Our partnerships team will be in touch soon.",
-    )
+app.include_router(forms_router)
