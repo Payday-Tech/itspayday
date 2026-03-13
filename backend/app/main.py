@@ -17,7 +17,6 @@ from app.sheets import (
     save_lender_partnership_form,
     save_eligibility_submission,
 )
-
 settings = get_settings()
 
 app = FastAPI(
@@ -25,7 +24,7 @@ app = FastAPI(
     description="Backend API for Payday website forms",
     version="1.0.0",
 )
-
+origins = [origin.strip() for origin in settings.cors_origins.split(",") if origin.strip()]
 origins = [origin.strip() for origin in settings.cors_origins.split(",") if origin.strip()]
 
 app.add_middleware(
