@@ -1,4 +1,4 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
 
 interface FormResponse {
   success: boolean;
@@ -31,6 +31,41 @@ interface LenderPartnershipFormData {
   recaptcha_token: string;
 }
 
+export interface EligibilityUploadMeta {
+  label: 'voterIdUpload' | 'drivingLicenceUpload' | 'passportUpload';
+  fileName: string;
+  fileType: string;
+  fileSize: number;
+  storageRef: string;
+}
+
+export interface EligibilitySubmissionData {
+  applicationId: string;
+  fullName: string;
+  firstName: string;
+  lastName: string;
+  dob: string;
+  pan: string;
+  voterIdUpload: EligibilityUploadMeta | null;
+  drivingLicenceUpload: EligibilityUploadMeta | null;
+  passportUpload: EligibilityUploadMeta | null;
+  phone1: string;
+  phone2: string;
+  address1: string;
+  city1: string;
+  state1: string;
+  pincode1: string;
+  address2: string;
+  city2: string;
+  state2: string;
+  pincode2: string;
+  consentAccepted: boolean;
+  consentTimestamp: string;
+  consentTextVersion: string;
+  privacyAccepted: boolean;
+  source: string;
+}
+
 async function submitForm<T>(endpoint: string, data: T): Promise<FormResponse> {
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     method: 'POST',
@@ -59,3 +94,8 @@ export async function submitContactForm(data: ContactFormData): Promise<FormResp
 export async function submitLenderPartnershipForm(data: LenderPartnershipFormData): Promise<FormResponse> {
   return submitForm('/api/forms/lender-partnership', data);
 }
+
+export async function submitEligibilityForm(data: EligibilitySubmissionData): Promise<FormResponse> {
+  return submitForm('/api/forms/check-eligibility', data);
+}
+
