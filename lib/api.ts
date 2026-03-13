@@ -1,8 +1,7 @@
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
-const ELIGIBILITY_API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL ||
-  process.env.NEXT_PUBLIC_API_URL ||
-  'https://payday-api-983f.onrender.com';
+const ELIGIBILITY_API_ENDPOINT =
+  process.env.NEXT_PUBLIC_ELIGIBILITY_API_ENDPOINT ||
+  '/api/forms/check-eligibility';
 
 interface FormResponse {
   success: boolean;
@@ -100,7 +99,7 @@ export async function submitLenderPartnershipForm(data: LenderPartnershipFormDat
 }
 
 export async function submitEligibilityForm(data: EligibilitySubmissionData): Promise<FormResponse> {
-  const response = await fetch(`${ELIGIBILITY_API_BASE_URL}/api/forms/check-eligibility`, {
+  const response = await fetch(ELIGIBILITY_API_ENDPOINT, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
