@@ -3,6 +3,14 @@
 ## Goal
 Verify that customer submission works end-to-end with no CORS failure.
 
+## Frontend API base URL
+
+Set this on Netlify so the browser calls Render directly:
+
+```bash
+NEXT_PUBLIC_API_BASE_URL=https://payday-api-983f.onrender.com
+```
+
 ## Test cases
 
 1. **CORS preflight check passes**

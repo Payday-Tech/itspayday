@@ -1,4 +1,8 @@
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
+const ELIGIBILITY_API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_BASE_URL ||
+  process.env.NEXT_PUBLIC_API_URL ||
+  'https://payday-api-983f.onrender.com';
 
 interface FormResponse {
   success: boolean;
@@ -96,7 +100,7 @@ export async function submitLenderPartnershipForm(data: LenderPartnershipFormDat
 }
 
 export async function submitEligibilityForm(data: EligibilitySubmissionData): Promise<FormResponse> {
-  const response = await fetch('/api/forms/check-eligibility', {
+  const response = await fetch(`${ELIGIBILITY_API_BASE_URL}/api/forms/check-eligibility`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -105,10 +109,9 @@ export async function submitEligibilityForm(data: EligibilitySubmissionData): Pr
   });
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ detail: 'Submission failed' }));
-    throw new Error(error.detail || 'Submission failed');
+    const error = await response.json().catch(() => ({ detail: 'Unable to submit right now. Please try again.' }));
+    throw new Error(error.detail || 'Unable to submit right now. Please try again.');
   }
 
   return response.json();
 }
-
