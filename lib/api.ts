@@ -1,28 +1,5 @@
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
-const DEFAULT_ELIGIBILITY_API_BASE_URL = 'https://payday-api-983f.onrender.com';
-
-function resolveEligibilityApiBaseUrl(): string {
-  const configuredBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || process.env.NEXT_PUBLIC_API_URL || '';
-
-  if (!configuredBaseUrl) {
-    return DEFAULT_ELIGIBILITY_API_BASE_URL;
-  }
-
-  try {
-    const parsed = new URL(configuredBaseUrl);
-
-    // Netlify-hosted frontend domain must never be used as API base for eligibility submit.
-    if (parsed.hostname === 'itspayday.in' || parsed.hostname === 'www.itspayday.in') {
-      return DEFAULT_ELIGIBILITY_API_BASE_URL;
-    }
-
-    return parsed.origin;
-  } catch {
-    return DEFAULT_ELIGIBILITY_API_BASE_URL;
-  }
-}
-
-const ELIGIBILITY_API_BASE_URL = resolveEligibilityApiBaseUrl();
+const ELIGIBILITY_API_BASE_URL = (process.env.NEXT_PUBLIC_API_BASE_URL || 'https://payday-api-983f.onrender.com').replace(/\/$/, '');
 
 interface FormResponse {
   success: boolean;

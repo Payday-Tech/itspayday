@@ -58,6 +58,7 @@ async def submit_lender_partnership(form: LenderPartnershipForm):
 
 
 @forms_router.post("/check-eligibility", response_model=FormResponse)
+@forms_router.post("/check-eligibility/", response_model=FormResponse, include_in_schema=False)
 async def submit_check_eligibility(form: EligibilitySubmission):
     logger.info(
         "eligibility_submission_received application_id=%s source=%s has_pan=%s",
@@ -76,12 +77,16 @@ async def submit_check_eligibility(form: EligibilitySubmission):
             logger.error("eligibility_submission_failed application_id=%s reason=storage_insert_failed", form.applicationId)
             raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Unable to save submission")
 
-        send_success_alert(
+        email_sent = send_success_alert(
             first_name=form.firstName,
             mobile=form.phone1,
             application_id=form.applicationId,
             has_pan=bool(form.pan),
         )
+        if email_sent:
+            logger.info("eligibility_submission_alert_sent application_id=%s", form.applicationId)
+        else:
+            logger.warning("eligibility_submission_alert_not_sent application_id=%s", form.applicationId)
     except HTTPException:
         raise
     except Exception:
