@@ -134,6 +134,40 @@ def save_lender_partnership_form(name: str, company: str, email: str, phone: str
     return append_to_sheet(settings.google_spreadsheet_id, "Lender Partnership", [name, company, email, phone, role, city, notes or ""])
 
 
+def save_eligibility_to_sheet(form: EligibilitySubmission) -> bool:
+    """Append eligibility submission to Google Sheets."""
+    settings = get_settings()
+    if not settings.google_spreadsheet_id:
+        return False
+
+    voter_ref = form.voterIdUpload.storageRef if form.voterIdUpload else ""
+    dl_ref = form.drivingLicenceUpload.storageRef if form.drivingLicenceUpload else ""
+    passport_ref = form.passportUpload.storageRef if form.passportUpload else ""
+
+    row = [
+        form.applicationId,
+        form.firstName,
+        form.lastName,
+        form.phone1,
+        form.dob,
+        form.pan,
+        form.address1,
+        form.city1,
+        form.state1,
+        form.pincode1,
+        form.phone2,
+        str(form.consentAccepted),
+        form.consentTimestamp,
+        str(form.privacyAccepted),
+        form.source,
+        voter_ref,
+        dl_ref,
+        passport_ref,
+    ]
+
+    return append_to_sheet(settings.google_spreadsheet_id, "Eligibility Submissions", row)
+
+
 def save_eligibility_submission(form: EligibilitySubmission) -> bool:
     client = get_supabase_client()
     if client is None:
