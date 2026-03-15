@@ -26,6 +26,11 @@ class Settings(BaseSettings):
     google_credentials_json: str = ""  # Service account JSON as string
     google_spreadsheet_id: str = ""  # ID of the Google Spreadsheet
 
+
+    # Supabase integration
+    supabase_url: str = ""
+    supabase_service_key: str = ""
+
     # SMTP / alerting
     smtp_host: str = ""
     smtp_port: int = 587

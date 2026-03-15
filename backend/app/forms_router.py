@@ -19,7 +19,6 @@ from app.sheets import (
 )
 
 forms_router = APIRouter(prefix="/api/forms", tags=["forms"])
-compat_router = APIRouter(tags=["forms"])
 logger = logging.getLogger(__name__)
 
 
@@ -58,7 +57,9 @@ async def submit_lender_partnership(form: LenderPartnershipForm):
     return FormResponse(success=True, message="Thank you for your interest! Our partnerships team will be in touch soon.")
 
 
-async def _handle_check_eligibility(form: EligibilitySubmission) -> FormResponse:
+@forms_router.post("/check-eligibility", response_model=FormResponse)
+@forms_router.post("/check-eligibility/", response_model=FormResponse, include_in_schema=False)
+async def submit_check_eligibility(form: EligibilitySubmission):
     logger.info(
         "eligibility_submission_received application_id=%s source=%s has_pan=%s",
         form.applicationId,
@@ -71,32 +72,26 @@ async def _handle_check_eligibility(form: EligibilitySubmission) -> FormResponse
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Consent is required")
 
     try:
-        save_eligibility_submission(form)
-        send_success_alert(
+        persisted = save_eligibility_submission(form)
+        if not persisted:
+            logger.error("eligibility_submission_failed application_id=%s reason=storage_insert_failed", form.applicationId)
+            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Unable to save submission")
+
+        email_sent = send_success_alert(
             first_name=form.firstName,
             mobile=form.phone1,
             application_id=form.applicationId,
             has_pan=bool(form.pan),
         )
+        if email_sent:
+            logger.info("eligibility_submission_alert_sent application_id=%s", form.applicationId)
+        else:
+            logger.warning("eligibility_submission_alert_not_sent application_id=%s", form.applicationId)
+    except HTTPException:
+        raise
     except Exception:
         logger.exception("eligibility_submission_failed application_id=%s", form.applicationId)
-        raise
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Unable to submit right now")
 
     logger.info("eligibility_submission_saved application_id=%s", form.applicationId)
     return FormResponse(success=True, message="Your details have been received.")
-
-
-@forms_router.post("/check-eligibility", response_model=FormResponse)
-async def submit_check_eligibility(form: EligibilitySubmission):
-    return await _handle_check_eligibility(form)
-
-
-# Backward-compatible aliases for deployments/proxies with prefix rewrites.
-@compat_router.post("/forms/check-eligibility", response_model=FormResponse)
-async def submit_check_eligibility_forms_alias(form: EligibilitySubmission):
-    return await _handle_check_eligibility(form)
-
-
-@compat_router.post("/check-eligibility", response_model=FormResponse)
-async def submit_check_eligibility_root_alias(form: EligibilitySubmission):
-    return await _handle_check_eligibility(form)

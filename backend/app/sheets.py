@@ -8,6 +8,7 @@ from typing import Optional
 
 from app.config import get_settings
 from app.schemas import EligibilitySubmission
+from app.supabase_client import get_supabase_client
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -134,31 +135,39 @@ def save_lender_partnership_form(name: str, company: str, email: str, phone: str
 
 
 def save_eligibility_submission(form: EligibilitySubmission) -> bool:
-    settings = get_settings()
-    if not settings.google_spreadsheet_id:
+    client = get_supabase_client()
+    if client is None:
+        logger.error("Supabase client not available, skipping eligibility insert")
         return False
 
-    return append_to_sheet(
-        settings.google_spreadsheet_id,
-        "Eligibility Submissions",
-        [
-            form.applicationId,
-            form.firstName,
-            form.lastName,
-            form.phone1,
-            form.dob,
-            form.pan,
-            form.address1,
-            form.city1,
-            form.state1,
-            form.pincode1,
-            form.phone2,
-            str(form.consentAccepted),
-            form.consentTimestamp,
-            str(form.privacyAccepted),
-            form.source,
-            form.voterIdUpload.storageRef if form.voterIdUpload else '',
-            form.drivingLicenceUpload.storageRef if form.drivingLicenceUpload else '',
-            form.passportUpload.storageRef if form.passportUpload else '',
-        ],
-    )
+    payload = {
+        "applicationId": form.applicationId,
+        "fullName": form.fullName,
+        "firstName": form.firstName,
+        "lastName": form.lastName,
+        "mobile": form.phone1,
+        "dob": form.dob,
+        "pan": form.pan,
+        "address": form.address1,
+        "city": form.city1,
+        "state": form.state1,
+        "pincode": form.pincode1,
+        "consentAccepted": form.consentAccepted,
+        "consentTimestamp": form.consentTimestamp,
+        "source": form.source,
+        "phone2": form.phone2,
+        "privacyAccepted": form.privacyAccepted,
+        "consentTextVersion": form.consentTextVersion,
+        "voterIdUpload": form.voterIdUpload.model_dump() if form.voterIdUpload else None,
+        "drivingLicenceUpload": form.drivingLicenceUpload.model_dump() if form.drivingLicenceUpload else None,
+        "passportUpload": form.passportUpload.model_dump() if form.passportUpload else None,
+    }
+
+    try:
+        response = client.table("eligibility_submissions").insert(payload).execute()
+        if getattr(response, "data", None):
+            logger.info("Supabase eligibility submission inserted: application_id=%s", form.applicationId)
+        return True
+    except Exception:
+        logger.exception("Failed to insert eligibility submission into Supabase: application_id=%s", form.applicationId)
+        return False

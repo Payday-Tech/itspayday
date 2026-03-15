@@ -2,7 +2,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import cors_origins_list, get_settings
-from app.forms_router import compat_router, forms_router
+from app.schemas import EligibilitySubmission
+from app.forms_router import forms_router, submit_check_eligibility
 
 settings = get_settings()
 
@@ -55,4 +56,15 @@ async def cors_debug():
 
 
 app.include_router(forms_router)
-app.include_router(compat_router)
+
+@app.post("/forms/check-eligibility", include_in_schema=False)
+async def submit_check_eligibility_legacy_forms(form: EligibilitySubmission):
+    """Legacy alias for older clients. Canonical path is /api/forms/check-eligibility."""
+    return await submit_check_eligibility(form)
+
+
+@app.post("/check-eligibility", include_in_schema=False)
+async def submit_check_eligibility_legacy_root(form: EligibilitySubmission):
+    """Legacy alias for older clients. Canonical path is /api/forms/check-eligibility."""
+    return await submit_check_eligibility(form)
+
