@@ -13,7 +13,6 @@ from app.schemas import (
 )
 from app.sheets import (
     save_contact_form,
-    save_eligibility_submission,
     save_eligibility_to_sheet,
     save_get_started_form,
     save_lender_partnership_form,
@@ -73,14 +72,10 @@ async def submit_check_eligibility(form: EligibilitySubmission):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Consent is required")
 
     try:
-        persisted = save_eligibility_submission(form)
-        if not persisted:
-            logger.error("eligibility_submission_failed application_id=%s reason=storage_insert_failed", form.applicationId)
-            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Unable to save submission")
-
         sheet_ok = save_eligibility_to_sheet(form)
         if not sheet_ok:
-            logger.warning("eligibility_sheet_write_failed application_id=%s", form.applicationId)
+            logger.error("eligibility_sheet_write_failed application_id=%s", form.applicationId)
+            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Unable to save submission")
 
         email_sent = send_success_alert(
             first_name=form.firstName,

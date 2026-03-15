@@ -8,7 +8,6 @@ from typing import Optional
 
 from app.config import get_settings
 from app.schemas import EligibilitySubmission
-from app.supabase_client import get_supabase_client
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -168,40 +167,3 @@ def save_eligibility_to_sheet(form: EligibilitySubmission) -> bool:
     return append_to_sheet(settings.google_spreadsheet_id, "Eligibility Submissions", row)
 
 
-def save_eligibility_submission(form: EligibilitySubmission) -> bool:
-    client = get_supabase_client()
-    if client is None:
-        logger.error("Supabase client not available, skipping eligibility insert")
-        return False
-
-    payload = {
-        "applicationId": form.applicationId,
-        "fullName": form.fullName,
-        "firstName": form.firstName,
-        "lastName": form.lastName,
-        "mobile": form.phone1,
-        "dob": form.dob,
-        "pan": form.pan,
-        "address": form.address1,
-        "city": form.city1,
-        "state": form.state1,
-        "pincode": form.pincode1,
-        "consentAccepted": form.consentAccepted,
-        "consentTimestamp": form.consentTimestamp,
-        "source": form.source,
-        "phone2": form.phone2,
-        "privacyAccepted": form.privacyAccepted,
-        "consentTextVersion": form.consentTextVersion,
-        "voterIdUpload": form.voterIdUpload.model_dump() if form.voterIdUpload else None,
-        "drivingLicenceUpload": form.drivingLicenceUpload.model_dump() if form.drivingLicenceUpload else None,
-        "passportUpload": form.passportUpload.model_dump() if form.passportUpload else None,
-    }
-
-    try:
-        response = client.table("eligibility_submissions").insert(payload).execute()
-        if getattr(response, "data", None):
-            logger.info("Supabase eligibility submission inserted: application_id=%s", form.applicationId)
-        return True
-    except Exception:
-        logger.exception("Failed to insert eligibility submission into Supabase: application_id=%s", form.applicationId)
-        return False

@@ -39,7 +39,7 @@ class EligibilitySubmitTests(unittest.TestCase):
         }
 
     @patch('app.forms_router.send_success_alert')
-    @patch('app.forms_router.save_eligibility_submission')
+    @patch('app.forms_router.save_eligibility_to_sheet')
     def test_submit_check_eligibility_success(self, mock_save, mock_alert):
         payload = self._payload("PD-TEST-INT-001")
 
@@ -52,7 +52,7 @@ class EligibilitySubmitTests(unittest.TestCase):
         mock_alert.assert_called_once()
 
     @patch('app.forms_router.send_success_alert')
-    @patch('app.forms_router.save_eligibility_submission')
+    @patch('app.forms_router.save_eligibility_to_sheet')
     def test_submit_check_eligibility_storage_failure(self, mock_save, mock_alert):
         payload = self._payload("PD-TEST-INT-002")
 
@@ -73,7 +73,7 @@ class EligibilitySubmitTests(unittest.TestCase):
         self.assertIn('/api/forms/check-eligibility', response.json().get('paths', {}))
 
     @patch('app.forms_router.send_success_alert')
-    @patch('app.forms_router.save_eligibility_submission')
+    @patch('app.forms_router.save_eligibility_to_sheet')
     def test_legacy_alias_forms_route(self, mock_save, mock_alert):
         mock_save.return_value = True
         response = self.client.post('/forms/check-eligibility', json=self._payload('PD-TEST-ALIAS-001'))
@@ -81,7 +81,7 @@ class EligibilitySubmitTests(unittest.TestCase):
         mock_alert.assert_called_once()
 
     @patch('app.forms_router.send_success_alert')
-    @patch('app.forms_router.save_eligibility_submission')
+    @patch('app.forms_router.save_eligibility_to_sheet')
     def test_legacy_alias_root_route(self, mock_save, mock_alert):
         mock_save.return_value = True
         response = self.client.post('/check-eligibility', json=self._payload('PD-TEST-ALIAS-002'))
