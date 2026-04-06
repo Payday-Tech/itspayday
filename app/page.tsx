@@ -1,22 +1,14 @@
 'use client';
 
-import Image from 'next/image';
 import { useState } from 'react';
+import Image from 'next/image';
 import GetStartedButton from '@/components/GetStartedButton';
-
-const DEMAND_PARTNERS = [
-  { name: 'MyGate', desc: 'Housing societies' },
-  { name: 'Snabbit', desc: 'On-demand home help' },
-  { name: 'Pronto', desc: 'On-demand home help' },
-  { name: '+ more platforms', desc: '' },
-];
 
 const SUPPLY_PARTNERS = [
   { name: 'NBFCs', desc: 'Non-banking lenders' },
   { name: 'Banks', desc: 'Scheduled commercial banks' },
   { name: 'Regulated lenders', desc: 'RBI licensed' },
 ];
-
 
 const FAQS = [
   {
@@ -49,19 +41,17 @@ export default function Home() {
       {/* ── Hero ── */}
       <section className="hero">
         <div>
-          <span className="badge">Salary Advances · Domestic Workers</span>
           <h1>Access what you&apos;ve earned —<br />before payday</h1>
-          <p style={{ fontSize: '1.08rem', lineHeight: 1.65, marginTop: 14, maxWidth: 500, color: 'var(--color-ink-700)' }}>
+          <p style={{ fontSize: '1.08rem', lineHeight: 1.7, marginTop: 16, maxWidth: 480, color: 'var(--color-ink-700)' }}>
             Domestic workers can access salary advances or credit on a WhatsApp-based journey — verified through their work data. No CIBIL score. No branch visits.
           </p>
-
           <div className="hero-actions">
             <GetStartedButton />
             <a className="button secondary" href="mailto:partnerships@itspayday.in">
               Partner with us →
             </a>
           </div>
-          <p style={{ marginTop: 16, fontSize: '0.82rem', color: 'var(--color-ink-500)' }}>
+          <p style={{ marginTop: 18, fontSize: '0.82rem', color: 'var(--color-ink-500)', lineHeight: 1.5 }}>
             Payday is a Lending Service Provider. Loans are issued by regulated partner lenders after consent and eligibility checks.
           </p>
         </div>
@@ -69,12 +59,10 @@ export default function Home() {
         {/* WhatsApp mockup */}
         <div className="hero-visual" style={{ background: 'linear-gradient(140deg, #e8f5e2 0%, #d4ece9 100%)', border: '1px solid #c3ddd8' }}>
           <div className="wa-phone">
-            {/* Status bar */}
             <div className="wa-statusbar">
               <span>9:41</span>
               <span className="wa-statusbar-icons">▲ ◼ ◼◼◼</span>
             </div>
-            {/* Chat header */}
             <div className="wa-header">
               <div className="wa-avatar">P</div>
               <div className="wa-header-info">
@@ -82,30 +70,25 @@ export default function Home() {
                 <div className="wa-header-status">● online</div>
               </div>
             </div>
-            {/* Messages */}
             <div className="wa-messages">
               <div className="wa-date-chip">Today</div>
-
               <div className="wa-bubble wa-received">
                 <span className="wa-bubble-sender">Payday</span>
                 Namaste Rekha 👋 You&apos;ve worked 18 days this month with Sunflower Society.<br /><br />
                 You can access <strong>₹2,400</strong> right now — straight to your bank.
                 <span className="wa-time">9:38 AM</span>
               </div>
-
               <div className="wa-quick-replies">
                 <button className="wa-reply-btn">Yes, send ₹2,400 ✓</button>
                 <button className="wa-reply-btn wa-reply-ghost">Not now</button>
               </div>
-
               <div className="wa-bubble wa-sent">
                 Yes, send ₹2,400 ✓
                 <span className="wa-time">9:39 AM ✓✓</span>
               </div>
-
               <div className="wa-bubble wa-received">
                 ✅ <strong>₹2,400 sent!</strong> It will reach your account ending <strong>4521</strong> within minutes.<br /><br />
-                Repayment of ₹2,520 will be auto-deducted on your salary date.
+                Repayment of ₹2,520 will be auto-deducted on your next salary date.
                 <span className="wa-time">9:39 AM</span>
               </div>
             </div>
@@ -113,7 +96,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Ecosystem Infographic ── */}
+      {/* ── Ecosystem ── */}
       <section className="section-alt eco-section">
         <div style={{ textAlign: 'center', marginBottom: 44 }}>
           <h2 style={{ marginBottom: 8 }}>How the ecosystem works</h2>
@@ -129,12 +112,14 @@ export default function Home() {
               <div className="eco-col-label">Work Platforms</div>
               <div className="eco-col-sublabel">Attendance · Earnings · Tenure</div>
             </div>
-            {DEMAND_PARTNERS.map((p) => (
-              <div key={p.name} className="eco-pill eco-pill-demand">
-                <span className="eco-pill-name">{p.name}</span>
-                {p.desc && <span className="eco-pill-desc">{p.desc}</span>}
-              </div>
-            ))}
+            <div className="eco-pill eco-pill-demand">
+              <span className="eco-pill-name">Society Management Apps</span>
+              <span className="eco-pill-desc">Housing society platforms</span>
+            </div>
+            <div className="eco-pill eco-pill-demand">
+              <span className="eco-pill-name">Insta-Help Platforms</span>
+              <span className="eco-pill-desc">On-demand home services</span>
+            </div>
           </div>
 
           {/* Center: PayDay Hub */}
@@ -146,7 +131,6 @@ export default function Home() {
                 <div className="eco-arrow-head">›</div>
               </div>
             </div>
-
             <div className="eco-hub">
               <Image
                 src="/payday-logo.svg"
@@ -165,7 +149,6 @@ export default function Home() {
                 <span>50M+ domestic workers</span>
               </div>
             </div>
-
             <div className="eco-connector eco-connector-right">
               <div className="eco-arrow-line">
                 <div className="eco-arrow-head">›</div>
@@ -192,74 +175,56 @@ export default function Home() {
       </section>
 
       {/* ── How it works ── */}
-      <section>
-        <h2>How it works</h2>
-        <p className="small" style={{ marginBottom: 28 }}>Three steps. Fully on WhatsApp. No paperwork.</p>
-        <div className="how-it-works-row">
-          <div className="step">
-            <span>1</span>
-            <div>
+      <section className="how-section">
+        <div className="how-intro">
+          <h2>How it works</h2>
+          <p className="small">Three steps. Fully on WhatsApp. No paperwork.</p>
+        </div>
+        <div className="how-steps">
+          <div className="how-step">
+            <div className="how-step-num">01</div>
+            <div className="how-step-body">
               <strong>Work verified</strong>
-              <p style={{ margin: '6px 0 0', fontSize: '0.9rem', color: 'var(--color-ink-500)' }}>
-                Your employer platform — MyGate, Snabbit, or Pronto — shares your attendance and earnings with your consent.
-              </p>
+              <p>Your employer platform shares attendance and earnings data with your consent.</p>
             </div>
           </div>
-          <div className="step">
-            <span>2</span>
-            <div>
+          <div className="how-step-divider" />
+          <div className="how-step">
+            <div className="how-step-num">02</div>
+            <div className="how-step-body">
               <strong>Instant decision on WhatsApp</strong>
-              <p style={{ margin: '6px 0 0', fontSize: '0.9rem', color: 'var(--color-ink-500)' }}>
-                Our AI engine reviews your eligibility in minutes. No branch visit, no forms, no waiting.
-              </p>
+              <p>Our AI reviews your eligibility in minutes. No branch visit, no forms.</p>
             </div>
           </div>
-          <div className="step">
-            <span>3</span>
-            <div>
+          <div className="how-step-divider" />
+          <div className="how-step">
+            <div className="how-step-num">03</div>
+            <div className="how-step-body">
               <strong>Money in. Repay on salary day.</strong>
-              <p style={{ margin: '6px 0 0', fontSize: '0.9rem', color: 'var(--color-ink-500)' }}>
-                Funds hit your bank account within hours. Repayment is deducted on your salary date — simple and transparent.
-              </p>
+              <p>Funds in your account within hours. Repayment aligned to your salary date.</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* ── FAQ ── */}
-      <section className="section-alt">
+      <section className="faq-section">
         <h2>Frequently asked questions</h2>
-        <div className="steps" style={{ marginTop: 24 }}>
+        <div className="faq-list">
           {FAQS.map((faq, i) => (
-            <div key={i} className="card" style={{ padding: 0, overflow: 'hidden' }}>
+            <div key={i} className="faq-item">
               <button
-                style={{
-                  width: '100%',
-                  textAlign: 'left',
-                  padding: '18px 24px',
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  fontWeight: 600,
-                  fontSize: '1rem',
-                  fontFamily: 'inherit',
-                  color: 'var(--color-ink-900)',
-                }}
+                className="faq-question"
                 aria-expanded={openFaq === i}
                 onClick={() => setOpenFaq(openFaq === i ? -1 : i)}
               >
                 {faq.q}
-                <span aria-hidden="true" style={{ fontSize: '1.2rem', color: 'var(--color-ink-500)', marginLeft: 12, flexShrink: 0 }}>
+                <span aria-hidden="true" className="faq-icon">
                   {openFaq === i ? '−' : '+'}
                 </span>
               </button>
               {openFaq === i && (
-                <p style={{ margin: 0, padding: '0 24px 20px', color: 'var(--color-ink-700)', fontSize: '0.95rem', lineHeight: 1.65 }}>
-                  {faq.a}
-                </p>
+                <p className="faq-answer">{faq.a}</p>
               )}
             </div>
           ))}
