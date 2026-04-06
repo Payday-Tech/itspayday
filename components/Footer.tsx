@@ -17,10 +17,10 @@ export default function Footer() {
 
           <div className="footer-grid">
             <div>
-              <h4>Products</h4>
-              <Link href="/products/earned-wage-access">Earned Wage Access</Link>
-              <Link href="/fees">Fees</Link>
-              <Link href="/security">Security</Link>
+              <h4>Salary Advance</h4>
+              <Link href="/how-it-works">How it works</Link>
+              <Link href="/apply">Apply on WhatsApp</Link>
+              <Link href="/fees">Fees &amp; rates</Link>
             </div>
             <div>
               <h4>Company</h4>
