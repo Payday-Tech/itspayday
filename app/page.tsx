@@ -17,6 +17,13 @@ const SUPPLY_PARTNERS = [
   { name: 'Regulated lenders', desc: 'RBI licensed' },
 ];
 
+const WORKERS = [
+  { emoji: '🧹', role: 'Housekeeper', name: 'Rekha' },
+  { emoji: '🍳', role: 'Cook', name: 'Sunita' },
+  { emoji: '🚗', role: 'Driver', name: 'Ravi' },
+  { emoji: '👶', role: 'Nanny', name: 'Priya' },
+];
+
 const FAQS = [
   {
     q: 'Do I need a CIBIL score?',
@@ -54,6 +61,20 @@ export default function Home() {
             Instant salary advances for maids, cooks, drivers and on-demand helpers across India&apos;s top cities.
             No CIBIL score. No branch visits. Just WhatsApp.
           </p>
+
+          {/* Worker profile pills */}
+          <div className="worker-pills">
+            {WORKERS.map((w) => (
+              <div key={w.name} className="worker-pill">
+                <span className="worker-pill-emoji">{w.emoji}</span>
+                <span className="worker-pill-text">
+                  <span className="worker-pill-name">{w.name}</span>
+                  <span className="worker-pill-role">{w.role}</span>
+                </span>
+              </div>
+            ))}
+          </div>
+
           <div className="hero-actions">
             <GetStartedButton />
             <a className="button secondary" href="mailto:partnerships@itspayday.in">
@@ -64,16 +85,50 @@ export default function Home() {
             Payday is a Lending Service Provider. Loans are issued by regulated partner lenders after consent and eligibility checks.
           </p>
         </div>
-        <div className="hero-visual">
-          <div className="hero-image-frame">
-            <Image
-              src="/home-hero-woman-phone.svg"
-              alt="Domestic worker using WhatsApp for a salary advance"
-              fill
-              style={{ objectFit: 'cover' }}
-              priority
-              sizes="(max-width: 940px) 100vw, 50vw"
-            />
+
+        {/* WhatsApp mockup */}
+        <div className="hero-visual" style={{ background: 'linear-gradient(140deg, #e8f5e2 0%, #d4ece9 100%)', border: '1px solid #c3ddd8' }}>
+          <div className="wa-phone">
+            {/* Status bar */}
+            <div className="wa-statusbar">
+              <span>9:41</span>
+              <span className="wa-statusbar-icons">▲ ◼ ◼◼◼</span>
+            </div>
+            {/* Chat header */}
+            <div className="wa-header">
+              <div className="wa-avatar">P</div>
+              <div className="wa-header-info">
+                <div className="wa-header-name">Payday</div>
+                <div className="wa-header-status">● online</div>
+              </div>
+            </div>
+            {/* Messages */}
+            <div className="wa-messages">
+              <div className="wa-date-chip">Today</div>
+
+              <div className="wa-bubble wa-received">
+                <span className="wa-bubble-sender">Payday</span>
+                Namaste Rekha 👋 You&apos;ve worked 18 days this month with Sunflower Society.<br /><br />
+                You can access <strong>₹2,400</strong> right now — straight to your bank.
+                <span className="wa-time">9:38 AM</span>
+              </div>
+
+              <div className="wa-quick-replies">
+                <button className="wa-reply-btn">Yes, send ₹2,400 ✓</button>
+                <button className="wa-reply-btn wa-reply-ghost">Not now</button>
+              </div>
+
+              <div className="wa-bubble wa-sent">
+                Yes, send ₹2,400 ✓
+                <span className="wa-time">9:39 AM ✓✓</span>
+              </div>
+
+              <div className="wa-bubble wa-received">
+                ✅ <strong>₹2,400 sent!</strong> It will reach your account ending <strong>4521</strong> within minutes.<br /><br />
+                Repayment of ₹2,520 will be auto-deducted on your salary date.
+                <span className="wa-time">9:39 AM</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
