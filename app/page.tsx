@@ -132,7 +132,7 @@ export default function Home() {
             <span className="eco-arrow-label">work data</span>
             <div className="eco-arrow-shaft">
               <div className="eco-arrow-line" />
-              <span className="eco-arrow-head">›</span>
+              <span className="eco-arrow-head" />
             </div>
           </div>
 
@@ -156,7 +156,7 @@ export default function Home() {
             <span className="eco-arrow-label">loan capital</span>
             <div className="eco-arrow-shaft">
               <div className="eco-arrow-line" />
-              <span className="eco-arrow-head">›</span>
+              <span className="eco-arrow-head" />
             </div>
           </div>
 
