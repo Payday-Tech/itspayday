@@ -17,12 +17,6 @@ export default function Footer() {
 
           <div className="footer-grid">
             <div>
-              <h4>Salary Advance</h4>
-              <Link href="/how-it-works">How it works</Link>
-              <Link href="/apply">Apply on WhatsApp</Link>
-              <Link href="/fees">Fees &amp; rates</Link>
-            </div>
-            <div>
               <h4>Company</h4>
               <Link href="/for-communities">For Communities</Link>
               <Link href="/for-lenders">For Lenders</Link>
