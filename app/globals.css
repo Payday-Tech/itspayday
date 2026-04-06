@@ -194,8 +194,8 @@ section {
   background: linear-gradient(135deg, #e8f4f7 0%, #f5f9fb 60%, #ffffff 100%);
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
-  padding-left: max(24px, calc(50vw - (var(--container) / 2)));
-  padding-right: max(24px, calc(50vw - (var(--container) / 2)));
+  padding-left: max(24px, calc(50vw - (var(--container) / 2) + 24px));
+  padding-right: max(24px, calc(50vw - (var(--container) / 2) + 24px));
   margin-bottom: 0;
 }
 
@@ -226,7 +226,7 @@ section {
   grid-template-columns: 1fr 1fr;
   gap: 56px;
   align-items: center;
-  padding: 80px max(24px, calc(50vw - (var(--container) / 2))) 88px;
+  padding: 80px max(24px, calc(50vw - (var(--container) / 2) + 24px)) 88px;
   min-height: calc(100vh - 72px);
 }
 
@@ -401,7 +401,7 @@ section {
   color: white;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
-  padding: 72px max(24px, calc(50vw - (var(--container) / 2)));
+  padding: 72px max(24px, calc(50vw - (var(--container) / 2) + 24px));
 }
 
 .section-dark h2 {
@@ -419,8 +419,8 @@ section {
   background: var(--color-surface-alt);
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
-  padding-left: max(24px, calc(50vw - (var(--container) / 2)));
-  padding-right: max(24px, calc(50vw - (var(--container) / 2)));
+  padding-left: max(24px, calc(50vw - (var(--container) / 2) + 24px));
+  padding-right: max(24px, calc(50vw - (var(--container) / 2) + 24px));
 }
 
 /* ── Section trust dark (backwards compat) ── */
@@ -428,8 +428,8 @@ section {
 .section-trust-dark {
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
-  padding-left: max(24px, calc(50vw - (var(--container) / 2)));
-  padding-right: max(24px, calc(50vw - (var(--container) / 2)));
+  padding-left: max(24px, calc(50vw - (var(--container) / 2) + 24px));
+  padding-right: max(24px, calc(50vw - (var(--container) / 2) + 24px));
   color: #dbe4ea;
   background: radial-gradient(circle at top right, #1d3754 0%, #0f172a 58%);
 }
@@ -675,34 +675,43 @@ section {
 
 .ecosystem {
   display: grid;
-  grid-template-columns: 1fr 176px 1fr;
-  align-items: center;
-  max-width: 880px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  max-width: 860px;
   margin: 0 auto;
 }
 
-.eco-col {
+.eco-card {
+  border-radius: var(--radius-md);
+  padding: 28px 24px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  align-items: stretch;
+  gap: 12px;
 }
 
-.eco-col-left {
-  padding-right: 0;
+.eco-card-left {
+  background: #edf5f9;
+  border: 1px solid #b8d4e0;
 }
 
-.eco-col-right {
-  padding-left: 0;
-}
-
-.eco-col-header {
-  margin-bottom: 8px;
+.eco-card-center {
+  background: var(--color-brand-600);
+  color: white;
+  align-items: center;
   text-align: center;
+  box-shadow: 0 16px 40px rgba(16, 73, 89, 0.22);
 }
 
-.eco-col-label {
-  font-family: var(--font-inter), system-ui, sans-serif;
+.eco-card-right {
+  background: #edf5eb;
+  border: 1px solid #b2d1ac;
+}
+
+.eco-card-header {
+  margin-bottom: 4px;
+}
+
+.eco-card-label {
   font-weight: 700;
   font-size: 0.78rem;
   text-transform: uppercase;
@@ -710,15 +719,24 @@ section {
   color: var(--color-brand-700);
 }
 
-.eco-col-sublabel {
-  font-size: 0.73rem;
+.eco-card-center .eco-card-label {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.eco-card-sublabel {
+  font-size: 0.72rem;
   color: var(--color-ink-500);
-  margin-top: 2px;
+  margin-top: 3px;
+}
+
+.eco-card-center .eco-card-sublabel {
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .eco-pill {
-  border-radius: 10px;
-  padding: 10px 16px;
+  border-radius: 8px;
+  padding: 10px 14px;
+  background: white;
   border: 1px solid;
   display: flex;
   flex-direction: column;
@@ -726,14 +744,12 @@ section {
   width: 100%;
 }
 
-.eco-pill-demand {
-  border-color: #b8d4e0;
-  background: #edf5f9;
+.eco-card-left .eco-pill {
+  border-color: #cde0ea;
 }
 
-.eco-pill-supply {
-  border-color: #b2d1ac;
-  background: #edf5eb;
+.eco-card-right .eco-pill {
+  border-color: #bcd8b4;
 }
 
 .eco-pill-name {
@@ -747,74 +763,21 @@ section {
   color: var(--color-ink-500);
 }
 
-.eco-center {
-  display: flex;
-  align-items: center;
-  padding: 0 4px;
-}
-
-.eco-connector {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  padding: 0 6px;
-}
-
-.eco-arrow-label {
-  font-size: 0.63rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--color-ink-500);
-  white-space: nowrap;
-}
-
-.eco-arrow-line {
-  display: flex;
-  align-items: center;
-}
-
-.eco-arrow-shaft {
-  width: 28px;
-  height: 2px;
-  background: #bdd4e0;
-}
-
-.eco-arrow-head {
-  font-size: 1.3rem;
-  color: #8ab5c8;
-  line-height: 1;
-  margin: 0 -2px;
-}
-
-.eco-hub {
-  background: var(--color-brand-600);
-  color: white;
-  border-radius: 20px;
-  padding: 26px 20px;
-  text-align: center;
-  box-shadow: 0 16px 40px rgba(16, 73, 89, 0.25);
-  min-width: 164px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .eco-hub-tags {
   display: flex;
   flex-direction: column;
   gap: 6px;
   width: 100%;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 
 .eco-hub-tag {
   font-size: 0.69rem;
   background: rgba(255, 255, 255, 0.15);
   border-radius: 999px;
-  padding: 4px 10px;
+  padding: 5px 10px;
   color: rgba(255, 255, 255, 0.9);
+  white-space: nowrap;
 }
 
 .eco-hub-worker {
@@ -826,6 +789,7 @@ section {
   align-items: center;
   gap: 6px;
   justify-content: center;
+  width: 100%;
 }
 
 /* ── Journey ── */
@@ -839,6 +803,7 @@ section {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   max-width: 960px;
+  margin: 0 auto;
 }
 
 .journey-step {
@@ -906,6 +871,7 @@ section {
 .faq-list {
   max-width: 680px;
   margin-top: 32px;
+  margin-left: 0;
 }
 
 .faq-item {
@@ -1449,35 +1415,8 @@ footer a:hover {
   /* ecosystem responsive */
   .ecosystem {
     grid-template-columns: 1fr;
-    gap: 24px;
-    max-width: 380px;
-  }
-
-  .eco-col-left,
-  .eco-col-right {
-    align-items: stretch;
-  }
-
-  .eco-pill {
-    width: 100%;
-  }
-
-  .eco-center {
-    flex-direction: column;
-    padding: 4px 0;
-  }
-
-  .eco-connector {
-    flex-direction: row;
-  }
-
-  .eco-arrow-shaft {
-    width: 24px;
-    height: 2px;
-  }
-
-  .eco-arrow-head {
-    transform: rotate(90deg);
+    gap: 12px;
+    max-width: 400px;
   }
 
   /* journey responsive */
