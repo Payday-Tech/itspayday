@@ -256,25 +256,50 @@ section {
   margin-bottom: 20px;
 }
 
-.hero-backed {
+/* ── Stats strip ── */
+
+.stats-strip {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  padding: 0 max(24px, calc(50vw - (var(--container) / 2) + 24px));
+  background: var(--color-brand-700);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+
+.stat-item {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 8px;
+  flex-direction: column;
+  gap: 4px;
+  padding: 28px 24px;
+  border-right: 1px solid rgba(255,255,255,0.1);
 }
 
-.hero-backed-label {
-  font-size: 0.72rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: rgba(255, 255, 255, 0.5);
-  white-space: nowrap;
+.stat-item:last-child {
+  border-right: none;
 }
 
-.hero-backed img {
-  filter: brightness(0) invert(1);
-  opacity: 0.7;
+.stat-value {
+  font-family: var(--font-sora), Georgia, serif;
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: white;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.stat-label {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.4;
+}
+
+/* ── Features section ── */
+
+.features-section {
+  padding-top: 72px;
+  padding-bottom: 72px;
 }
 
 .hero-legal {
@@ -1538,6 +1563,29 @@ footer a:hover {
 
   section {
     padding: 44px 0;
+  }
+
+  .stats-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stat-item:nth-child(2) {
+    border-right: none;
+  }
+
+  .stat-item {
+    padding: 20px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    border-right: none;
+  }
+
+  .stat-item:nth-child(odd) {
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .stat-item:nth-child(3),
+  .stat-item:nth-child(4) {
+    border-bottom: none;
   }
 }
 
