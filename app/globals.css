@@ -674,14 +674,15 @@ section {
 }
 
 .ecosystem {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  max-width: 860px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  max-width: 900px;
   margin: 0 auto;
 }
 
 .eco-card {
+  flex: 1;
   border-radius: var(--radius-md);
   padding: 28px 24px;
   display: flex;
@@ -694,17 +695,93 @@ section {
   border: 1px solid #b8d4e0;
 }
 
-.eco-card-center {
-  background: var(--color-brand-600);
-  color: white;
-  align-items: center;
-  text-align: center;
-  box-shadow: 0 16px 40px rgba(16, 73, 89, 0.22);
-}
-
 .eco-card-right {
   background: #edf5eb;
   border: 1px solid #b2d1ac;
+}
+
+/* Center content — no background box */
+.eco-center-content {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  padding: 0 4px;
+  min-width: 148px;
+}
+
+.eco-center-name {
+  font-family: var(--font-sora), Georgia, serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-brand-700);
+  letter-spacing: -0.01em;
+}
+
+.eco-center-tags {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+}
+
+.eco-center-tag {
+  font-size: 0.68rem;
+  background: var(--color-brand-100);
+  border-radius: 999px;
+  padding: 4px 10px;
+  color: var(--color-brand-700);
+  white-space: nowrap;
+}
+
+.eco-center-worker {
+  margin-top: 4px;
+  font-size: 0.7rem;
+  color: var(--color-ink-500);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  justify-content: center;
+}
+
+/* Arrow connector */
+.eco-arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 0 10px;
+  flex-shrink: 0;
+}
+
+.eco-arrow-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--color-ink-500);
+  white-space: nowrap;
+}
+
+.eco-arrow-shaft {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.eco-arrow-line {
+  width: 36px;
+  height: 2px;
+  background: #bdd4e0;
+}
+
+.eco-arrow-head {
+  font-size: 1.1rem;
+  color: #8ab5c8;
+  line-height: 1;
+  margin-left: -4px;
 }
 
 .eco-card-header {
@@ -719,18 +796,10 @@ section {
   color: var(--color-brand-700);
 }
 
-.eco-card-center .eco-card-label {
-  color: rgba(255, 255, 255, 0.7);
-}
-
 .eco-card-sublabel {
   font-size: 0.72rem;
   color: var(--color-ink-500);
   margin-top: 3px;
-}
-
-.eco-card-center .eco-card-sublabel {
-  color: rgba(255, 255, 255, 0.6);
 }
 
 .eco-pill {
@@ -761,35 +830,6 @@ section {
 .eco-pill-desc {
   font-size: 0.72rem;
   color: var(--color-ink-500);
-}
-
-.eco-hub-tags {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  width: 100%;
-  margin-bottom: 12px;
-}
-
-.eco-hub-tag {
-  font-size: 0.69rem;
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 999px;
-  padding: 5px 10px;
-  color: rgba(255, 255, 255, 0.9);
-  white-space: nowrap;
-}
-
-.eco-hub-worker {
-  padding-top: 10px;
-  border-top: 1px solid rgba(255, 255, 255, 0.18);
-  font-size: 0.72rem;
-  color: rgba(255, 255, 255, 0.75);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  justify-content: center;
-  width: 100%;
 }
 
 /* ── Journey ── */
@@ -1414,9 +1454,30 @@ footer a:hover {
 
   /* ecosystem responsive */
   .ecosystem {
-    grid-template-columns: 1fr;
-    gap: 12px;
+    flex-direction: column;
+    align-items: stretch;
     max-width: 400px;
+    gap: 8px;
+  }
+
+  .eco-card {
+    width: 100%;
+  }
+
+  .eco-arrow {
+    flex-direction: row;
+    justify-content: center;
+    padding: 4px 0;
+  }
+
+  .eco-arrow-line {
+    width: 24px;
+  }
+
+  .eco-center-content {
+    min-width: unset;
+    width: 100%;
+    padding: 12px 0;
   }
 
   /* journey responsive */
