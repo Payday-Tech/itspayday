@@ -49,7 +49,7 @@ export default function Home() {
     <main>
 
       {/* ── HERO ── */}
-      <section className="hero">
+      <section className="hero hero-split">
         <div className="hero-text">
           <h1>Access what you&apos;ve<br />earned — before payday</h1>
           <p className="hero-sub">
