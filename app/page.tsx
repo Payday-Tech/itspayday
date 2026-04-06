@@ -49,9 +49,9 @@ export default function Home() {
       <section className="hero">
         <div>
           <span className="badge">Salary Advances · Domestic Workers</span>
-          <h1>Access what you've earned —<br />before payday</h1>
+          <h1>Access what you&apos;ve earned —<br />before payday</h1>
           <p style={{ fontSize: '1.08rem', lineHeight: 1.65, marginTop: 14, maxWidth: 500, color: 'var(--color-ink-700)' }}>
-            Instant salary advances for maids, cooks, drivers and on-demand helpers across India's top cities.
+            Instant salary advances for maids, cooks, drivers and on-demand helpers across India&apos;s top cities.
             No CIBIL score. No branch visits. Just WhatsApp.
           </p>
           <div className="hero-actions">
@@ -83,7 +83,7 @@ export default function Home() {
         <div style={{ textAlign: 'center', marginBottom: 44 }}>
           <h2 style={{ marginBottom: 8 }}>How the ecosystem works</h2>
           <p className="small">
-            Payday sits at the centre — connecting work platforms with regulated lenders to serve India's domestic workforce.
+            Payday sits at the centre — connecting work platforms with regulated lenders to serve India&apos;s domestic workforce.
           </p>
         </div>
 
