@@ -1321,3 +1321,122 @@ label {
   line-height: 1.7;
   max-width: 620px;
 }
+
+/* ── Journey flow diagram ── */
+.flow-section {
+  padding: 64px 0;
+}
+
+.flow-diagram {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  max-width: 860px;
+  position: relative;
+}
+
+.flow-row {
+  display: contents;
+}
+
+.flow-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 20px 24px 20px 0;
+  position: relative;
+}
+
+/* Connecting line between steps */
+.flow-step::after {
+  content: '→';
+  position: absolute;
+  right: 4px;
+  top: 28px;
+  font-size: 1.1rem;
+  color: var(--color-brand-100);
+  font-weight: 700;
+}
+
+/* Last in each row of 3 has no arrow */
+.flow-step:nth-child(3n)::after,
+.flow-step:last-child::after {
+  display: none;
+}
+
+/* Row break arrow for step 3 → 4 */
+.flow-diagram::after {
+  content: '';
+  grid-column: 1 / -1;
+  height: 1px;
+  background: linear-gradient(to right, transparent 16px, var(--color-border) 16px, var(--color-border) calc(100% - 16px), transparent calc(100% - 16px));
+  margin: 0 0 4px;
+}
+
+.flow-arrow {
+  display: none;
+}
+
+.flow-icon {
+  font-size: 1.4rem;
+  line-height: 1;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.flow-step-body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.flow-step-num {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--color-ink-500);
+  font-family: var(--font-sora), sans-serif;
+}
+
+.flow-step-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-ink-900);
+}
+
+.flow-step-desc {
+  font-size: 0.78rem;
+  color: var(--color-ink-500);
+  line-height: 1.45;
+}
+
+@media (max-width: 700px) {
+  .flow-diagram {
+    grid-template-columns: 1fr;
+    max-width: 380px;
+  }
+
+  .flow-step::after {
+    content: '↓';
+    right: unset;
+    top: unset;
+    bottom: -4px;
+    left: 18px;
+  }
+
+  .flow-step:last-child::after {
+    display: none;
+  }
+
+  .flow-step:nth-child(3n)::after {
+    display: block;
+  }
+
+  .flow-diagram::after {
+    display: none;
+  }
+
+  .flow-step {
+    padding: 16px 0 24px;
+  }
+}
