@@ -11,12 +11,37 @@ const SUPPLY_PARTNERS = [
 ];
 
 const FLOW_STEPS = [
-  { num: '01', title: 'Basic Details',        desc: 'Name and phone number',                              icon: '👤' },
-  { num: '02', title: 'KYC',                  desc: 'Identity verification',                              icon: '🪪' },
-  { num: '03', title: 'Work Signals',         desc: 'Attendance, tenure, households served, earnings',    icon: '📊' },
-  { num: '04', title: 'Bank Verification',    desc: 'Account details and statement check',                icon: '🏦' },
-  { num: '05', title: 'Disbursal',            desc: 'Money in your bank within hours',                   icon: '💸' },
-  { num: '06', title: 'Repayment',            desc: 'UPI AutoPay or eNACH on salary date',               icon: '🔄' },
+  { num: '01', title: 'Basic Details',     desc: 'Name and phone number',                           icon: '👤' },
+  { num: '02', title: 'KYC',               desc: 'Identity verification',                           icon: '🪪' },
+  { num: '03', title: 'Work Signals',      desc: 'Attendance, tenure, households served, earnings', icon: '📊' },
+  { num: '04', title: 'Bank Verification', desc: 'Account details and statement check',             icon: '🏦' },
+  { num: '05', title: 'Disbursal',         desc: 'Money in your bank within hours',                 icon: '💸' },
+  { num: '06', title: 'Repayment',         desc: 'UPI AutoPay or eNACH on salary date',             icon: '🔄' },
+];
+
+const FEATURES = [
+  {
+    icon: '💬',
+    title: 'No app needed',
+    desc: 'The entire journey — from application to disbursal — happens on WhatsApp. No downloads, no branch visits.',
+  },
+  {
+    icon: '⚡',
+    title: 'Money in hours',
+    desc: 'Once approved, funds are credited directly to your bank account within hours — not days.',
+  },
+  {
+    icon: '🔒',
+    title: 'Consent-first',
+    desc: 'We only access work data you explicitly share. No data is used without your knowledge or approval.',
+  },
+];
+
+const STATS = [
+  { value: '50–150%', label: 'of monthly salary' },
+  { value: '4 options', label: '3, 6, 9 or 12 month repayment' },
+  { value: 'Hours', label: 'from apply to disbursal' },
+  { value: '100%', label: 'WhatsApp-based journey' },
 ];
 
 const FAQS = [
@@ -62,10 +87,6 @@ export default function Home() {
               Partner with us →
             </a>
           </div>
-          <div className="hero-backed">
-            <span className="hero-backed-label">Backed by</span>
-            <Image src="/iima-ventures.png" alt="IIMA Ventures" width={120} height={40} style={{ objectFit: 'contain' }} />
-          </div>
         </div>
 
         <div className="hero-mockup">
@@ -107,9 +128,35 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── STATS STRIP ── */}
+      <section className="stats-strip">
+        {STATS.map((s) => (
+          <div key={s.value} className="stat-item">
+            <span className="stat-value">{s.value}</span>
+            <span className="stat-label">{s.label}</span>
+          </div>
+        ))}
+      </section>
+
+      {/* ── FEATURES ── */}
+      <section className="section-alt features-section">
+        <span className="overline">Why Payday</span>
+        <h2 className="section-title">Built for India&apos;s domestic workforce</h2>
+        <div className="feature-grid">
+          {FEATURES.map((f) => (
+            <div key={f.title} className="feature-card">
+              <span className="feature-icon">{f.icon}</span>
+              <strong className="feature-title">{f.title}</strong>
+              <p className="feature-desc">{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* ── ECOSYSTEM ── */}
       <section className="eco-section">
-        <h2 className="section-title">How the ecosystem works</h2>
+        <span className="overline">The ecosystem</span>
+        <h2 className="section-title">How it all connects</h2>
         <p className="section-sub">
           Payday connects work platforms with regulated lenders to serve India&apos;s domestic workforce.
         </p>
@@ -181,9 +228,10 @@ export default function Home() {
       </section>
 
       {/* ── JOURNEY ── */}
-      <section className="journey-section">
-        <h2 className="section-title">The journey</h2>
-        <p className="section-sub">From sign-up to money in your account — entirely on WhatsApp.</p>
+      <section className="journey-section section-alt">
+        <span className="overline">The journey</span>
+        <h2 className="section-title">From WhatsApp to your bank account</h2>
+        <p className="section-sub">Six steps, entirely on WhatsApp. No paperwork, no branch visits.</p>
 
         <div className="journey-grid">
           {FLOW_STEPS.map((step, i) => (
