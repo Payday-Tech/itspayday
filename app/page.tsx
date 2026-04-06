@@ -111,58 +111,45 @@ export default function Home() {
         </p>
 
         <div className="ecosystem">
-          <div className="eco-col eco-col-left">
-            <div className="eco-col-header">
-              <div className="eco-col-label">Work Platforms</div>
-              <div className="eco-col-sublabel">Attendance · Earnings · Tenure</div>
+          {/* Work Platforms */}
+          <div className="eco-card eco-card-left">
+            <div className="eco-card-header">
+              <div className="eco-card-label">Work Platforms</div>
+              <div className="eco-card-sublabel">Attendance · Earnings · Tenure</div>
             </div>
-            <div className="eco-pill eco-pill-demand">
+            <div className="eco-pill">
               <span className="eco-pill-name">Society Management Apps</span>
               <span className="eco-pill-desc">Housing society platforms</span>
             </div>
-            <div className="eco-pill eco-pill-demand">
+            <div className="eco-pill">
               <span className="eco-pill-name">Insta-Help Platforms</span>
               <span className="eco-pill-desc">On-demand home services</span>
             </div>
           </div>
 
-          <div className="eco-center">
-            <div className="eco-connector eco-connector-left">
-              <div className="eco-arrow-label">work data</div>
-              <div className="eco-arrow-line">
-                <div className="eco-arrow-shaft" />
-                <div className="eco-arrow-head">›</div>
-              </div>
+          {/* Payday Hub */}
+          <div className="eco-card eco-card-center">
+            <Image src="/payday-logo.svg" alt="Payday" width={88} height={26}
+              style={{ filter: 'brightness(0) invert(1)', marginBottom: 8 }} />
+            <div className="eco-hub-tags">
+              <span className="eco-hub-tag">AI underwriting</span>
+              <span className="eco-hub-tag">WhatsApp journey</span>
+              <span className="eco-hub-tag">Instant disbursal</span>
             </div>
-            <div className="eco-hub">
-              <Image src="/payday-logo.svg" alt="Payday" width={96} height={28}
-                style={{ filter: 'brightness(0) invert(1)', marginBottom: 14 }} />
-              <div className="eco-hub-tags">
-                <span className="eco-hub-tag">AI underwriting</span>
-                <span className="eco-hub-tag">WhatsApp journey</span>
-                <span className="eco-hub-tag">Instant disbursal</span>
-              </div>
-              <div className="eco-hub-worker">
-                <span>🏠</span>
-                <span>50M+ domestic workers</span>
-              </div>
-            </div>
-            <div className="eco-connector eco-connector-right">
-              <div className="eco-arrow-line">
-                <div className="eco-arrow-head">›</div>
-                <div className="eco-arrow-shaft" />
-              </div>
-              <div className="eco-arrow-label">loan capital</div>
+            <div className="eco-hub-worker">
+              <span>🏠</span>
+              <span>50M+ domestic workers</span>
             </div>
           </div>
 
-          <div className="eco-col eco-col-right">
-            <div className="eco-col-header">
-              <div className="eco-col-label">Lending Partners</div>
-              <div className="eco-col-sublabel">RBI-regulated capital</div>
+          {/* Lending Partners */}
+          <div className="eco-card eco-card-right">
+            <div className="eco-card-header">
+              <div className="eco-card-label">Lending Partners</div>
+              <div className="eco-card-sublabel">RBI-regulated capital</div>
             </div>
             {SUPPLY_PARTNERS.map((p) => (
-              <div key={p.name} className="eco-pill eco-pill-supply">
+              <div key={p.name} className="eco-pill">
                 <span className="eco-pill-name">{p.name}</span>
                 {p.desc && <span className="eco-pill-desc">{p.desc}</span>}
               </div>
