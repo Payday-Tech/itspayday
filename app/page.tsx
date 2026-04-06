@@ -11,48 +11,18 @@ const SUPPLY_PARTNERS = [
 ];
 
 const FLOW_STEPS = [
-  {
-    num: '01',
-    title: 'Basic Details',
-    desc: 'Name and phone number',
-    icon: '👤',
-  },
-  {
-    num: '02',
-    title: 'KYC',
-    desc: 'Identity verification',
-    icon: '🪪',
-  },
-  {
-    num: '03',
-    title: 'Work Signals',
-    desc: 'Attendance, tenure, households served, earnings',
-    icon: '📊',
-  },
-  {
-    num: '04',
-    title: 'Bank Verification',
-    desc: 'Account details and statement check',
-    icon: '🏦',
-  },
-  {
-    num: '05',
-    title: 'Disbursal',
-    desc: 'Money in your bank within hours',
-    icon: '💸',
-  },
-  {
-    num: '06',
-    title: 'Repayment',
-    desc: 'UPI AutoPay or eNACH on salary date',
-    icon: '🔄',
-  },
+  { num: '01', title: 'Basic Details',        desc: 'Name and phone number',                              icon: '👤' },
+  { num: '02', title: 'KYC',                  desc: 'Identity verification',                              icon: '🪪' },
+  { num: '03', title: 'Work Signals',         desc: 'Attendance, tenure, households served, earnings',    icon: '📊' },
+  { num: '04', title: 'Bank Verification',    desc: 'Account details and statement check',                icon: '🏦' },
+  { num: '05', title: 'Disbursal',            desc: 'Money in your bank within hours',                   icon: '💸' },
+  { num: '06', title: 'Repayment',            desc: 'UPI AutoPay or eNACH on salary date',               icon: '🔄' },
 ];
 
 const FAQS = [
   {
     q: 'What documents do I need?',
-    a: 'Just your basic KYC documents (Aadhaar/PAN), bank account details, and your work history from your employer platform — no salary slips or lengthy paperwork.',
+    a: 'Just your KYC documents (Aadhaar/PAN), bank account details, and your work history from your employer platform — no salary slips or lengthy paperwork.',
   },
   {
     q: 'How fast can I get the money?',
@@ -77,12 +47,14 @@ export default function Home() {
 
   return (
     <main>
-      {/* ── Hero ── */}
+
+      {/* ── HERO ── */}
       <section className="hero">
-        <div>
-          <h1>Access what you&apos;ve earned —<br />before payday</h1>
-          <p style={{ fontSize: '1.08rem', lineHeight: 1.7, marginTop: 16, maxWidth: 480, color: 'var(--color-ink-700)' }}>
-            Domestic workers can access salary advances or credit on a WhatsApp-based journey — verified through their work data. No branch visits.
+        <div className="hero-text">
+          <h1>Access what you&apos;ve<br />earned — before payday</h1>
+          <p className="hero-sub">
+            Domestic workers can access salary advances on a WhatsApp-based journey,
+            underwritten through their work data.
           </p>
           <div className="hero-actions">
             <GetStartedButton />
@@ -90,13 +62,13 @@ export default function Home() {
               Partner with us →
             </a>
           </div>
-          <p style={{ marginTop: 18, fontSize: '0.82rem', color: 'var(--color-ink-500)', lineHeight: 1.5 }}>
-            Payday is a Lending Service Provider. Loans are issued by regulated partner lenders after consent and eligibility checks.
+          <p className="hero-legal">
+            Payday is a Lending Service Provider. Loans are issued by regulated partner lenders
+            after consent and eligibility checks.
           </p>
         </div>
 
-        {/* WhatsApp mockup */}
-        <div className="hero-visual" style={{ background: 'linear-gradient(140deg, #e8f5e2 0%, #d4ece9 100%)', border: '1px solid #c3ddd8' }}>
+        <div className="hero-mockup">
           <div className="wa-phone">
             <div className="wa-statusbar">
               <span>9:41</span>
@@ -135,37 +107,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Journey Flow Diagram ── */}
-      <section className="flow-section">
-        <h2>The journey</h2>
-        <p className="small" style={{ marginBottom: 40 }}>From sign-up to money in your account — entirely on WhatsApp.</p>
-        <div className="flow-diagram">
-          {FLOW_STEPS.map((step, i) => (
-            <div key={step.num} className="flow-row">
-              <div className="flow-step">
-                <div className="flow-icon">{step.icon}</div>
-                <div className="flow-step-body">
-                  <span className="flow-step-num">{step.num}</span>
-                  <strong className="flow-step-title">{step.title}</strong>
-                  <span className="flow-step-desc">{step.desc}</span>
-                </div>
-              </div>
-              {i < FLOW_STEPS.length - 1 && (
-                <div className="flow-arrow">↓</div>
-              )}
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── Ecosystem ── */}
-      <section className="section-alt eco-section">
-        <div style={{ textAlign: 'center', marginBottom: 44 }}>
-          <h2 style={{ marginBottom: 8 }}>How the ecosystem works</h2>
-          <p className="small">
-            Payday sits at the centre — connecting work platforms with regulated lenders to serve India&apos;s domestic workforce.
-          </p>
-        </div>
+      {/* ── ECOSYSTEM ── */}
+      <section className="eco-section">
+        <h2 className="section-title">How the ecosystem works</h2>
+        <p className="section-sub">
+          Payday connects work platforms with regulated lenders to serve India&apos;s domestic workforce.
+        </p>
 
         <div className="ecosystem">
           <div className="eco-col eco-col-left">
@@ -192,13 +139,8 @@ export default function Home() {
               </div>
             </div>
             <div className="eco-hub">
-              <Image
-                src="/payday-logo.svg"
-                alt="Payday"
-                width={96}
-                height={28}
-                style={{ filter: 'brightness(0) invert(1)', marginBottom: 14 }}
-              />
+              <Image src="/payday-logo.svg" alt="Payday" width={96} height={28}
+                style={{ filter: 'brightness(0) invert(1)', marginBottom: 14 }} />
               <div className="eco-hub-tags">
                 <span className="eco-hub-tag">AI underwriting</span>
                 <span className="eco-hub-tag">WhatsApp journey</span>
@@ -233,42 +175,29 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── How it works ── */}
-      <section className="how-section">
-        <div className="how-intro">
-          <h2>How it works</h2>
-          <p className="small">Three steps. Fully on WhatsApp. No paperwork.</p>
-        </div>
-        <div className="how-steps">
-          <div className="how-step">
-            <div className="how-step-num">01</div>
-            <div className="how-step-body">
-              <strong>Work verified</strong>
-              <p>Your employer platform shares attendance and earnings data with your consent.</p>
+      {/* ── JOURNEY ── */}
+      <section className="journey-section">
+        <h2 className="section-title">The journey</h2>
+        <p className="section-sub">From sign-up to money in your account — entirely on WhatsApp.</p>
+
+        <div className="journey-grid">
+          {FLOW_STEPS.map((step, i) => (
+            <div key={step.num} className="journey-step">
+              <div className="journey-step-top">
+                <span className="journey-icon">{step.icon}</span>
+                {i < FLOW_STEPS.length - 1 && <div className="journey-connector" />}
+              </div>
+              <span className="journey-num">{step.num}</span>
+              <strong className="journey-title">{step.title}</strong>
+              <span className="journey-desc">{step.desc}</span>
             </div>
-          </div>
-          <div className="how-step-divider" />
-          <div className="how-step">
-            <div className="how-step-num">02</div>
-            <div className="how-step-body">
-              <strong>Instant decision on WhatsApp</strong>
-              <p>Our AI reviews your eligibility in minutes. No branch visit, no forms.</p>
-            </div>
-          </div>
-          <div className="how-step-divider" />
-          <div className="how-step">
-            <div className="how-step-num">03</div>
-            <div className="how-step-body">
-              <strong>Money in. Repay on salary day.</strong>
-              <p>Funds in your account within hours. Repayment aligned to your salary date.</p>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
       {/* ── FAQ ── */}
       <section className="faq-section">
-        <h2>Frequently asked questions</h2>
+        <h2 className="section-title">Frequently asked questions</h2>
         <div className="faq-list">
           {FAQS.map((faq, i) => (
             <div key={i} className="faq-item">
@@ -282,13 +211,12 @@ export default function Home() {
                   {openFaq === i ? '−' : '+'}
                 </span>
               </button>
-              {openFaq === i && (
-                <p className="faq-answer">{faq.a}</p>
-              )}
+              {openFaq === i && <p className="faq-answer">{faq.a}</p>}
             </div>
           ))}
         </div>
       </section>
+
     </main>
   );
 }
