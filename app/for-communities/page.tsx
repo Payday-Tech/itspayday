@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
@@ -11,26 +10,15 @@ export default function ForCommunities() {
   return (
     <main>
       <section className="hero">
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '56px', alignItems: 'center', maxWidth: 'var(--container)' }}>
-          <div>
-            <span className="overline">For communities &amp; employers</span>
-            <h1>Support your workers. Without becoming their lender.</h1>
-            <p>Payday helps your workforce access responsible credit while regulated lenders manage underwriting and disbursal. Your team stays focused on operations.</p>
-            <div className="hero-actions">
-              <a className="button primary" href="mailto:partnerships@itspayday.in">Contact partnerships</a>
-              <Link className="button secondary" href="/security">Review security</Link>
-            </div>
-          </div>
-          <div>
-            <Image
-              src="/forcommunities.png"
-              alt="Two women in a kitchen smiling while looking at a phone"
-              width={960}
-              height={960}
-              priority
-              style={{ borderRadius: 20, width: '100%', height: 'auto' }}
-            />
-          </div>
+        <span className="overline">For communities &amp; employers</span>
+        <h1>Support your workers. Without becoming their lender.</h1>
+        <p className="hero-sub">
+          Payday helps your workforce access responsible credit while regulated lenders manage underwriting
+          and disbursal. Your team stays focused on operations.
+        </p>
+        <div className="hero-actions">
+          <a className="button primary" href="mailto:partnerships@itspayday.in">Contact partnerships</a>
+          <Link className="button secondary" href="/contact">Talk to us</Link>
         </div>
       </section>
 
@@ -55,10 +43,31 @@ export default function ForCommunities() {
       </section>
 
       <section className="section-alt" style={{ paddingTop: 72, paddingBottom: 72 }}>
-        <h2>Consent-first, always</h2>
-        <p style={{ maxWidth: 600, color: 'var(--color-ink-700)', marginBottom: 0, lineHeight: 1.7 }}>
-          Worker consent is mandatory before any data is accessed or shared. Payday communicates key terms, fees, and grievance channels to every worker before disbursal — in their preferred language.
-        </p>
+        <span className="overline">Our commitment</span>
+        <h2 className="section-title">Consent-first, always</h2>
+        <div className="steps" style={{ marginTop: 32, maxWidth: 640 }}>
+          <div className="step">
+            <span>1</span>
+            <div>
+              <strong>Worker consent before anything</strong>
+              <p className="small">No data is accessed or shared without explicit approval from the worker. Payday communicates key terms before any action is taken.</p>
+            </div>
+          </div>
+          <div className="step">
+            <span>2</span>
+            <div>
+              <strong>Fees disclosed upfront</strong>
+              <p className="small">Interest rates, processing fees, and repayment schedules are communicated clearly in the worker&apos;s preferred language before disbursal.</p>
+            </div>
+          </div>
+          <div className="step">
+            <span>3</span>
+            <div>
+              <strong>Grievance channels available</strong>
+              <p className="small">Workers have access to a dedicated grievance redressal channel. All complaints are logged and resolved within the RBI-mandated timeline.</p>
+            </div>
+          </div>
+        </div>
       </section>
     </main>
   );
