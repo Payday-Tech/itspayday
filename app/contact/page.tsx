@@ -65,44 +65,72 @@ export default function Contact() {
   return (
     <main>
       <section className="hero">
-        <div>
-          <div className="badge">Contact</div>
-          <h1>Talk to our team.</h1>
-          <p>For onboarding, partnerships, support, or compliance queries, reach us by WhatsApp, email, or this form.</p>
-        </div>
+        <span className="overline">Contact</span>
+        <h1>Talk to our team.</h1>
+        <p>For onboarding, partnerships, support, or compliance queries, reach us by WhatsApp, email, or this form.</p>
       </section>
 
       <section>
-        <div className="card-grid">
-          <div className="card">
+        <div className="feature-grid">
+          <div className="feature-card">
+            <span className="feature-card-icon">💬</span>
             <h3>WhatsApp onboarding</h3>
-            <p className="small">Start directly from WhatsApp for faster onboarding.</p>
-            <GetStartedButton />
+            <p>Start directly from WhatsApp for faster onboarding.</p>
+            <div style={{ marginTop: 16 }}>
+              <GetStartedButton />
+            </div>
           </div>
-          <div className="card">
+          <div className="feature-card">
+            <span className="feature-card-icon">📬</span>
             <h3>Official contacts</h3>
-            <p className="small">Email: contact@itspayday.in</p>
-            <p className="small">Grievance: grievance@itspayday.in</p>
-            <p className="small">Phone: +91 85870 12908 (Mon–Sat, 9:00 AM–6:00 PM)</p>
+            <p style={{ marginBottom: 8 }}>contact@itspayday.in</p>
+            <p style={{ marginBottom: 8 }}>grievance@itspayday.in</p>
+            <p>+91 85870 12908 (Mon–Sat, 9:00 AM–6:00 PM)</p>
           </div>
         </div>
       </section>
 
-      <section className="section-alt">
-        <h2>Contact form</h2>
-        {submitted ? (
-          <div className="card"><p style={{ color: 'var(--color-brand-700)', fontWeight: 600 }}>Thanks. Our team will respond shortly.</p></div>
-        ) : (
-          <form className="form-grid" onSubmit={handleSubmit} style={{ maxWidth: '620px' }}>
-            <div><label htmlFor="name">Name</label><input id="name" value={formData.name} onChange={(e) => setFormData({ ...formData, name: sanitizeInput(e.target.value, 100) })} required disabled={submitting} />{errors.name && <div className="helper-text" style={{ color: 'var(--color-error)' }}>{errors.name}</div>}</div>
-            <div><label htmlFor="email">Email</label><input id="email" type="email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: sanitizeInput(e.target.value, 254) })} required disabled={submitting} />{errors.email && <div className="helper-text" style={{ color: 'var(--color-error)' }}>{errors.email}</div>}</div>
-            <div><label htmlFor="topic">Topic</label><select id="topic" value={formData.topic} onChange={(e) => setFormData({ ...formData, topic: e.target.value })} disabled={submitting}><option value="">Select a topic</option><option value="support">Worker support</option><option value="partnerships">Partnerships</option><option value="lenders">Lender partnerships</option><option value="compliance">Compliance & legal</option></select></div>
-            <div><label htmlFor="message">Message</label><textarea id="message" rows={5} value={formData.message} onChange={(e) => setFormData({ ...formData, message: sanitizeInput(e.target.value, 2000) })} required disabled={submitting} />{errors.message && <div className="helper-text" style={{ color: 'var(--color-error)' }}>{errors.message}</div>}</div>
-            <div><ReCaptcha onVerify={handleRecaptchaVerify} onExpire={handleRecaptchaExpire} />{errors.recaptcha && <div className="helper-text" style={{ color: 'var(--color-error)' }}>{errors.recaptcha}</div>}</div>
-            {errors.submit && <div className="helper-text" style={{ color: 'var(--color-error)' }}>{errors.submit}</div>}
-            <button className="button primary" type="submit" disabled={submitting}>{submitting ? 'Submitting...' : 'Send message'}</button>
-          </form>
-        )}
+      <section className="section-alt" style={{ paddingTop: 72, paddingBottom: 72 }}>
+        <div style={{ maxWidth: 620 }}>
+          <h2>Contact form</h2>
+          {submitted ? (
+            <div className="card"><p style={{ color: 'var(--color-brand-700)', fontWeight: 600 }}>Thanks. Our team will respond shortly.</p></div>
+          ) : (
+            <form className="form-grid" onSubmit={handleSubmit}>
+              <div>
+                <label htmlFor="name">Name</label>
+                <input id="name" value={formData.name} onChange={(e) => setFormData({ ...formData, name: sanitizeInput(e.target.value, 100) })} required disabled={submitting} />
+                {errors.name && <div className="helper-text" style={{ color: 'var(--color-error)' }}>{errors.name}</div>}
+              </div>
+              <div>
+                <label htmlFor="email">Email</label>
+                <input id="email" type="email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: sanitizeInput(e.target.value, 254) })} required disabled={submitting} />
+                {errors.email && <div className="helper-text" style={{ color: 'var(--color-error)' }}>{errors.email}</div>}
+              </div>
+              <div>
+                <label htmlFor="topic">Topic</label>
+                <select id="topic" value={formData.topic} onChange={(e) => setFormData({ ...formData, topic: e.target.value })} disabled={submitting}>
+                  <option value="">Select a topic</option>
+                  <option value="support">Worker support</option>
+                  <option value="partnerships">Partnerships</option>
+                  <option value="lenders">Lender partnerships</option>
+                  <option value="compliance">Compliance &amp; legal</option>
+                </select>
+              </div>
+              <div>
+                <label htmlFor="message">Message</label>
+                <textarea id="message" rows={5} value={formData.message} onChange={(e) => setFormData({ ...formData, message: sanitizeInput(e.target.value, 2000) })} required disabled={submitting} />
+                {errors.message && <div className="helper-text" style={{ color: 'var(--color-error)' }}>{errors.message}</div>}
+              </div>
+              <div>
+                <ReCaptcha onVerify={handleRecaptchaVerify} onExpire={handleRecaptchaExpire} />
+                {errors.recaptcha && <div className="helper-text" style={{ color: 'var(--color-error)' }}>{errors.recaptcha}</div>}
+              </div>
+              {errors.submit && <div className="helper-text" style={{ color: 'var(--color-error)' }}>{errors.submit}</div>}
+              <button className="button primary" type="submit" disabled={submitting}>{submitting ? 'Submitting...' : 'Send message'}</button>
+            </form>
+          )}
+        </div>
       </section>
     </main>
   );
