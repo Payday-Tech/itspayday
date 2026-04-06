@@ -62,6 +62,10 @@ export default function Home() {
               Partner with us →
             </a>
           </div>
+          <div className="hero-backed">
+            <span className="hero-backed-label">Backed by</span>
+            <Image src="/iima-ventures.png" alt="IIMA Ventures" width={120} height={40} style={{ objectFit: 'contain' }} />
+          </div>
         </div>
 
         <div className="hero-mockup">
