@@ -10,10 +10,49 @@ const SUPPLY_PARTNERS = [
   { name: 'Regulated lenders', desc: 'RBI licensed' },
 ];
 
+const FLOW_STEPS = [
+  {
+    num: '01',
+    title: 'Basic Details',
+    desc: 'Name and phone number',
+    icon: '👤',
+  },
+  {
+    num: '02',
+    title: 'KYC',
+    desc: 'Identity verification',
+    icon: '🪪',
+  },
+  {
+    num: '03',
+    title: 'Work Signals',
+    desc: 'Attendance, tenure, households served, earnings',
+    icon: '📊',
+  },
+  {
+    num: '04',
+    title: 'Bank Verification',
+    desc: 'Account details and statement check',
+    icon: '🏦',
+  },
+  {
+    num: '05',
+    title: 'Disbursal',
+    desc: 'Money in your bank within hours',
+    icon: '💸',
+  },
+  {
+    num: '06',
+    title: 'Repayment',
+    desc: 'UPI AutoPay or eNACH on salary date',
+    icon: '🔄',
+  },
+];
+
 const FAQS = [
   {
-    q: 'Do I need a CIBIL score?',
-    a: 'No. We use your work history and earnings from your employer platform to assess eligibility — not credit bureau scores.',
+    q: 'What documents do I need?',
+    a: 'Just your basic KYC documents (Aadhaar/PAN), bank account details, and your work history from your employer platform — no salary slips or lengthy paperwork.',
   },
   {
     q: 'How fast can I get the money?',
@@ -25,7 +64,7 @@ const FAQS = [
   },
   {
     q: 'How do I repay?',
-    a: 'Repayment is aligned with your salary cycle — automatic and transparent.',
+    a: 'Repayment is set up via UPI AutoPay or eNACH, automatically deducted on your salary date.',
   },
   {
     q: 'Who actually lends the money?',
@@ -43,7 +82,7 @@ export default function Home() {
         <div>
           <h1>Access what you&apos;ve earned —<br />before payday</h1>
           <p style={{ fontSize: '1.08rem', lineHeight: 1.7, marginTop: 16, maxWidth: 480, color: 'var(--color-ink-700)' }}>
-            Domestic workers can access salary advances or credit on a WhatsApp-based journey — verified through their work data. No CIBIL score. No branch visits.
+            Domestic workers can access salary advances or credit on a WhatsApp-based journey — verified through their work data. No branch visits.
           </p>
           <div className="hero-actions">
             <GetStartedButton />
@@ -96,6 +135,29 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── Journey Flow Diagram ── */}
+      <section className="flow-section">
+        <h2>The journey</h2>
+        <p className="small" style={{ marginBottom: 40 }}>From sign-up to money in your account — entirely on WhatsApp.</p>
+        <div className="flow-diagram">
+          {FLOW_STEPS.map((step, i) => (
+            <div key={step.num} className="flow-row">
+              <div className="flow-step">
+                <div className="flow-icon">{step.icon}</div>
+                <div className="flow-step-body">
+                  <span className="flow-step-num">{step.num}</span>
+                  <strong className="flow-step-title">{step.title}</strong>
+                  <span className="flow-step-desc">{step.desc}</span>
+                </div>
+              </div>
+              {i < FLOW_STEPS.length - 1 && (
+                <div className="flow-arrow">↓</div>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* ── Ecosystem ── */}
       <section className="section-alt eco-section">
         <div style={{ textAlign: 'center', marginBottom: 44 }}>
@@ -106,7 +168,6 @@ export default function Home() {
         </div>
 
         <div className="ecosystem">
-          {/* Left: Demand Partners */}
           <div className="eco-col eco-col-left">
             <div className="eco-col-header">
               <div className="eco-col-label">Work Platforms</div>
@@ -122,7 +183,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Center: PayDay Hub */}
           <div className="eco-center">
             <div className="eco-connector eco-connector-left">
               <div className="eco-arrow-label">work data</div>
@@ -158,7 +218,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Right: Supply Partners */}
           <div className="eco-col eco-col-right">
             <div className="eco-col-header">
               <div className="eco-col-label">Lending Partners</div>
