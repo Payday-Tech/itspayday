@@ -62,10 +62,6 @@ export default function Home() {
               Partner with us →
             </a>
           </div>
-          <p className="hero-legal">
-            Payday is a Lending Service Provider. Loans are issued by regulated partner lenders
-            after consent and eligibility checks.
-          </p>
         </div>
 
         <div className="hero-mockup">
@@ -216,6 +212,10 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      <p style={{ fontSize: '0.78rem', color: 'var(--color-ink-500)', lineHeight: 1.6, maxWidth: 640, marginTop: 40 }}>
+        Payday is a Lending Service Provider (LSP). Loans are issued by regulated NBFC and bank partners after consent and eligibility checks.
+      </p>
 
     </main>
   );
