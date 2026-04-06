@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { FormEvent, useState, useCallback } from 'react';
 import ReCaptcha from '@/components/ReCaptcha';
 import { submitLenderPartnershipForm } from '@/lib/api';
@@ -132,170 +131,167 @@ export default function ForLenders() {
   return (
     <main>
       <section className="hero">
-        <div>
-          <div className="badge">For lenders</div>
-          <h1>Underwrite worker credit with structured, consent-led signals.</h1>
-          <p>Payday supports lender partners with wage behaviour data, servicing workflows, and multilingual borrower support.</p>
-        </div>
-        <div className="hero-visual">
-          <Image
-            src="/api/for-lenders-hero"
-            alt="Borrower viewing loan approval on smartphone"
-            width={960}
-            height={885}
-          />
-        </div>
+        <span className="overline">For lenders</span>
+        <h1>Underwrite worker credit with structured, consent-led signals.</h1>
+        <p>Payday supports lender partners with verified work behaviour data, servicing workflows, and multilingual borrower support across Tier-1 Indian cities.</p>
       </section>
 
       <section>
-        <div className="card-grid">
-          <div className="card">
+        <div className="feature-grid">
+          <div className="feature-card">
+            <span className="feature-card-icon">🏘️</span>
             <h3>Sourcing at scale</h3>
-            <p className="small">Tier-1 gated communities and gig platforms with verified employment data.</p>
+            <p>Tier-1 gated communities and on-demand platforms with verified employment and earnings data.</p>
           </div>
-          <div className="card">
+          <div className="feature-card">
+            <span className="feature-card-icon">📊</span>
             <h3>Underwriting insights</h3>
-            <p className="small">Tenure, earnings regularity, consent-led data, and repayment history.</p>
+            <p>Tenure, earnings regularity, household count, attendance — consent-led signals designed for this segment.</p>
           </div>
-          <div className="card">
+          <div className="feature-card">
+            <span className="feature-card-icon">🔁</span>
             <h3>Assisted collections</h3>
-            <p className="small">Aligned repayment cycles, reminders, and collaboration with community partners.</p>
+            <p>Salary-aligned repayment cycles, multilingual reminders, and partnership with community managers.</p>
           </div>
         </div>
       </section>
 
-      <section className="section-alt">
-        <h2>Partner with Payday</h2>
-        <p className="small" style={{ marginBottom: '14px' }}>Payday is an LSP; regulated lenders own credit policy, underwriting decisions, and disbursal.</p>
-        {submitted ? (
-          <div className="card" style={{ textAlign: 'center', padding: '40px' }}>
-            <p style={{ color: 'var(--color-brand-700)', fontWeight: 600, fontSize: '1.1rem' }}>
-              Thank you for your interest! We&apos;ll be in touch soon.
-            </p>
-          </div>
-        ) : (
-          <form className="form-grid" onSubmit={handleSubmit} style={{ maxWidth: '600px' }}>
-            <div>
-              <label htmlFor="name">Name</label>
-              <input
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: sanitizeInput(e.target.value, 100) })}
-                maxLength={100}
-                pattern="[a-zA-Z\s\-']+"
-                title="Letters, spaces, hyphens, and apostrophes only"
-                autoComplete="name"
-                required
-                disabled={submitting}
-              />
-              {errors.name && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.name}</div>}
+      <section className="section-alt" style={{ paddingTop: 72, paddingBottom: 72 }}>
+        <div style={{ maxWidth: 600 }}>
+          <h2>Partner with Payday</h2>
+          <p className="small" style={{ marginBottom: 28, color: 'var(--color-ink-500)' }}>
+            Payday is an LSP. Regulated lenders own credit policy, underwriting decisions, and disbursal. Fill in your details and we&apos;ll reach out.
+          </p>
+          {submitted ? (
+            <div className="card" style={{ textAlign: 'center', padding: '40px' }}>
+              <p style={{ color: 'var(--color-brand-700)', fontWeight: 600, fontSize: '1.1rem' }}>
+                Thank you for your interest! We&apos;ll be in touch soon.
+              </p>
             </div>
-            <div>
-              <label htmlFor="company">Company</label>
-              <input
-                id="company"
-                name="company"
-                value={formData.company}
-                onChange={(e) => setFormData({ ...formData, company: sanitizeInput(e.target.value, 100) })}
-                maxLength={100}
-                minLength={2}
-                autoComplete="organization"
-                required
-                disabled={submitting}
-              />
-              {errors.company && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.company}</div>}
-            </div>
-            <div>
-              <label htmlFor="email">Email</label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: sanitizeInput(e.target.value, 254) })}
-                maxLength={254}
-                autoComplete="email"
-                required
-                disabled={submitting}
-              />
-              {errors.email && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.email}</div>}
-            </div>
-            <div>
-              <label htmlFor="phone">Phone</label>
-              <input
-                id="phone"
-                name="phone"
-                type="tel"
-                value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: sanitizePhone(e.target.value) })}
-                maxLength={15}
-                pattern="[0-9]{10,15}"
-                title="Enter 10-15 digit phone number"
-                placeholder="e.g. 919876543210"
-                autoComplete="tel"
-                required
-                disabled={submitting}
-              />
-              {errors.phone && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.phone}</div>}
-            </div>
-            <div>
-              <label htmlFor="role">Role</label>
-              <input
-                id="role"
-                name="role"
-                value={formData.role}
-                onChange={(e) => setFormData({ ...formData, role: sanitizeInput(e.target.value, 100) })}
-                maxLength={100}
-                pattern="[a-zA-Z\s\-']+"
-                title="Letters, spaces, hyphens, and apostrophes only"
-                autoComplete="organization-title"
-                required
-                disabled={submitting}
-              />
-              {errors.role && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.role}</div>}
-            </div>
-            <div>
-              <label htmlFor="city">City</label>
-              <input
-                id="city"
-                name="city"
-                value={formData.city}
-                onChange={(e) => setFormData({ ...formData, city: sanitizeInput(e.target.value, 100) })}
-                maxLength={100}
-                pattern="[a-zA-Z\s\-']+"
-                title="Letters, spaces, hyphens, and apostrophes only"
-                autoComplete="address-level2"
-                required
-                disabled={submitting}
-              />
-              {errors.city && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.city}</div>}
-            </div>
-            <div>
-              <label htmlFor="notes">Notes</label>
-              <textarea
-                id="notes"
-                name="notes"
-                rows={4}
-                value={formData.notes}
-                onChange={(e) => setFormData({ ...formData, notes: sanitizeInput(e.target.value, 1000) })}
-                maxLength={1000}
-                disabled={submitting}
-              />
-            </div>
-            <div>
-              <ReCaptcha
-                onVerify={handleRecaptchaVerify}
-                onExpire={handleRecaptchaExpire}
-              />
-              {errors.recaptcha && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.recaptcha}</div>}
-            </div>
-            {errors.submit && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.submit}</div>}
-            <button className="button primary" type="submit" disabled={submitting}>
-              {submitting ? 'Submitting...' : 'Submit partner request'}
-            </button>
-          </form>
-        )}
+          ) : (
+            <form className="form-grid" onSubmit={handleSubmit}>
+              <div>
+                <label htmlFor="name">Name</label>
+                <input
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: sanitizeInput(e.target.value, 100) })}
+                  maxLength={100}
+                  pattern="[a-zA-Z\s\-']+"
+                  title="Letters, spaces, hyphens, and apostrophes only"
+                  autoComplete="name"
+                  required
+                  disabled={submitting}
+                />
+                {errors.name && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.name}</div>}
+              </div>
+              <div>
+                <label htmlFor="company">Company</label>
+                <input
+                  id="company"
+                  name="company"
+                  value={formData.company}
+                  onChange={(e) => setFormData({ ...formData, company: sanitizeInput(e.target.value, 100) })}
+                  maxLength={100}
+                  minLength={2}
+                  autoComplete="organization"
+                  required
+                  disabled={submitting}
+                />
+                {errors.company && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.company}</div>}
+              </div>
+              <div>
+                <label htmlFor="email">Email</label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: sanitizeInput(e.target.value, 254) })}
+                  maxLength={254}
+                  autoComplete="email"
+                  required
+                  disabled={submitting}
+                />
+                {errors.email && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.email}</div>}
+              </div>
+              <div>
+                <label htmlFor="phone">Phone</label>
+                <input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: sanitizePhone(e.target.value) })}
+                  maxLength={15}
+                  pattern="[0-9]{10,15}"
+                  title="Enter 10-15 digit phone number"
+                  placeholder="e.g. 919876543210"
+                  autoComplete="tel"
+                  required
+                  disabled={submitting}
+                />
+                {errors.phone && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.phone}</div>}
+              </div>
+              <div>
+                <label htmlFor="role">Role</label>
+                <input
+                  id="role"
+                  name="role"
+                  value={formData.role}
+                  onChange={(e) => setFormData({ ...formData, role: sanitizeInput(e.target.value, 100) })}
+                  maxLength={100}
+                  pattern="[a-zA-Z\s\-']+"
+                  title="Letters, spaces, hyphens, and apostrophes only"
+                  autoComplete="organization-title"
+                  required
+                  disabled={submitting}
+                />
+                {errors.role && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.role}</div>}
+              </div>
+              <div>
+                <label htmlFor="city">City</label>
+                <input
+                  id="city"
+                  name="city"
+                  value={formData.city}
+                  onChange={(e) => setFormData({ ...formData, city: sanitizeInput(e.target.value, 100) })}
+                  maxLength={100}
+                  pattern="[a-zA-Z\s\-']+"
+                  title="Letters, spaces, hyphens, and apostrophes only"
+                  autoComplete="address-level2"
+                  required
+                  disabled={submitting}
+                />
+                {errors.city && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.city}</div>}
+              </div>
+              <div>
+                <label htmlFor="notes">Notes</label>
+                <textarea
+                  id="notes"
+                  name="notes"
+                  rows={4}
+                  value={formData.notes}
+                  onChange={(e) => setFormData({ ...formData, notes: sanitizeInput(e.target.value, 1000) })}
+                  maxLength={1000}
+                  disabled={submitting}
+                />
+              </div>
+              <div>
+                <ReCaptcha
+                  onVerify={handleRecaptchaVerify}
+                  onExpire={handleRecaptchaExpire}
+                />
+                {errors.recaptcha && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.recaptcha}</div>}
+              </div>
+              {errors.submit && <div className="helper-text" style={{ color: 'var(--status-error)' }}>{errors.submit}</div>}
+              <button className="button primary" type="submit" disabled={submitting}>
+                {submitting ? 'Submitting...' : 'Submit partner request'}
+              </button>
+            </form>
+          )}
+        </div>
       </section>
     </main>
   );
