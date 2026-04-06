@@ -127,18 +127,36 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Payday Hub */}
-          <div className="eco-card eco-card-center">
-            <Image src="/payday-logo.svg" alt="Payday" width={88} height={26}
-              style={{ filter: 'brightness(0) invert(1)', marginBottom: 8 }} />
-            <div className="eco-hub-tags">
-              <span className="eco-hub-tag">AI underwriting</span>
-              <span className="eco-hub-tag">WhatsApp journey</span>
-              <span className="eco-hub-tag">Instant disbursal</span>
+          {/* Arrow: work data → */}
+          <div className="eco-arrow">
+            <span className="eco-arrow-label">work data</span>
+            <div className="eco-arrow-shaft">
+              <div className="eco-arrow-line" />
+              <span className="eco-arrow-head">›</span>
             </div>
-            <div className="eco-hub-worker">
+          </div>
+
+          {/* Payday — no background box */}
+          <div className="eco-center-content">
+            <Image src="/payday-logo.svg" alt="Payday" width={88} height={26}
+              style={{ marginBottom: 4 }} />
+            <div className="eco-center-tags">
+              <span className="eco-center-tag">AI underwriting</span>
+              <span className="eco-center-tag">WhatsApp journey</span>
+              <span className="eco-center-tag">Instant disbursal</span>
+            </div>
+            <div className="eco-center-worker">
               <span>🏠</span>
               <span>50M+ domestic workers</span>
+            </div>
+          </div>
+
+          {/* Arrow: → loan capital */}
+          <div className="eco-arrow">
+            <span className="eco-arrow-label">loan capital</span>
+            <div className="eco-arrow-shaft">
+              <div className="eco-arrow-line" />
+              <span className="eco-arrow-head">›</span>
             </div>
           </div>
 
