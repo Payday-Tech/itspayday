@@ -772,16 +772,19 @@ section {
 }
 
 .eco-arrow-line {
-  width: 36px;
+  width: 40px;
   height: 2px;
-  background: #bdd4e0;
+  background: var(--color-brand-600);
 }
 
 .eco-arrow-head {
-  font-size: 1.1rem;
-  color: #8ab5c8;
-  line-height: 1;
-  margin-left: -4px;
+  width: 0;
+  height: 0;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-left: 10px solid var(--color-brand-600);
+  margin-left: 0;
+  font-size: 0;
 }
 
 .eco-card-header {
