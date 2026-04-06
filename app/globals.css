@@ -1183,3 +1183,141 @@ label {
     gap: 6px;
   }
 }
+
+/* ── How it works — editorial layout ── */
+.how-section {
+  padding: 64px 0;
+}
+
+.how-intro {
+  margin-bottom: 48px;
+}
+
+.how-intro h2 {
+  margin-bottom: 6px;
+}
+
+.how-steps {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.how-step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 24px 0 0;
+}
+
+.how-step-num {
+  font-family: var(--font-sora), sans-serif;
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-brand-100);
+  letter-spacing: -0.04em;
+}
+
+.how-step-body strong {
+  display: block;
+  font-size: 1rem;
+  color: var(--color-ink-900);
+  margin-bottom: 6px;
+}
+
+.how-step-body p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--color-ink-500);
+  line-height: 1.6;
+}
+
+.how-step-divider {
+  width: 1px;
+  height: 80px;
+  background: var(--color-border);
+  margin: 8px 24px 0 0;
+  flex-shrink: 0;
+}
+
+@media (max-width: 700px) {
+  .how-steps {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .how-step {
+    padding: 0;
+  }
+
+  .how-step-divider {
+    width: 40px;
+    height: 1px;
+    margin: 0;
+  }
+}
+
+/* ── FAQ — borderless, editorial ── */
+.faq-section {
+  padding: 64px 0;
+  background: var(--color-surface-alt);
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  padding-left: max(24px, calc(50vw - (var(--container) / 2)));
+  padding-right: max(24px, calc(50vw - (var(--container) / 2)));
+}
+
+.faq-section h2 {
+  margin-bottom: 32px;
+}
+
+.faq-list {
+  max-width: 720px;
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.faq-item:first-child {
+  border-top: 1px solid var(--color-border);
+}
+
+.faq-question {
+  width: 100%;
+  text-align: left;
+  padding: 20px 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--color-ink-900);
+  gap: 16px;
+}
+
+.faq-question:hover {
+  color: var(--color-brand-700);
+}
+
+.faq-icon {
+  font-size: 1.3rem;
+  color: var(--color-ink-500);
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.faq-answer {
+  margin: 0;
+  padding: 0 0 20px;
+  color: var(--color-ink-700);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  max-width: 620px;
+}
