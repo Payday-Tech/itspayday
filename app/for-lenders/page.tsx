@@ -4,30 +4,22 @@ import { FormEvent, useState, useCallback } from 'react';
 import ReCaptcha from '@/components/ReCaptcha';
 import { submitLenderPartnershipForm } from '@/lib/api';
 
-// Sanitize input to prevent XSS
 const sanitizeInput = (input: string, maxLength: number = 500): string => {
-  return input
-    .replace(/[<>]/g, '')
-    .trim()
-    .slice(0, maxLength);
+  return input.replace(/[<>]/g, '').trim().slice(0, maxLength);
 };
 
-// Sanitize phone - only digits
 const sanitizePhone = (input: string): string => {
   return input.replace(/\D/g, '').slice(0, 15);
 };
 
-// Validate email format
 const isValidEmail = (email: string): boolean => {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length <= 254;
 };
 
-// Validate name - letters, spaces, hyphens, apostrophes
 const isValidName = (name: string): boolean => {
   return /^[a-zA-Z\s\-']+$/.test(name) && name.length >= 1 && name.length <= 100;
 };
 
-// Validate phone - 10-15 digits
 const isValidPhone = (phone: string): boolean => {
   return /^\d{10,15}$/.test(phone);
 };
@@ -70,7 +62,6 @@ export default function ForLenders() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    // Validate inputs
     const newErrors: FormErrors = {};
 
     if (!isValidName(formData.name)) {
@@ -133,7 +124,10 @@ export default function ForLenders() {
       <section className="hero">
         <span className="overline">For lenders</span>
         <h1>Underwrite worker credit with structured, consent-led signals.</h1>
-        <p>Payday supports lender partners with verified work behaviour data, servicing workflows, and multilingual borrower support across Tier-1 Indian cities.</p>
+        <p className="hero-sub">
+          Payday supports lender partners with verified work behaviour data, servicing workflows,
+          and multilingual borrower support across Tier-1 Indian cities.
+        </p>
       </section>
 
       <section>
@@ -158,12 +152,14 @@ export default function ForLenders() {
 
       <section className="section-alt" style={{ paddingTop: 72, paddingBottom: 72 }}>
         <div style={{ maxWidth: 600 }}>
-          <h2>Partner with Payday</h2>
-          <p className="small" style={{ marginBottom: 28, color: 'var(--color-ink-500)' }}>
-            Payday is an LSP. Regulated lenders own credit policy, underwriting decisions, and disbursal. Fill in your details and we&apos;ll reach out.
+          <span className="overline">Get in touch</span>
+          <h2 className="section-title">Partner with Payday</h2>
+          <p className="section-sub">
+            Payday is an LSP. Regulated lenders own credit policy, underwriting decisions, and disbursal.
+            Fill in your details and we&apos;ll reach out.
           </p>
           {submitted ? (
-            <div className="card" style={{ textAlign: 'center', padding: '40px' }}>
+            <div className="card" style={{ padding: '40px', textAlign: 'center' }}>
               <p style={{ color: 'var(--color-brand-700)', fontWeight: 600, fontSize: '1.1rem' }}>
                 Thank you for your interest! We&apos;ll be in touch soon.
               </p>
