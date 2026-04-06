@@ -1,21 +1,22 @@
 import type { Metadata } from 'next';
-import { Inter, Sora } from 'next/font/google';
+import { DM_Serif_Display, Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 
-const inter = Inter({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
   variable: '--font-inter',
+  weight: ['400', '500', '600', '700'],
 });
 
-const sora = Sora({
+const dmSerif = DM_Serif_Display({
   subsets: ['latin'],
   variable: '--font-sora',
-  weight: ['500', '600', '700'],
+  weight: '400',
 });
 
 export const metadata: Metadata = {
-  title: 'Payday | Credit-First Financial Access for Everyday Workers',
-  description: 'Payday helps domestic and on-demand workers access fair, wage-linked credit with consent-led underwriting and transparent servicing.',
+  title: 'Payday | Salary Advances for Domestic Workers',
+  description: 'Domestic workers across India can access salary advances on a WhatsApp-based journey, underwritten through their work data.',
 };
 
 export default function RootLayout({
@@ -25,7 +26,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${sora.variable}`}>
+      <body className={`${jakarta.variable} ${dmSerif.variable}`}>
         {children}
       </body>
     </html>
