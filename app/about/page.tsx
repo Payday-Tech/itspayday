@@ -11,7 +11,10 @@ export default function About() {
       <section className="hero">
         <span className="overline">About Payday</span>
         <h1>Responsible credit for India&apos;s everyday workforce.</h1>
-        <p>Payday is a Lending Service Provider enabling wage-linked credit with regulated lending partners, consent-led operations, and clear communication in local languages.</p>
+        <p className="hero-sub">
+          Payday is a Lending Service Provider enabling wage-linked credit with regulated lending partners,
+          consent-led operations, and clear communication in local languages.
+        </p>
       </section>
 
       <section>
@@ -35,7 +38,8 @@ export default function About() {
       </section>
 
       <section className="section-alt" style={{ paddingTop: 72, paddingBottom: 72 }}>
-        <h2>How Payday works</h2>
+        <span className="overline">How it works</span>
+        <h2 className="section-title">From consent to credit</h2>
         <div className="steps" style={{ marginTop: 32, maxWidth: 640 }}>
           <div className="step">
             <span>1</span>
