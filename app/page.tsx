@@ -17,12 +17,6 @@ const SUPPLY_PARTNERS = [
   { name: 'Regulated lenders', desc: 'RBI licensed' },
 ];
 
-const WORKERS = [
-  { emoji: '🧹', role: 'Housekeeper', name: 'Rekha' },
-  { emoji: '🍳', role: 'Cook', name: 'Sunita' },
-  { emoji: '🚗', role: 'Driver', name: 'Ravi' },
-  { emoji: '👶', role: 'Nanny', name: 'Priya' },
-];
 
 const FAQS = [
   {
@@ -58,22 +52,8 @@ export default function Home() {
           <span className="badge">Salary Advances · Domestic Workers</span>
           <h1>Access what you&apos;ve earned —<br />before payday</h1>
           <p style={{ fontSize: '1.08rem', lineHeight: 1.65, marginTop: 14, maxWidth: 500, color: 'var(--color-ink-700)' }}>
-            Instant salary advances for maids, cooks, drivers and on-demand helpers across India&apos;s top cities.
-            No CIBIL score. No branch visits. Just WhatsApp.
+            Domestic workers can access salary advances or credit on a WhatsApp-based journey — verified through their work data. No CIBIL score. No branch visits.
           </p>
-
-          {/* Worker profile pills */}
-          <div className="worker-pills">
-            {WORKERS.map((w) => (
-              <div key={w.name} className="worker-pill">
-                <span className="worker-pill-emoji">{w.emoji}</span>
-                <span className="worker-pill-text">
-                  <span className="worker-pill-name">{w.name}</span>
-                  <span className="worker-pill-role">{w.role}</span>
-                </span>
-              </div>
-            ))}
-          </div>
 
           <div className="hero-actions">
             <GetStartedButton />
