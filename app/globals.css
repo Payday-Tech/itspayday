@@ -986,3 +986,200 @@ label {
     transform: rotate(90deg);
   }
 }
+
+/* ── Worker profile pills ── */
+.worker-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0 26px;
+}
+
+.worker-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px 7px 8px;
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  box-shadow: var(--shadow-sm);
+}
+
+.worker-pill-emoji {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.worker-pill-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.worker-pill-name {
+  font-weight: 600;
+  font-size: 0.82rem;
+  color: var(--color-ink-900);
+  line-height: 1.2;
+}
+
+.worker-pill-role {
+  font-size: 0.72rem;
+  color: var(--color-ink-500);
+  line-height: 1.2;
+}
+
+/* ── WhatsApp phone mockup ── */
+.wa-phone {
+  background: #ece5dd;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  max-width: 320px;
+  margin: 0 auto;
+  box-shadow: 0 20px 48px rgba(15, 23, 42, 0.14);
+  font-family: -apple-system, 'Segoe UI', sans-serif;
+}
+
+.wa-statusbar {
+  background: #075e54;
+  color: rgba(255,255,255,0.9);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 12px 4px;
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+
+.wa-statusbar-icons {
+  letter-spacing: 1px;
+  font-size: 0.6rem;
+}
+
+.wa-header {
+  background: #075e54;
+  padding: 10px 14px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.wa-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #25d366;
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.wa-header-name {
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: #ffffff;
+}
+
+.wa-header-status {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.75);
+}
+
+.wa-messages {
+  padding: 12px 10px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #ece5dd;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c8b8a2' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.wa-date-chip {
+  text-align: center;
+  font-size: 0.68rem;
+  color: #667781;
+  background: rgba(255,255,255,0.65);
+  border-radius: 999px;
+  padding: 3px 10px;
+  align-self: center;
+  margin-bottom: 2px;
+}
+
+.wa-bubble {
+  max-width: 82%;
+  padding: 8px 10px 18px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  position: relative;
+  color: #111b21;
+}
+
+.wa-received {
+  background: #ffffff;
+  align-self: flex-start;
+  border-top-left-radius: 0;
+}
+
+.wa-bubble-sender {
+  display: block;
+  font-weight: 700;
+  font-size: 0.72rem;
+  color: #075e54;
+  margin-bottom: 3px;
+}
+
+.wa-sent {
+  background: #d9fdd3;
+  align-self: flex-end;
+  border-top-right-radius: 0;
+}
+
+.wa-time {
+  position: absolute;
+  bottom: 4px;
+  right: 8px;
+  font-size: 0.62rem;
+  color: #667781;
+  white-space: nowrap;
+}
+
+.wa-quick-replies {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-self: flex-start;
+  margin-left: 4px;
+}
+
+.wa-reply-btn {
+  background: #ffffff;
+  border: 1.5px solid #25d366;
+  color: #075e54;
+  font-weight: 600;
+  font-size: 0.78rem;
+  border-radius: 999px;
+  padding: 7px 16px;
+  cursor: default;
+  white-space: nowrap;
+}
+
+.wa-reply-ghost {
+  border-color: #c8c8c8;
+  color: #667781;
+}
+
+@media (max-width: 940px) {
+  .wa-phone {
+    max-width: 100%;
+  }
+
+  .worker-pills {
+    gap: 6px;
+  }
+}
