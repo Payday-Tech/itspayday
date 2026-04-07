@@ -3,22 +3,11 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
-import { useLanguage } from './LanguageContext';
+import { useModal } from './ModalContext';
 
-interface HeaderProps {
-  onOpenModal: () => void;
-}
-
-const languageOptions = [
-  { code: 'en' as const, label: 'English' },
-  { code: 'hng' as const, label: 'Hinglish' },
-  { code: 'kn' as const, label: 'ಕನ್ನಡ' },
-  { code: 'hi' as const, label: 'हिन्दी' },
-];
-
-export default function Header({ onOpenModal }: HeaderProps) {
+export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { language, setLanguage, t } = useLanguage();
+  const { openModal } = useModal();
 
   return (
     <header>
@@ -35,21 +24,7 @@ export default function Header({ onOpenModal }: HeaderProps) {
         </div>
 
         <div className="nav-actions">
-          <label className="language-select-label" htmlFor="language-select">Language</label>
-          <select
-            id="language-select"
-            className="language-select"
-            value={language}
-            onChange={(event) => setLanguage(event.target.value as typeof language)}
-            aria-label="Select language"
-          >
-            {languageOptions.map((option) => (
-              <option key={option.code} value={option.code}>{option.label}</option>
-            ))}
-          </select>
-          <button className="button primary" onClick={onOpenModal}>
-            {t('cta.getStarted')}
-          </button>
+          <button className="button primary" onClick={openModal}>Get Started</button>
         </div>
 
         <div className="mobile-nav">
@@ -60,9 +35,7 @@ export default function Header({ onOpenModal }: HeaderProps) {
           >
             Menu
           </button>
-          <button className="button primary" onClick={onOpenModal}>
-            {t('cta.getStarted')}
-          </button>
+          <button className="button primary" onClick={openModal}>Get Started</button>
         </div>
       </nav>
 
@@ -71,18 +44,6 @@ export default function Header({ onOpenModal }: HeaderProps) {
         <Link href="/for-lenders" onClick={() => setMenuOpen(false)}>For Lenders</Link>
         <Link href="/about" onClick={() => setMenuOpen(false)}>About</Link>
         <Link href="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
-        <label className="language-select-label" htmlFor="language-select-mobile">Language</label>
-        <select
-          id="language-select-mobile"
-          className="language-select"
-          value={language}
-          onChange={(event) => setLanguage(event.target.value as typeof language)}
-          aria-label="Select language"
-        >
-          {languageOptions.map((option) => (
-            <option key={option.code} value={option.code}>{option.label}</option>
-          ))}
-        </select>
       </div>
     </header>
   );
