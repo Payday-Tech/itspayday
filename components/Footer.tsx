@@ -36,7 +36,6 @@ export default function Footer() {
 
         <div className="footer-note">
           <span>&copy; 2026 Satrean Technologies Pvt. Ltd.</span>
-          <span>Languages: English • Hinglish • ಕನ್ನಡ • हिन्दी</span>
         </div>
       </div>
     </footer>
