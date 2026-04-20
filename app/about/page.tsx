@@ -21,18 +21,24 @@ export default function About() {
         <div className="feature-grid">
           <div className="feature-card">
             <span className="feature-card-icon">🎯</span>
-            <h3>Mission</h3>
-            <p>Expand fair access to short-tenor credit for domestic workers — without hidden terms or debt traps.</p>
+            <div className="feature-card-body">
+              <h3>Mission</h3>
+              <p>Expand fair access to short-tenor credit for domestic workers — without hidden terms or debt traps.</p>
+            </div>
           </div>
           <div className="feature-card">
             <span className="feature-card-icon">🤝</span>
-            <h3>Operating principles</h3>
-            <p>Consent first. Transparent fees. Dignified servicing. Strong compliance discipline.</p>
+            <div className="feature-card-body">
+              <h3>Operating principles</h3>
+              <p>Consent first. Transparent fees. Dignified servicing. Strong compliance discipline.</p>
+            </div>
           </div>
           <div className="feature-card">
             <span className="feature-card-icon">🏛️</span>
-            <h3>Partnership model</h3>
-            <p>Regulated lenders issue loans. Payday manages onboarding, servicing, repayments, and grievance routing.</p>
+            <div className="feature-card-body">
+              <h3>Partnership model</h3>
+              <p>Regulated lenders issue loans. Payday manages onboarding, servicing, repayments, and grievance routing.</p>
+            </div>
           </div>
         </div>
       </section>
