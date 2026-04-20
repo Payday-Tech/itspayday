@@ -134,18 +134,24 @@ export default function ForLenders() {
         <div className="feature-grid">
           <div className="feature-card">
             <span className="feature-card-icon">🏘️</span>
-            <h3>Sourcing at scale</h3>
-            <p>Tier-1 gated communities and on-demand platforms with verified employment and earnings data.</p>
+            <div className="feature-card-body">
+              <h3>Sourcing at scale</h3>
+              <p>Tier-1 gated communities and on-demand platforms with verified employment and earnings data.</p>
+            </div>
           </div>
           <div className="feature-card">
             <span className="feature-card-icon">📊</span>
-            <h3>Underwriting insights</h3>
-            <p>Tenure, earnings regularity, household count, attendance — consent-led signals designed for this segment.</p>
+            <div className="feature-card-body">
+              <h3>Underwriting insights</h3>
+              <p>Tenure, earnings regularity, household count, attendance — consent-led signals designed for this segment.</p>
+            </div>
           </div>
           <div className="feature-card">
             <span className="feature-card-icon">🔁</span>
-            <h3>Assisted collections</h3>
-            <p>Salary-aligned repayment cycles, multilingual reminders, and partnership with community managers.</p>
+            <div className="feature-card-body">
+              <h3>Assisted collections</h3>
+              <p>Salary-aligned repayment cycles, multilingual reminders, and partnership with community managers.</p>
+            </div>
           </div>
         </div>
       </section>
