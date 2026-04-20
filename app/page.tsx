@@ -146,8 +146,10 @@ export default function Home() {
           {FEATURES.map((f) => (
             <div key={f.title} className="feature-card">
               <span className="feature-card-icon">{f.icon}</span>
-              <h3>{f.title}</h3>
-              <p>{f.desc}</p>
+              <div className="feature-card-body">
+                <h3>{f.title}</h3>
+                <p>{f.desc}</p>
+              </div>
             </div>
           ))}
         </div>
