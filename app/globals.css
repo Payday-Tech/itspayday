@@ -320,35 +320,52 @@ section {
 
 .feature-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
 }
 
 .feature-card {
-  background: var(--color-surface-alt);
-  border-radius: var(--radius-lg);
-  padding: 32px 28px;
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 20px;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.04);
 }
 
 .feature-card-icon {
-  font-size: 1.8rem;
-  margin-bottom: 16px;
-  display: block;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  background: var(--color-brand-100);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feature-card-body {
+  flex: 1;
+  min-width: 0;
 }
 
 .feature-card h3 {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 700;
-  margin: 0 0 8px;
+  margin: 0 0 6px;
   color: var(--color-ink-900);
   font-family: var(--font-inter), sans-serif;
 }
 
 .feature-card p {
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   color: var(--color-ink-500);
   margin: 0;
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 /* ── Card (backwards compat, cleaner) ── */
