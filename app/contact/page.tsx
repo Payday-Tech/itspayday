@@ -79,24 +79,28 @@ export default function Contact() {
         <div className="feature-grid">
           <div className="feature-card">
             <span className="feature-card-icon">💬</span>
-            <h3>WhatsApp</h3>
-            <p>Start the onboarding journey directly on WhatsApp — no app download needed.</p>
+            <div className="feature-card-body">
+              <h3>WhatsApp</h3>
+              <p>Start the onboarding journey directly on WhatsApp — no app download needed.</p>
+            </div>
             <div style={{ marginTop: 16 }}>
               <GetStartedButton />
             </div>
           </div>
           <div className="feature-card">
             <span className="feature-card-icon">📬</span>
-            <h3>Email us</h3>
-            <p>
-              <a href="mailto:contact@itspayday.in">contact@itspayday.in</a><br />
-              <a href="mailto:grievance@itspayday.in">grievance@itspayday.in</a>
-            </p>
+            <div className="feature-card-body">
+              <h3>Email us</h3>
+              <p><a href="mailto:contact@itspayday.in">contact@itspayday.in</a><br />
+              <a href="mailto:grievance@itspayday.in">grievance@itspayday.in</a></p>
+            </div>
           </div>
           <div className="feature-card">
             <span className="feature-card-icon">📞</span>
-            <h3>Phone</h3>
-            <p>+91 85870 12908<br /><span style={{ color: 'var(--color-ink-500)', fontSize: '0.85rem' }}>Mon–Sat, 9 AM–6 PM</span></p>
+            <div className="feature-card-body">
+              <h3>Phone</h3>
+              <p>+91 85870 12908<br /><span style={{ color: 'var(--color-ink-500)', fontSize: '0.85rem' }}>Mon–Sat, 9 AM–6 PM</span></p>
+            </div>
           </div>
         </div>
       </section>
