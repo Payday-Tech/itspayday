@@ -26,18 +26,24 @@ export default function ForCommunities() {
         <div className="feature-grid">
           <div className="feature-card">
             <span className="feature-card-icon">🛡️</span>
-            <h3>No lending exposure</h3>
-            <p>Partner lenders issue loans. Payday operates as LSP and servicing layer — your balance sheet is never at risk.</p>
+            <div className="feature-card-body">
+              <h3>No lending exposure</h3>
+              <p>Partner lenders issue loans. Payday operates as LSP and servicing layer — your balance sheet is never at risk.</p>
+            </div>
           </div>
           <div className="feature-card">
             <span className="feature-card-icon">⚡</span>
-            <h3>Low operational effort</h3>
-            <p>Simple onboarding and repayment communication designed for large housing societies and on-demand platforms.</p>
+            <div className="feature-card-body">
+              <h3>Low operational effort</h3>
+              <p>Simple onboarding and repayment communication designed for large housing societies and on-demand platforms.</p>
+            </div>
           </div>
           <div className="feature-card">
             <span className="feature-card-icon">💚</span>
-            <h3>Better worker outcomes</h3>
-            <p>Transparent pricing and wage-linked limits improve financial wellbeing, trust, and worker retention.</p>
+            <div className="feature-card-body">
+              <h3>Better worker outcomes</h3>
+              <p>Transparent pricing and wage-linked limits improve financial wellbeing, trust, and worker retention.</p>
+            </div>
           </div>
         </div>
       </section>
