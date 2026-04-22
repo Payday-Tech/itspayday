@@ -76,7 +76,7 @@ export default function Home() {
       {/* ── HERO ── */}
       <section className="hero hero-split">
         <div className="hero-text">
-          <h1>Access what you&apos;ve<br />earned — before payday</h1>
+          <h1>Access your earnings —<br />before payday</h1>
           <p className="hero-sub">
             Domestic workers can access salary advances on a WhatsApp-based journey,
             underwritten through their work data.
